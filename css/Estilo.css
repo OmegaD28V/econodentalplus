@@ -1,0 +1,1368 @@
+/* Variables */
+:root{
+	/* Colores */
+	--Form-Primary: rgb(25, 173, 136);
+	--Form-Primary-Active: rgb(0, 255, 191);
+	--Form-Primary-Low: rgb(19, 117, 93);
+	--Form-Secondary: rgb(201, 134, 249);
+	--Form-Secondary-Active: rgb(188, 106, 246);
+	--Form-Secondary-Low: rgb(207, 158, 241);
+	--Form-Default: rgb(253, 172, 172);
+	--Form-Default-Active: rgba(253, 146, 146, 0.8);
+	--Form-Default-Low: rgb(235, 186, 186);
+	--Form-Basic: rgb(255, 243, 205);
+	/* --Form-Basic: rgb(253, 234, 47); */
+	--Form-Basic-Active: rgb(246, 250, 15);
+	--Form-Basic-Low: rgb(133, 100, 4);
+	/* --Form-Basic-Low: rgb(226, 205, 13); */
+	--Background: rgb(226, 239, 241);
+	--Background-Active: rgb(112, 121, 165);
+	--CardTitle: rgb(255, 228, 149);
+	--CardTitleText: rgb(53, 82, 95);
+	--CardPrimary: rgb(146, 194, 206);
+	--CardSecondary: rgb(255, 241, 202);
+	/* Colores */
+}
+/* Variables */
+
+/* KeyFrames */
+@keyframes cardFlipLT {
+	from {
+		border-left: 300px solid var(--Form-Default-Active);
+		border-bottom: 300px solid transparent;
+	}
+	
+	to {
+		border-left: 100px solid var(--Form-Default-Active);
+		border-bottom: 100px solid transparent;
+	}
+}
+
+@keyframes cardFlipRB {
+	from {
+		border-right: 300px solid var(--Form-Default-Active);
+		border-top: 300px solid transparent;
+	}
+	
+	to {
+		border-right: 130px solid var(--Form-Default-Active);
+		border-top: 130px solid transparent;
+	}
+}
+/* KeyFrames */
+
+/* Estilos generales y de cuerpo */
+*{
+	font-family: 'Nunito Sans', sans-serif, arial;
+	outline: none;
+}
+
+body{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	max-height: auto;
+	height: 100vh;
+	/* height: -webkit-fill-available; */
+	/* background-color: bisque; */
+}
+
+.nav {
+	height: 94px;
+}
+
+main{
+	display: inline-block;
+	/* height: calc(100% - 124px); */
+	min-height: 100%;
+	width: calc(100% - 80px);
+	padding: 0 40px 30px 40px;
+	background-color: var(--Background);
+}
+
+#C__Map {
+	display: inline-block;
+	position: relative;
+	height: 50%;
+	width: 50%;
+}
+
+#map{
+	display: inline-block;
+	position: fixed !important;
+	width: 50%;
+	height: 60%;
+}
+/* Estilos generales y de cuerpo */
+/* Navegación v2 */
+nav{
+	display: inline-block;
+	position: relative;
+	height: calc(62px - 20px);
+	width: calc(100% - 80px);
+	background-color: var(--Form-Primary);
+	margin: 0;
+	padding: 10px 40px;
+}
+
+nav::before{
+	display: block;
+	position: absolute;
+	content: '';
+	width: 100%;
+	height: 3px;
+	background: var(--Form-Primary-Low);
+	left: 0;
+	bottom: 0;
+}
+
+.buttonsBar{
+	background-color: white;
+	height: max-content;
+	padding: 0 40px;
+}
+
+.D-Logo{
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+}
+
+.Logo{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+
+.mainTitle{
+	display: inline-block;
+	position: relative;
+	height: 100%;
+	align-items: center;
+	margin: 0 5px;
+	color: white;
+	font-size: 20px;
+	vertical-align: bottom;
+}
+
+.saludo{
+	display: inline-flex;
+	position: relative;
+	float: right;
+	height: 100%;
+	align-items: center;
+	margin: 0 5px;
+	color: white;
+	font-size: 18px;
+}
+
+.D-link-buttons{
+	display: inline-block;
+	position: relative;
+	width: auto;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.link-button{
+	display: inline-block;
+	position: relative;
+	color: var(--Form-Primary);
+	font-size: 18px;
+	text-decoration: none;
+	padding: 4px 10px;
+	background: white;
+	height: calc(40px - 8px);
+	box-sizing: border-box;
+}
+
+.link-button.activo{
+	background-color: var(--Form-Primary-Low);
+	color: var(--Form-Primary-Active);
+}
+
+.link-button.activo::before{
+	height: 3px;
+	background: var(--Form-Primary-Active);
+}
+
+.link-button.active::before{
+	height: 3px;
+}
+
+.link-button::before{
+	display: block;
+	position: absolute;
+	content: '';
+	width: 100%;
+	height: 0px;
+	background: var(--Form-Primary);
+	left: 0;
+	bottom: 0;
+	transition: all .1s ease;
+}
+
+.link-button:hover::before{
+	height: 3px;
+}
+/* Navegación v2 */
+
+
+/* Título */
+.title{
+	display: inline-block;
+	width: 100%;
+	background-color: white;
+	height: auto;
+	text-align: center;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	box-shadow: 0px 1px 4px 0px gray;
+	animation: titleDawn .5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.title h2{
+	font-size: 2em;
+	font-weight: lighter;
+	font-family: 'Nunito Sans';
+	height: calc(50px - 10px);
+	margin: 5px 0;
+}
+
+@keyframes titleDawn {
+	from {
+		transform: scaleX(50%);
+	}
+	to {
+		transform: scaleX(100%);
+	}
+}
+/* Título */
+
+/* Formulario en página */
+.C__F{
+	display: flex;
+	width: 100%;
+	height: calc(100% - 22px);
+	justify-content: center;
+	align-items: baseline;
+	border-radius: 4px;
+	padding-top: 40px;
+}
+
+.F{
+	box-shadow: 2px 2px 7px 0px var(--Form-Primary);
+	display: inline-block;
+	width: auto;
+	min-width: 25%;
+	padding: 20px 35px;
+	background-color: white;
+	border-radius: 6px;
+}
+
+.C__F__C{
+	margin-top: 60px;
+}
+
+.i__group{
+	position: relative;
+	margin: 40px 0 0 0;
+	color: var(--Form-Primary);
+	width: 100%;
+}
+
+.disabled{
+	opacity: 0.4;
+	pointer-events: none;
+	text-align: end !important;
+	height: 32px !important;
+	padding-top: 5px !important;
+}
+
+.left{
+	right: 0 !important;
+	left: inherit !important;
+}
+
+.flex{
+	display: flex !important;
+}
+
+.message{
+	display: inline-block;
+	position: relative;
+	background-color: var(--Form-Basic);
+	width: calc(100% - 8px);
+	height: 15px;
+	margin: 2px;
+	padding: 4px;
+	font-size: 14px;
+	color: var(--Form-Basic-Low);
+}
+
+.yeah{
+	border-bottom-color: var(--Form-Primary-Active) !important;
+}
+.noug{
+	border-bottom-color: red !important;
+}
+
+.counter{
+	position: absolute;
+	content: '';
+	right: 0;
+	top: 25%;
+}
+
+.counter::before{
+	position: absolute;
+	content: attr(data-content);
+	top: 0;
+	right: 150%;
+}
+
+.inputs{
+	display: inline-block;
+	position: relative;
+	background-color: transparent;
+	width: calc(100% - 4px);
+	height: 35px;
+	margin: 2px;
+	font-size: 16px;
+	border: none;
+	color: var(--Form-Primary-Low);
+	border-bottom: 2px solid var(--Form-Primary-Low);
+}
+
+input[type="password"]{
+	letter-spacing: 4px;
+	font-size: larger;
+	text-align: center;
+}
+
+input[type="text"]{
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.iconSearch {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(25, 173, 136, 0.4);
+	border: 2px solid var(--Form-Primary-Low);
+	border-left: none;
+	border-top: none;
+	padding: 0;
+	height: 35px;
+	width: 35px;
+}
+
+.inputs:focus{
+	border-bottom: 2px solid var(--Form-Primary);
+}
+
+select{
+	display: inline-block;
+	background-color: var(--Form-Primary-Low);
+	width: calc(100% - 4px);
+	height: 35px;
+	margin: 2px;
+	font-size: 16px;
+	border: none;
+	color: white;
+	border: 2px solid var(--Form-Primary-Low);
+	border-radius: 2px;
+}
+
+option{
+	background-color: white;
+	color: black;
+}
+
+.option-free{
+	color: forestgreen;
+	font-weight: bold;
+}
+
+.option-booked{
+	color: indianred;
+}
+
+textarea{
+	width: 100%;
+	height: 50px;
+	font-size: 16px;
+	text-align: justify;
+	resize: none;
+	border-radius: 2px;
+	color: var(--Form-Primary-Low);
+	border-color: var(--Form-Primary-Low);
+	box-sizing: border-box;
+}
+
+textarea:focus{
+	border-color: var(--Form-Primary-Active);
+}
+
+.tag{
+	/* position: absolute; */
+	display: inline-block;
+	width: auto;
+	margin: 2px 5px;
+	background-color: var(--Background);
+	/* top: 3px;
+	left: 3px; */
+	padding: 2px 5px;
+	color: var(--Background-Active);
+}
+
+.tag__close{
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	background-color: var(--Background-Active);
+	color: white;
+	border: none;
+	padding: 0px 4px;
+	margin: 0 0 0px 4px;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+
+.selects:focus{
+	border-color: var(--Form-Primary);
+	background-color: var(--Form-Primary);
+}
+
+.labels{
+	position: absolute;
+	top: -12px;
+	font-size: 16px;
+	line-height: 12px;
+	color: var(--Form-Primary-Low);
+	left: 0px;
+	/* transition: all .3s ease; */
+}
+
+/* .inputs:focus + .labels{
+	top: -12px;
+	font-size: 14px;
+} */
+
+.submit{
+	display: inline-block;
+	width: 100%;
+	font-family: 'Nunito Sans', sans-serif, arial;
+	text-decoration: none;
+	text-align: center;
+	border: none;
+	color: white;
+	cursor: pointer;
+	background-color: var(--Form-Primary);
+	pointer-events: all;
+	font-size: 1rem;
+	margin-top: 25px;
+	padding: 8px 0;
+	border-radius: 2px;
+}
+
+.submit:active{
+	background-color: var(--Form-Primary-Active) !important;
+}
+
+.submit:hover{
+	background-color: var(--Form-Primary-Low);
+}
+
+.back{
+	display: flex;
+	text-decoration: none;
+	color: currentColor;
+	align-items: center;
+	float: left;
+	margin-top: 10px;
+	padding: 5px 10px 5px 25px;
+	position: relative;
+	border-radius: 2px;
+}
+
+.back:hover{
+	background-color: #ccc;
+}
+
+.back::before{
+	content: '';
+	position: absolute;
+	width: 4px;
+	height: 18px;
+	top: 2px;
+	left: 10px;
+	background: var(--Form-Primary-Low);
+	transform: rotate(45deg);
+}
+
+.back::after{
+	content: '';
+	position: absolute;
+	width: 4px;
+	height: 18px;
+	top: 12px;
+	left: 10px;
+	background: var(--Form-Primary-Low);
+	transform: rotate(315deg);
+}
+
+.buttons{
+	display: block;
+	position: relative !important;
+	width: auto;
+	border: none;
+	text-decoration: none;
+	color: white;
+	background: rgba(255, 255, 255, 0.1);
+	font-size: 1rem;
+	margin-top: 15px;
+	padding: 0;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+.buttons::before{
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 50%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.buttons::after{
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+	transition: 0.5s;
+}
+
+.buttons:hover::after{
+	left: 100%;
+}
+/* Formulario en página */
+
+/* Estilos genéricos */
+.box {
+	box-sizing: border-box;
+}
+
+.w100{
+	width: 100%;
+}
+
+.i-b{
+	display: inline-block !important;
+}
+
+.none{
+	display: none !important;
+}
+
+.unset{
+	display: unset !important;
+}
+
+.nodata{
+	display: inline-block;
+	width: calc(100% - 12px);
+	font-size: 18px;
+	background-color: var(--Form-Basic);
+	text-align: center;
+	padding: 5px;
+	border: 1px solid var(--Form-Basic-Low);
+	border-radius: 2px;
+}
+
+.nodata span{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--Form-Basic-Low);
+}
+
+.f__title{
+	display: inline-block;
+	font-weight: lighter;
+	font-size: 2rem;
+	text-align: center;
+	width: 100%;
+	margin: 0;
+	color: var(--Form-Primary);
+}
+
+.f__datetime{
+	text-align: center;
+	display: inline-block;
+	width: 100%;
+	padding: 10px 0;
+}
+
+.f__datetime span{
+	display: inline-flex;
+	float: left;
+}
+
+.f__datetime span:last-child{
+	display: inline-flex;
+	float: right;
+}
+
+.line-top{
+	display: block;
+	width: 100%;
+	margin-bottom: 25px;
+	height: 1px;
+	background: gray;
+}
+
+.line-bottom{
+	display: block;
+	width: 100%;
+	margin-top: 5px;
+	height: 1px;
+	background: gray;
+}
+
+input[type="password"]{
+	letter-spacing: 4px;
+}
+
+.d-none{
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: none;
+	border: none;
+	font-size: 1rem;
+	padding: 8px 0;
+}
+
+/* .I__btn__close{} */
+/* Estilos genéricos */
+
+/* Formulario modal */
+
+/* Checkbox del modal */
+#checkbox{
+	padding: 0;
+	height: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+#checkbox label{
+	width: 50%;
+	min-width: max-content;
+	color: var(--Form-Primary-Low);
+	background-color: white;
+	border: 1px solid;
+	padding: 5px 10px;
+	border-radius: 2px;
+	text-align: center;
+	cursor: pointer;
+	transition: color .3s ease;
+}
+
+#checkbox input:checked + label{
+	background-color: var(--Form-Primary-Low);
+	color: white;
+}
+
+/* Checkbox del modal */
+/* RadioButtons del modal */
+input[type="radio"]{
+	display: none;
+}
+
+input[type="radio"]:checked + .label-radio{
+	color: white;
+	background-color: var(--Form-Primary-Low);
+}
+
+input[type="radio"]:checked + .label-radio::before{
+	display: none;
+}
+
+input[type="radio"]:checked + .label-radio{
+	padding: 2px 8px;
+}
+
+.label-radio{
+	position: relative;
+	color: var(--Form-Primary-Low);
+	padding: 2px 4px 2px 20px;
+	border-radius: 2px;
+	transition: all .3s ease;
+}
+
+.label-radio::before{
+	position: absolute;
+	content: '';
+	top: calc(50% - 7px);
+	left: 3px;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	border: 1px solid var(--Form-Primary-Low);
+}
+
+.label-radio:hover{
+	background-color: #ccc;
+}
+/* RadioButtons del modal */
+
+/* Tarjetas modales */
+.Cards{
+	display: inline-block;
+	position: relative;
+	width: 450px;
+	/* min-width: max-content; */
+	padding: 20px 30px;
+	box-shadow: 2px 2px 7px 0px var(--Form-Primary);
+	height: max-content;
+	border-radius: 6px;
+	background-color: white;
+}
+
+.Cards::before {
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	top: 0;
+	left: 0;
+	border-left: 100px solid var(--Form-Default-Active);
+	border-bottom: 100px solid transparent;
+	filter: drop-shadow(6px 6px 4px gray);
+	animation: cardFlipLT 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+	z-index: 1;
+}
+
+.Cards::after {
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	bottom: 0;
+	right: 0;
+	border-right: 130px solid var(--Form-Default-Active);
+	border-top: 130px solid transparent;
+	filter: drop-shadow(-6px -6px 4px gray);
+	animation: cardFlipRB 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+	z-index: 1;
+}
+
+.Cards__Contentinfo {
+	width: 100%;
+	height: 80px;
+	margin-bottom: 20px;
+}
+
+.Cards__logo {
+	position: relative;
+	float: left;
+	width: 20%;
+	height: 100%;
+	background-color: var(--CardPrimary);
+}
+
+.Cards__logo::before {
+	content: '\2764';
+	position: absolute;
+	font-size: 54px;
+	color: white;
+	width: 100%;
+	height: 100%;
+	line-height: 80px;
+	text-align: center;
+}
+
+.Cards__info {
+	float: left;
+	text-align: center;
+	font-weight: bold;
+	font-size: larger;
+	margin-left: 20px;
+	line-height: 80px;
+	height: 80px;
+	width: calc(80% - 20px);
+	background-color: var(--CardPrimary);
+	color: var(--CardTitleText);
+}
+
+.Cards__info h3 {
+	margin: 0;
+	padding: 0;
+}
+
+.Cards__main {
+	display: inline-block;
+	width: 100%;
+	height: auto;
+	margin-bottom: 35px;
+	border: 1px solid var(--CardPrimary);
+}
+
+.Cards__main h4 {
+	margin: 0;
+	padding: 10px;
+	width: calc(100% - 20px);
+	background-color: var(--CardPrimary);
+	color: var(--CardTitleText);
+	font-weight: lighter;
+	font-size: 16px;
+	text-align: center;
+}
+
+.Cards__main div {
+	display: inline-flex;
+	float: left;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	color: var(--CardTitleText);
+	font-size: 14px;
+	height: auto;
+}
+
+.Cards__main div span:first-child {
+	padding: 10px;
+	width: calc(32% - 20px);
+}
+
+.Cards__main div span:last-child {
+	padding: 10px;
+	width: calc(68% - 20px);
+}
+
+.Cards__tabs {
+	position: relative;
+}
+
+.Cards__tabs::before {
+	display: inline-block;
+	content: attr(name);
+	height: 40px;
+	width: 100%;
+	background-color: var(--CardPrimary);
+	top: 0;
+	left: 0;
+	text-align: center;
+	font-size: 16px;
+	line-height: 40px;
+	color: var(--CardTitleText);
+}
+
+.Cards .tabs a.active {
+	color: var(--CardTitleText);
+}
+
+.Cards .table {
+	box-shadow: none;
+	font-size: 14px;
+}
+
+.Cards .table th{
+	border: none;
+}
+
+.Cards .C__Btn__Last {
+	display: inline-flex;
+	height: 32px;
+	padding: 0 10px;
+	align-items: center;
+	color: var(--CardTitleText);
+}
+
+/* Tarjetas modales */
+
+/* Tabs del modal */
+.tabs{
+	display: inline-flex;
+	background: antiquewhite;
+	padding: 0;
+	margin: 0;
+}
+
+.tabs a{
+	background-color: white;
+	color: var(--Form-Primary-Low);
+	text-decoration: none;
+	font-size: 16px;
+	padding: 5px;
+	border-radius: 2px;
+	border-bottom: none;
+}
+
+.tabs a.active{
+	font-weight: bold;
+	/* color: white; */
+	border: 1px solid var(--Form-Primary-Low);
+	border-bottom: none;
+	color: var(--Form-Primary);
+}
+
+.tabs a:hover{
+	/* opacity: 0.6; */
+	border-top: 1px solid;
+	border-left: 1px solid;
+	border-right: 1px solid;
+}
+
+#tabs-content{
+	min-width: max-content;
+}
+
+.ficha__info{
+	border: 1px solid var(--Form-Primary-Low);
+	border-radius: 2px;
+	padding: 20px 10px;
+}
+/* Tabs del modal */
+
+.C__f.oculto{
+	top: -150%;
+	visibility: hidden;
+}
+
+.C__f{
+	visibility: visible;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0%);
+	z-index: 1000;
+	padding: 20px 0;
+	box-shadow: 2px 2px 7px 0px var(--Form-Primary);
+	transition: 0.8s;
+	background-color: rgb(0, 0, 0, 0.4);
+	top: 0%;
+	width: 100%;
+	height: max-content;
+	min-height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.f{
+	display: inline-block;
+	width: 450px;
+	min-width: 30%;
+	/* min-width: max-content; */
+	padding: 20px 30px;
+	background-color: white;
+	box-shadow: 2px 2px 7px 0px var(--Form-Primary);
+	height: max-content;
+	border-radius: 6px;
+}
+
+.label-checkbox{
+	color: var(--Form-Primary-Low);
+}
+
+.C__group{
+	border: 1px solid var(--Form-Primary-Low);
+	border-radius: 2px;
+	padding: 20px 10px;
+	margin-top: 20px;
+}
+
+.C__group h4{
+	margin: 0;
+	text-align: center;
+}
+
+.m-no{
+	margin: 0;
+}
+
+.D-info{
+	display: block;
+	margin-bottom: 20px;
+}
+
+.info{
+	display: block;
+	text-align: justify;
+	font-size: 14px;
+	margin: 10px 0;
+	/* color: white; */
+	color: var(--Background-Active);
+	/* border: 1px solid var(--Form-Basic-Low); */
+	/* background: var(--Form-Basic-Low); */
+	background: var(--Background);
+	border: 1px solid var(--Background-Active);
+	padding: 10px;
+	border-radius: 2px;
+	text-align: center;
+}
+
+i{
+	font-size: 16px;
+	font-weight: bold;
+	font-family: monospace;
+	border: 1px solid currentColor;
+	border-radius: 100%;
+	padding: 0 6px;
+}
+
+
+
+.f__close{
+	display: block;
+	border: none;
+	background: none;
+	font-size: 25px;
+	color: orangered;
+	font-weight: bold;
+	filter: drop-shadow(0px 0px 2px darkgray);
+}
+
+.f__close:hover{
+	color: red;
+	filter: drop-shadow(0px 0px 2px black);
+}
+
+.f__close:active{
+	color: black;
+}
+/* Formulario modal */
+
+/* Tablas */
+.C__Table{
+	display: inline-block;
+	width: calc(100% - 80px);
+	padding: 20px 40px;
+	margin-top: 24px;
+}
+
+.table {
+	border-collapse: collapse;
+	width: 100%;
+	border-radius: 2px;
+	box-shadow: 0px 0px 8px 1px gray;
+}
+
+table tr:first-child th:first-child {
+	border-top-left-radius: 4px;
+}
+
+table tr:first-child th:last-child {
+	border-top-right-radius: 4px;
+}
+
+table tr:last-child td:first-child {
+	border-bottom-left-radius: 4px;
+}
+
+table tr:last-child td:last-child {
+	border-bottom-right-radius: 4px;
+}
+
+.table tr{
+	transition: background-color .2s ease;
+}
+
+.table td, .table th {
+	position: relative;
+	padding: 10px 8px;
+}
+
+.table tr:nth-child(odd){background-color: whitesmoke;}
+
+.table tr:nth-child(even){background-color: rgb(228, 225, 225);}
+
+.table tr:hover {background-color: rgb(118, 105, 240);}
+
+.table th {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: left;
+	background-color: var(--Form-Secondary-Active);
+	color: white;
+	font-size: 20px;
+	font-weight: lighter;
+	border-bottom: 1px solid black;
+}
+
+.table td{
+	cursor: pointer;
+}
+
+.table tr:active{
+	background-color: skyblue;
+}
+
+.table tr td .clip{
+	display: flex;
+	font-size: 14px;
+	line-height: 22px;
+	width: inherit;
+	height: 22px;
+	justify-content: center;
+	color: white;
+	background-color: rgb(107, 107, 107);
+	border: none;
+}
+
+.table tr td .clip.disabled{
+	height: auto !important;
+	padding-top: 0px !important;
+}
+
+.warn {
+	background-color: red !important;
+}
+
+.init {
+	background-color: var(--Form-Secondary-Active) !important;
+}
+
+.progress {
+	background-color: yellow !important;
+	color: black !important;
+}
+
+.finish {
+	background-color: green !important;
+}
+
+.table tr td a, .button{
+	text-decoration: none;
+	color: var(--Form-Primary-Low);
+	font-size: 20px;
+	border: 1px solid var(--Form-Primary-Low);
+	display: inline-block;
+	min-width: max-content;
+	width: 50%;
+	text-align: center;
+	border-radius: 2px;
+}
+
+.table tr td a:hover, button:hover{
+	color: white;
+	background-color: var(--Form-Primary-Low);
+	border-color: var(--Form-Primary-Low);
+}
+
+.table tr td:last-child, .table tr th:last-child{
+	text-align: center;
+}
+/* Tablas */
+
+/* Tooltip, Checkbox & Botones de acción */
+input:disabled{
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+input[type="image"]:active{
+	filter: drop-shadow(0px 0px 4px var(--Form-Primary-Active)) !important;
+	/* box-shadow: 0px 0px 4px var(--Form-Primary-Active); */
+}
+
+input[type="image"] {
+	position: relative;
+	display: inline-block;
+	margin: 5px 2px;
+	transition: all .3s ease;
+}
+
+input[type="image"]:hover {
+	filter: drop-shadow(0px 0px 4px gray);
+}
+
+.tooltip {
+	visibility: hidden;
+	position: absolute;
+	left: 0;
+	top: -20px;
+	background-color: rgba(0, 0, 0, 0.2);
+	padding: 2px 4px;
+	font-size: 12px;
+	border-radius: 2px;
+	width: max-content;
+	transition: all .1s ease;
+}
+
+input:hover + .tooltip, a:hover + .tooltip{
+	visibility: visible;
+	font-size: 14px;
+}
+
+.tooltip::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 13px;
+	transform: translate(50%, 0%);
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: black transparent transparent transparent;
+}
+
+.Bar__Btns{
+	display: inline-block;
+	width: 100%;
+	padding: 10px 0;
+}
+
+.C__Btn{
+	position: relative; 
+	display: inline-flex;
+	vertical-align: middle;
+}
+
+.C__Btn a, .C__Btn input{
+	display: flex;
+	align-self: center;
+}
+
+.C__Btn__Last{
+	display: flex;
+	float: right;
+}
+
+.C__Btn__Last a{
+	display: flex;
+	align-self: center;
+}
+
+.buttonSmall{
+	margin: 0;
+	font-size: 12px;
+	padding: 5px 10px;
+	background-color: white;
+	color: var(--Form-Primary);
+	border: 1px solid var(--Form-Primary);
+	display: inline-block;
+	/* width: 100%; */
+	font-family: 'Nunito Sans', sans-serif, arial;
+	text-decoration: none;
+	text-align: center;
+	cursor: pointer;
+	pointer-events: all;
+	border-radius: 2px;
+}
+
+.buttonSmall:active{
+	color: var(--Form-Primary-Low);
+	border-color: var(--Form-Primary-Low);
+}
+
+input[type="checkbox"]{
+	border: 2px solid var(--Form-Primary-Low);
+	background-color: white;
+	/* border-radius: 2px; */
+	border-radius: 50%;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	position: relative;
+	top: 5px;
+}
+
+.iconJoin{
+	display: inline-block;
+	position: absolute;
+	top: 30%;
+	left: 0;
+}
+
+/* input[type="checkbox"]:checked{
+	background-color: #3133ca;
+} */
+
+input[type="checkbox"]:checked::before{
+	content: '';
+	position: absolute;
+	width: 70%;
+	height: 70%;
+	top: 15%;
+	left: 15%;
+	/* border-radius: 2px; */
+	border-radius: 50%;
+	background-color: var(--Form-Primary-Low);
+}
+/* Tooltip, Checkbox & Botones de acción */
+
+/* list */
+#list {
+	border: 1px solid var(--Background);
+	margin: 0;
+	padding: 0;
+	border-radius: 2px;
+}
+
+#list li {
+	list-style: none;
+	border: 1px solid var(--Background);
+	display: flex;
+	width: calc(100% - 12px);
+	align-content: space-between;
+	align-items: center;
+	padding: 5px;
+}
+
+#list span {
+	display: flex;
+	box-sizing: border-box;
+	width: -webkit-fill-available;
+}
+/* list */
+
+/* Paginación */
+.Pnt {
+	display: inline-block;
+	width: 100%;
+	/* border: 1px solid; */
+}
+
+.Pnt a {
+	text-decoration: none;
+	border: 1px solid var(--Form-Primary-Low);
+	color: var(--Form-Primary-Low);
+	padding: 2px 5px;
+	border-radius: 2px;
+	box-sizing: border-box;
+}
+
+.Pnt a.active, 
+.Pnt a:first-child, 
+.Pnt a:last-child {
+	color: var(--Form-Primary-Active);
+	background-color: var(--Form-Primary-Low);
+}
+/* Paginación */
+
+/* Modo oscuro */
+/* @media (prefers-color-scheme: dark) {
+	main{
+		background-color: black;
+	}
+
+	.C__f{
+		background-color: rgba(255, 255, 255, 0.4);
+	}
+} */
+/* Modo oscuro */

@@ -1,40 +1,41 @@
 <?php
 	class CRUDUsuario{
-		// #Buscar usuario en la base de datos.
-		// public function buscarUsuarioBD($search){
-		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"SELECT u.iduser, u.nombre, u.tipo, u.fecha, u_a.estado, 
-		// 		date_format(u.fecha, '%d/%M/%Y') fecha 
-		// 		FROM user u 
-		// 		INNER JOIN user_acceso u_a ON u.iduser = u_a.iduser 
-		// 		WHERE nombre LIKE '%$search%' AND u.estado = 1 AND u.tipo > 0;"
-		// 	);
-		// 	$sql -> execute();			
-		// 	return $sql -> fetchAll();
-		// 	$sql -> close();
-		// 	$sql = null;
-		// }
+		#Buscar usuarios en la base de datos.
+		public function buscarUsuariosBD($buscar){
+			$sql = Conexion::conectar() -> prepare(
+				"SELECT idUsuario, nombre, apellidos, tipoUsuario, estado, 
+				date_format(fechaRegistro, '%d/%b/%Y') fechaRegistro 
+				FROM usuario
+				WHERE (nombre LIKE '%$buscar%' 
+				OR apellidos LIKE '%$buscar%') 
+				AND estado = 1 AND tipoUsuario > 0;"
+			);
+			$sql -> execute();
+			return $sql -> fetchAll();
+			$sql -> close();
+			$sql = null;
+		}
 		
-		// #Seleccionar usuarios de la base de datos.
-		// public function seleccionarUsuariosBD(){
-		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"SELECT u.iduser, u.nombre, u.tipo, u.fecha, u_a.estado, 
-		// 		date_format(u.fecha, '%d/%M/%Y') fecha 
-		// 		FROM user u 
-		// 		INNER JOIN user_acceso u_a ON u.iduser = u_a.iduser 
-		// 		WHERE u.estado = 1 AND u.tipo > 0;"
-		// 	);
-		// 	$sql -> execute();
-		// 	return $sql -> fetchAll();
-		// 	$sql -> close();
-		// 	$sql = null;
-		// }
+		#Seleccionar usuarios de la base de datos.
+		public function selUsuariosBD(){
+			$sql = Conexion::conectar() -> prepare(
+				"SELECT u.idUsuario, u.nombre, u.apellidos, u.tipoUsuario, 
+				u_a.estado, date_format(u.fechaRegistro, '%d/%b/%Y') fechaRegistro 
+				FROM usuario u 
+				INNER JOIN usuario_acceso u_a ON u.idUsuario = u_a.idUsuario 
+				WHERE u.estado = 1 AND u.tipoUsuario > 0;"
+			);
+			$sql -> execute();
+			return $sql -> fetchAll();
+			$sql -> close();
+			$sql = null;
+		}
 
 		// #Seleccionar estado de conexión de los usuarios activos de la base de datos.
 		// public function seleccionarConexionUsuariosBD(){
 		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"SELECT u.iduser, u_a.estado FROM user u 
-		// 		INNER JOIN user_acceso u_a ON u.iduser = u_a.iduser 
+		// 		"SELECT u.idUsuario, u_a.estado FROM usuario u 
+		// 		INNER JOIN usuario_acceso u_a ON u.idUsuario = u_a.idUsuario 
 		// 		WHERE u.estado = 1 AND u.tipo > 0;"
 		// 	);
 		// 	$sql -> execute();
@@ -104,12 +105,12 @@
 		// #Recuperar datos de usuario de la base de datos.
 		// public function datosUsuarioBD($usuarioId){
 		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"SELECT iduser, nombre, tipo, fecha, 
+		// 		"SELECT idUsuario, nombre, tipo, fecha, 
 		// 		date_format(fecha, '%d de %M de %Y') fecha 
-		// 		FROM user 
-		// 		WHERE tipo > 0 AND tipo < 4 AND estado = 1 AND iduser = :iduser;"
+		// 		FROM usuario 
+		// 		WHERE tipo > 0 AND tipo < 4 AND estado = 1 AND idUsuario = :idUsuario;"
 		// 	);
-		// 	$sql -> bindParam(":iduser", $usuarioId, PDO::PARAM_INT);
+		// 	$sql -> bindParam(":idUsuario", $usuarioId, PDO::PARAM_INT);
 		// 	$sql -> execute();
 		// 	return $sql -> fetch();
 		// 	$sql -> close();
@@ -119,7 +120,7 @@
 		// #Seleccionar todos los usuarios de tipo médico.
 		// public function medicosBD() {
 		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"SELECT iduser, nombre FROM user 
+		// 		"SELECT idUsuario, nombre FROM usuario 
 		// 		WHERE tipo = 3 AND estado = 1;"
 		// 	);
 		// 	$sql -> execute();
@@ -131,11 +132,11 @@
 		// #Actualizar datos de usuario en la base de datos.
 		// public function actualizarUsuarioBD($datosUsuario){
 		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"UPDATE user SET nombre = :nombre, tipo = :tipo WHERE iduser = :iduser;"
+		// 		"UPDATE usuario SET nombre = :nombre, tipo = :tipo WHERE idUsuario = :idUsuario;"
 		// 	);
 		// 	$sql -> bindParam(":nombre", $datosUsuario["nombre"], PDO::PARAM_STR);
 		// 	$sql -> bindParam(":tipo", $datosUsuario["tipo"], PDO::PARAM_INT);
-		// 	$sql -> bindParam(":iduser", $datosUsuario["iduser"], PDO::PARAM_INT);
+		// 	$sql -> bindParam(":idUsuario", $datosUsuario["idUsuario"], PDO::PARAM_INT);
 		// 	if($sql -> execute()) {
 		// 		return true;
 		// 	}else{
@@ -148,9 +149,9 @@
 		// #Actualizar contraseña de usuario en la base de datos.
 		// public function actualizarPicBD($datosPic){
 		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"UPDATE user_acceso SET contrasena = :contrasena WHERE iduser = :iduser;"
+		// 		"UPDATE usuario_acceso SET contrasena = :contrasena WHERE idUsuario = :idUsuario;"
 		// 	);
-		// 	$sql -> bindParam(":iduser", $datosPic["usuarioId"], PDO::PARAM_INT);
+		// 	$sql -> bindParam(":idUsuario", $datosPic["usuarioId"], PDO::PARAM_INT);
 		// 	$sql -> bindParam(":contrasena", $datosPic["contrasenaNew"], PDO::PARAM_STR);
 		// 	if($sql -> execute()) {
 		// 		return true;
@@ -164,9 +165,9 @@
 		// #Verificar la contraseña de usuario en la base de datos.
 		// public function verificarPicOldBD($datosPic){
 		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"SELECT contrasena FROM user_acceso WHERE iduser = :iduser AND contrasena = :contrasena;"
+		// 		"SELECT contrasena FROM usuario_acceso WHERE idUsuario = :idUsuario AND contrasena = :contrasena;"
 		// 	);
-		// 	$sql -> bindParam(":iduser", $datosPic["usuarioId"], PDO::PARAM_INT);
+		// 	$sql -> bindParam(":idUsuario", $datosPic["usuarioId"], PDO::PARAM_INT);
 		// 	$sql -> bindParam(":contrasena", $datosPic["contrasenaOld"], PDO::PARAM_STR);
 		// 	$sql -> execute();
 		// 	return $sql -> fetch();
@@ -178,7 +179,7 @@
 		// public function crearCuentaBD($datosUsuario){
 		// 	$transaccion = true;
 		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"INSERT INTO user(nombre, fecha, tipo, estado) VALUE(:nombre, now(), :tipo, 2);"
+		// 		"INSERT INTO usuario(nombre, fecha, tipo, estado) VALUE(:nombre, now(), :tipo, 2);"
 		// 	);
 		// 	$sql -> bindParam(":nombre", $datosUsuario["nombre"], PDO::PARAM_STR);
 		// 	$sql -> bindParam(":tipo", $datosUsuario["tipo"], PDO::PARAM_INT);
@@ -192,7 +193,7 @@
 
 		// 	if ($transaccion) {
 		// 		$sql2 = Conexion::conectar() -> prepare(
-		// 			"select iduser from user where nombre = :nombre AND tipo = :tipo AND estado = 2;"
+		// 			"select idUsuario from usuario where nombre = :nombre AND tipo = :tipo AND estado = 2;"
 		// 		);
 		// 		$sql2 -> bindParam(":nombre", $datosUsuario["nombre"], PDO::PARAM_STR);
 		// 		$sql2 -> bindParam(":tipo", $datosUsuario["tipo"], PDO::PARAM_INT);
@@ -201,9 +202,9 @@
 		// 		$crearAcceso = CRUDUsuario::crearAccesoUsuarioBD($usuario, $datosUsuario);
 		// 		if ($crearAcceso) {
 		// 			$sql3 = Conexion::conectar() -> prepare(
-		// 				"UPDATE user set estado = 1 where iduser = :iduser AND estado = 2;"
+		// 				"UPDATE usuario set estado = 1 where idUsuario = :idUsuario AND estado = 2;"
 		// 			);
-		// 			$sql3 -> bindParam(":iduser", $usuario["iduser"], PDO::PARAM_INT);
+		// 			$sql3 -> bindParam(":idUsuario", $usuario["idUsuario"], PDO::PARAM_INT);
 		// 			if ($sql3 -> execute()) {
 		// 				return true;
 		// 			}else{
@@ -222,10 +223,10 @@
 		// #Crear acceso de usuario en la base de datos.
 		// public function crearAccesoUsuarioBD($usuario, $datosAcceso){
 		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"INSERT INTO user_acceso(iduser, usuario, contrasena, fecha, estado) 
-		// 		VALUE(:iduser, :usuario, :contrasena, now(), 0);"
+		// 		"INSERT INTO usuario_acceso(idUsuario, usuario, contrasena, fecha, estado) 
+		// 		VALUE(:idUsuario, :usuario, :contrasena, now(), 0);"
 		// 	);
-		// 	$sql -> bindParam(":iduser", $usuario["iduser"], PDO::PARAM_INT);
+		// 	$sql -> bindParam(":idUsuario", $usuario["idUsuario"], PDO::PARAM_INT);
 		// 	$sql -> bindParam(":usuario", $datosAcceso["usuario"], PDO::PARAM_STR);
 		// 	$sql -> bindParam(":contrasena", $datosAcceso["contrasena"], PDO::PARAM_STR);
 		// 	if($sql -> execute()){
@@ -240,9 +241,9 @@
 		// #Deshabilitar uno o más usuarios del sistema.
 		// public function eliminarUsuariosBD($usuarioId){
 		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"UPDATE user SET estado = 0 WHERE tipo != 1 AND iduser = :iduser;"
+		// 		"UPDATE usuario SET estado = 0 WHERE tipo != 1 AND idUsuario = :idUsuario;"
 		// 	);
-		// 	$sql -> bindParam(":iduser", $usuarioId, PDO::PARAM_INT);
+		// 	$sql -> bindParam(":idUsuario", $usuarioId, PDO::PARAM_INT);
 		// 	if ($sql -> execute()) {
 		// 		return $usuarioId;
 		// 	}else{

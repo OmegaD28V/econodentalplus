@@ -3,14 +3,14 @@
 	require_once 'modelo/Acceso.php';
 	require_once 'modelo/CRUD.php';
 	require_once 'modelo/CRUDExterno.php';
-	require_once 'modelo/CRUDCita.php';
+	require_once 'modelo/CRUDAgenda.php';
 	// require_once 'modelo/CRUDCliente.php';
 	// require_once 'modelo/CRUDMascota.php';
 	require_once 'modelo/CRUDUsuario.php';
 	// require_once 'modelo/CRUDServicios.php';
 	require_once 'controlador/Controlador.php';
 	require_once 'controlador/ControladorExterno.php';
-	require_once 'controlador/ControladorCita.php';
+	require_once 'controlador/ControladorAgenda.php';
 	// require_once 'controlador/ControladorCliente.php';
 	// require_once 'controlador/ControladorMascota.php';
 	require_once 'controlador/ControladorUsuario.php';

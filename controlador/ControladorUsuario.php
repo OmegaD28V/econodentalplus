@@ -1,16 +1,16 @@
 <?php
 	class ControladorUsuario{
-		// #Buscar usuario.
-		// public function buscarUsuarioCtl($search) {
-		// 	$respuesta = CRUDUsuario::buscarUsuarioBD($search);
-		// 	return $respuesta;
-		// }
+		#Buscar usuarios.
+		public function buscarUsuariosCtl($buscar) {
+			$respuesta = CRUDUsuario::buscarUsuariosBD($buscar);
+			return $respuesta;
+		}
 
-		// #Seleccionar los usuarios 
-		// public function seleccionarUsuariosCtl(){
-		// 	$respuesta = CRUDUsuario::seleccionarUsuariosBD();
-		// 	return $respuesta;
-		// }
+		#Seleccionar los usuarios 
+		public function selUsuariosCtl(){
+			$respuesta = CRUDUsuario::selUsuariosBD();
+			return $respuesta;
+		}
 
 		// #Seleccionar estado de conexión de los usuarios activos.
 		// public function seleccionarConexionUsuariosCtl(){

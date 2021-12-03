@@ -24,8 +24,6 @@
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;600&family=Nunito+Sans:wght@300;400;700&family=Roboto:wght@100;400&display=swap" rel="stylesheet">
 		
 		<!-- Estilos -->
-		<link rel="stylesheet" href="css/morris.css">
-		<!-- <link rel="stylesheet" href="css/Estilo.css"> -->
 		<link rel="stylesheet" href="css/Estilos.css">
 
 		<!-- Notificaciones -->
@@ -42,13 +40,5 @@
 		<footer></footer>
 	</body>
 	<!-- Scripts -->
-	<script src="js/Pagina.js"></script>
-	<script src="js/All.js"></script>
-	<!-- <script src="js/Datos.js"></script> -->
-	<!-- <script src="js/Graficas.js"></script> -->
-	<!-- <script src="js/ExcelExportar.js"></script> -->
-	<!-- <script src="js/JQueryAcciones.js"></script> -->
-	<script src="js/Validaciones.js"></script>
-	<script src="js/Interactividad.js"></script>
-	<!-- <script src="js/CronoAcciones.js"></script> -->
+	<script src="js/All.js" type="module"></script>
 </html>

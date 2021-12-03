@@ -20,8 +20,9 @@
 	// $paginacion != null ? $inicio = $paginacion['inicio'] : null ;
 	// $clientes = array_slice($arrayClientes, $inicio, $size);
 ?>
-
-<h2 class="title">Usuarios</h2>
+<div class="title">
+	<h2>Usuarios</h2>
+</div>
 
 <?php if($cargo >= 1) { ?>
 <div class="C__Table">
@@ -29,7 +30,7 @@
 		<div class="C__Btn">
 			<input type="button" id="usuarioNBtn-s" class="btn" value=" + Nuevo">
 			<input type="button" id="usuarioABtn-s" class="btn" value="Actualizar" disabled>
-			<input type="button" id="usuarioEBtn-s" class="btn" value="Eliminar" disabled>
+			<input type="button" id="usuarioEBtn-s" class="btn" value="Eliminar y desactivar" disabled>
 		</div>
 		<div class="C__Btn__Last">
 			<input class="search" type="text" id="usuarioBtn-b" name="usuarioBtn-b" placeholder="Buscar Usuario">
@@ -49,14 +50,16 @@
 			<?php 
 				foreach($arrayUsuarios as $key => $value) : 
 					$nombre = $value["nombre"].' '.$value["apellidos"];
-					$cargos = ['Paciente', 'Admin', 'Doctor', 'Asistente', 'Recepcionista'];
+					$cargos = ['Paciente', 'Admin', 'Gerente', 'Doctor', 'Asistente', 'Recepcionista'];
 					$estados = ['Desconectado', 'Conectado'];
 					$cargo = $cargos[$value["tipoUsuario"]];
 					$estado = $estados[$value["estado"]];
 			?>
 		<tr name="usuarios-row">
 			<td>
-				<input type="checkbox" name="checkUsuario" id="checkUsuario<?=$value["idUsuario"]?>" value="<?=$value["idUsuario"]?>">
+				<?php if($cargo != 'Admin') : ?>
+					<input type="checkbox" name="checkUsuario" id="checkUsuario<?=$value["idUsuario"]?>" value="<?=$value["idUsuario"]?>">
+				<?php endif?>
 			</td>
 			<td id="<?=$value["idUsuario"]?>" name="checkUsuario"><?=$nombre?>
 			</td>
@@ -85,24 +88,19 @@
 		</div>
 		
 		<div class="i__group">
-			<input class="textfield" type="tel" name="usuarioTelefono-A" id="usuarioTelefono-A" required>
-			<label class="labels" for="usuarioTelefono-A">Número de teléfono</label>
-		</div>
-		
-		<div class="i__group">
-			<select class="textfield" name="usuarioTipo-A" id="usuarioTipo-A" required>
+			<select class="textfield" name="usuarioCargo-A" id="usuarioCargo-A" required>
 				<option value="">Seleccione un cargo</option>
-				<option value="1">Gerente</option>
-				<option value="2">Doctor</option>
-				<option value="3">Asistente</option>
-				<option value="4">Recepcionista</option>
+				<option value="2">Gerente</option>
+				<option value="3">Doctor</option>
+				<option value="4">Asistente</option>
+				<option value="5">Recepcionista</option>
 			</select>
-			<label class="labels" for="usuarioTipo-A">Cargo</label>
+			<label class="labels" for="usuarioCargo-A">Cargo</label>
 		</div>
 
-		<input type="hidden" name="usuarioId-A" id="usuarioId-A" required>
+		<input type="hidden" name="idUsuario-A" id="idUsuario-A" required>
 		<input class="submit" type="submit" value="Actualizar">
-		<?php //$posponerCita = ControladorAgenda::posponerCitaCtl(); ?>
+		<?php ControladorUsuario::actualizarUsuarioCtl(); ?>
 	</form>
 </div>
 
@@ -139,23 +137,26 @@
 		</div>
 		
 		<div class="i__group">
-			<input class="textfield" type="tel" name="usuarioTelefono-N" id="usuarioTelefono-N" required>
-			<label class="labels" for="usuarioTelefono-N">Número de teléfono</label>
+			<input class="textfield" type="text" name="usuario-N" id="usuario-N" required>
+			<label class="labels" for="usuario-N">Nombre de usuario</label>
 		</div>
 		
 		<div class="i__group">
-			<select class="textfield" name="usuarioTipo-N" id="usuarioTipo-N" required>
-				<option value="">Seleccione un cargo</option>
-				<option value="1">Gerente</option>
-				<option value="2">Doctor</option>
-				<option value="3">Asistente</option>
-				<option value="4">Recepcionista</option>
-			</select>
-			<label class="labels" for="usuarioTipo-N">Cargo</label>
+			<input class="textfield pwd" type="password" name="usuarioPwd-N" id="usuarioPwd-N" autocomplete="on" required>
+			<label class="labels" for="usuarioPwd-N">Contraseña</label>
 		</div>
-
-		<input type="hidden" name="usuarioId-N" id="usuarioId-N" required>
+		
+		<div class="i__group">
+			<select class="textfield" name="usuarioCargo-N" id="usuarioCargo-N" required>
+				<option value="">Seleccione un cargo</option>
+				<option value="2">Gerente</option>
+				<option value="3">Doctor</option>
+				<option value="4">Asistente</option>
+				<option value="5">Recepcionista</option>
+			</select>
+			<label class="labels" for="usuarioCargo-N">Cargo</label>
+		</div>
 		<input class="submit" type="submit" value="Agregar">
-		<?php //$posponerCita = ControladorAgenda::posponerCitaCtl(); ?>
+		<?php ControladorUsuario::crearCuentaCtl(); ?>
 	</form>
 </div>

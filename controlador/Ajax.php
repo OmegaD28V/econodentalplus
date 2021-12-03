@@ -7,18 +7,9 @@
 	require_once 'ControladorAgenda.php';
 
 	class Ajax{
-		// public $usuarioElegido;
-		// public $clienteElegido;
 		public $cancelarCitas;
-		// public $usuariosElegidosEliminar;
-		// public $mascotasElegidosEliminar;
-		// public $correosClienteEliminar;
-		// public $telefonosClienteEliminar;
-		// public $domiciliosClienteEliminar;
-		// public $petInfoEliminar;
-		
-		// public $requestClientEdit;
 		public $datosCita;
+		public $datosUsuario;
 		// public $requestClientDataEdit;
 		// public $requestPetDataEdit;
 		// public $asMain;
@@ -36,12 +27,12 @@
 			echo json_encode($respuesta);
 		}
 		
-		// #Recuperar datos de cliente para editarlos.
-		// public function datosClienteAjax(){
-		// 	$dato = $this -> requestClientEdit;
-		// 	$respuesta = ControladorCliente::datosClienteCtl($dato);
-		// 	echo json_encode($respuesta);
-		// }
+		#Recuperar datos de usuario para editarlos.
+		public function datosUsuarioAjax(){
+			$dato = $this -> datosUsuario;
+			$respuesta = ControladorUsuario::datosUsuarioCtl($dato);
+			echo json_encode($respuesta);
+		}
 		
 		// #Seleccionar estado de conexión de los usuarios activos de la base de datos.
 		// public function seleccionarConexionUsuariosAjax(){
@@ -77,12 +68,12 @@
 		// 	echo $respuesta;
 		// }
 		
-		// #Deshabilitar uno o más usuarios.
-		// public function eliminarUsuariosAjax(){
-		// 	$datos = $this -> usuariosElegidosEliminar;
-		// 	$respuesta = ControladorUsuario::eliminarUsuariosCtl($datos);
-		// 	echo json_encode($respuesta);
-		// }
+		#Deshabilitar uno o más usuarios.
+		public function eliminarUsuariosAjax(){
+			$datos = $this -> datosUsuario;
+			$respuesta = ControladorUsuario::eliminarUsuariosCtl($datos);
+			echo json_encode($respuesta);
+		}
 		
 		// #Deshabilitar una o más mascotas.
 		// public function eliminarMascotasAjax(){
@@ -218,11 +209,11 @@
 		$objIdEliminar -> cancelarCitasAjax();
 	}
 	
-	// if (isset($_POST["usersToDelete"])) {
-	// 	$objIdEliminar = new Ajax();
-	// 	$objIdEliminar -> usuariosElegidosEliminar = json_decode($_POST["usersToDelete"]);
-	// 	$objIdEliminar -> eliminarUsuariosAjax();
-	// }
+	if (isset($_POST["eliminarUsuarios"])) {
+		$objIdEliminar = new Ajax();
+		$objIdEliminar -> datosUsuario = json_decode($_POST["eliminarUsuarios"]);
+		$objIdEliminar -> eliminarUsuariosAjax();
+	}
 	
 	// if (isset($_POST["petsToDelete"])) {
 	// 	$objIdEliminar = new Ajax();
@@ -293,6 +284,12 @@
 		$objdatosCita = new Ajax();
 		$objdatosCita -> datosCita = $_POST["idPosponer"];
 		$objdatosCita -> fechaCitaAjax();
+	}
+	
+	if (isset($_POST["idUsuario-A"])) {
+		$objdatosUsuario = new Ajax();
+		$objdatosUsuario -> datosUsuario = $_POST["idUsuario-A"];
+		$objdatosUsuario -> datosUsuarioAjax();
 	}
 
 	// if (isset($_POST["petId-edit"])) {

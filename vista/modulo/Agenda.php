@@ -76,7 +76,7 @@
 
 		<input type="hidden" name="idPosponer" id="idPosponer" required>
 		<input class="submit" type="submit" value="Posponer">
-		<?php $posponerCita = ControladorAgenda::posponerCitaCtl(); ?>
+		<?php ControladorAgenda::posponerCitaCtl(); ?>
 	</form>
 </div>
 
@@ -88,9 +88,6 @@
 		<div class="i__group">
 			<span class="label-checkbox">¿Cancelar las citas seleccionadas?</span>
 		</div>
-		<!-- <div class="D-info">
-			<p class="info"><i>i</i> También se eliminarán los datos pertenecientes a este registro.</p>
-		</div> -->
 		<input class="submit" type="button" id="cancelarBtn-C" value="Aceptar">
 	</form>
 </div>

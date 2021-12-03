@@ -315,10 +315,15 @@ input[type="password"]{
 
 /* Título */
 .title {
+	padding: 0 10px;
+}
+
+.title > h2 {
 	margin: 0;
-	font-size: 1.4rem;
-	font-weight: normal;
 	padding: 10px;
+	font-size: 1.5rem;
+	font-weight: lighter;
+	/* background-color: white; */
 }
 /* Título */
 

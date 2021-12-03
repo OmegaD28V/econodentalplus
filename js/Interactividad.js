@@ -3,7 +3,7 @@ export default class Interactividad {
 		items.forEach(i => {
 			i.addEventListener('click', (e) => {
 				let obj = i.parentElement.children;
-				console.log(i.firstElementChild);
+				// console.log(i.firstElementChild);
 				let td = i.firstElementChild;
 				let tdStatus = false;
 				if(td != null) {

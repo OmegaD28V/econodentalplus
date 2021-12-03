@@ -170,6 +170,34 @@ class All {
 					Interactividad.itemsTable(document.getElementsByName('checkUsuario'));
 				}
 			});
+
+			JQueryAcciones.editForm(
+				$('#usuarioABtn-s'), 
+				$('[name="checkUsuario"]'), 
+				$('#idUsuario-A'), 
+				function (resultado) {
+					console.log(resultado);
+					let select = $('#usuarioCargo-A');
+					$('#usuarioNombre-A').val(resultado["nombre"]);
+					$('#usuarioApellidos-A').val(resultado["apellidos"]);
+					select[0].options.selectedIndex = false;
+					for(const k of select[0].options){
+						if(k.value == resultado["tipoUsuario"]){
+							k.selected = true;
+						}
+					}
+				}
+			);
+			
+			JQueryAcciones.deleteForm(
+				$('#usuarioEBtn-s'), 
+				$('#usuarioEBtn-C'), 
+				$('#usuarioEBtn-x'), 
+				$('[name="checkUsuario"]'), 
+				document.getElementById('usuarioEForm'), 
+				'eliminarUsuarios', 
+				'Usuarios'
+			);
 		}
 	}
 }

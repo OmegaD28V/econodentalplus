@@ -1,4 +1,14 @@
 export default class Interactividad {
+	static confirmarCita(btnC) {
+		if (btnC) {
+			for (const i of btnC) {
+				i.addEventListener('click', () => {
+					console.log(i.parentElement.getAttribute('id'));
+				});
+			}
+		}
+	}
+
 	static itemsTable(items) {
 		items.forEach(i => {
 			i.addEventListener('click', (e) => {

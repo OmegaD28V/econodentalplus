@@ -21,11 +21,22 @@
 		#Vista de las citas existentes.
 		public function selCitasBD() {
 			$sql = Conexion::conectar() -> prepare(
-				"SELECT *, date_format(fechaCita, '%d-%b-%Y %H:%i hrs') fechaCita 
+				"SELECT *, date_format(fechaCita, '%d-%b-%Y %H:%i hrs') fechaCi 
 				FROM cita WHERE estado = 1 ORDER BY fechaCita ASC;"
 			);
 			$sql -> execute();
 			return $sql -> fetchAll();
+			$sql -> close();
+			$sql = null;
+		}
+		
+		#Contar las citas existentes.
+		public function contarCitasBD() {
+			$sql = Conexion::conectar() -> prepare(
+				"SELECT count(*) as totalCitas FROM cita WHERE estado = 1;"
+			);
+			$sql -> execute();
+			return $sql -> fetch();
 			$sql -> close();
 			$sql = null;
 		}

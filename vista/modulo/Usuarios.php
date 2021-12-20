@@ -16,6 +16,8 @@
 	// }
 
 	$arrayUsuarios = ControladorUsuario::selUsuariosCtl();
+	$totalUsuarios = ControladorUsuario::contarUsuariosCtl()["totalUsuarios"];
+	$mostrando = sizeof($arrayUsuarios);
 	// $paginacion = Paginacion::pnt($modulo, sizeof($arrayClientes), $init, $size);
 	// $paginacion != null ? $inicio = $paginacion['inicio'] : null ;
 	// $clientes = array_slice($arrayClientes, $inicio, $size);
@@ -31,6 +33,9 @@
 			<input type="button" id="usuarioNBtn-s" class="btn" value=" + Nuevo">
 			<input type="button" id="usuarioABtn-s" class="btn" value="Actualizar" disabled>
 			<input type="button" id="usuarioEBtn-s" class="btn" value="Eliminar y desactivar" disabled>
+		</div>
+		<div class="C__Btn">
+			<span class="results" id="results"><?=$mostrando?> resultados de <?=$totalUsuarios?></span>
 		</div>
 		<div class="C__Btn__Last">
 			<input class="search" type="text" id="usuarioBtn-b" name="usuarioBtn-b" placeholder="Buscar Usuario">

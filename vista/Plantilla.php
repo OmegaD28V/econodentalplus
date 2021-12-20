@@ -1,6 +1,10 @@
 <?php 
 	session_start();
 	date_default_timezone_set('America/Mexico_City');
+	$page;
+	if (isset($_GET["pagina"])) {
+		$page = $_GET["pagina"];
+	}
 ?>
 
 <!DOCTYPE html>
@@ -24,14 +28,18 @@
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500;600&family=Nunito+Sans:wght@300;400;700&family=Roboto:wght@100;400&display=swap" rel="stylesheet">
 		
 		<!-- Estilos -->
-		<link rel="stylesheet" href="css/Estilos.css">
+		<?php if($page != "HistoriaMedica") : ?>
+			<link rel="stylesheet" href="css/Estilos.css">
+		<?php endif ?>
 
 		<!-- Notificaciones -->
 		<script src="js/Notificaciones.js"></script>
 	</head>
 	<body>
 		<header>
-			<?php include "vista/modulo/Navegacion.php"; ?>
+			<?php
+				$page != "HistoriaMedica" ? include "vista/modulo/Navegacion.php" : null ; 
+			?>
 		</header>
 		<main>
 			<?php $ctrl = new Controlador(); ?>

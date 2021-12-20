@@ -11,6 +11,12 @@
 			$respuesta = CRUDUsuario::selUsuariosBD();
 			return $respuesta;
 		}
+		
+		#Contar los usuarios 
+		public function contarUsuariosCtl(){
+			$respuesta = CRUDUsuario::contarUsuariosBD();
+			return $respuesta;
+		}
 
 		// #Seleccionar estado de conexión de los usuarios activos.
 		// public function seleccionarConexionUsuariosCtl(){
@@ -32,38 +38,35 @@
 
 		#Actualizar datos de usuario.
 		public function actualizarUsuarioCtl(){
-			// if (
-			// 	isset($_POST["usuarioId-edit"]) && 
-			// 	isset($_POST["nombre-edit"]) && 
-			// 	isset($_POST["tipo-usuario-edit"])
-			// 	) {
-			// 	if (Validacion::nombresPropios($_POST["nombre-edit"], 2, 50)) {
-			// 		$datosUsuario = array(
-			// 			"idUsuario" => $_POST["usuarioId-edit"], 
-			// 			"nombre" => $_POST["nombre-edit"], 
-			// 			"tipo" => $_POST["tipo-usuario-edit"]
-			// 		);
-			// 		$respuesta = CRUDUsuario::actualizarUsuarioBD($datosUsuario);
-			// 		if($respuesta) {
-			// 			echo '
-			// 				<script>
-			// 					window.location = "index.php?pagina=Usuarios";
-			// 					alert("Datos actualizados");
-			// 				</script>
-			// 			';
-			// 		}else{
-			// 			echo '
-			// 				<script>
-			// 					alert("Error al actualizar");
-			// 					window.location = "index.php?pagina=Usuarios";
-			// 				</script>
-			// 			';
-			// 		}
-			// 	} else {
-			// 		echo '<script>alert("Debe llenar todos los campos correctamente.");</script>';
-			// 	}
+			if (
+				isset($_POST["idUsuario-A"]) && 
+				isset($_POST["usuarioNombre-A"]) && 
+				isset($_POST["usuarioApellidos-A"]) && 
+				isset($_POST["usuarioCargo-A"])
+				) {
+				if (
+					Validacion::nombresPropios($_POST["usuarioNombre-A"], 2, 30) && 
+					Validacion::nombresPropios($_POST["usuarioApellidos-A"], 2, 50)
+				) {
+					$datosUsuario = array(
+						"idUsuario" => $_POST["idUsuario-A"], 
+						"nombre" => $_POST["usuarioNombre-A"], 
+						"apellidos" => $_POST["usuarioApellidos-A"], 
+						"cargo" => $_POST["usuarioCargo-A"]
+					);
+					$respuesta = CRUDUsuario::actualizarUsuarioBD($datosUsuario);
+					if($respuesta) {
+						echo '<script>toast("Datos actualizados");</script>
+						';
+					}else{
+						echo '<script>toast("Error al actualizar");</script>
+						';
+					}
+				} else {
+					echo '<script>toast("Debe llenar todos los campos correctamente.");</script>';
+				}
 				
-			// }
+			}
 		}
 
 		// #Actualizar contraseña de usuario.
@@ -112,21 +115,25 @@
 		#Abrir la sesión de usuario.
 		public function iniciarSesionCtl(){
 			if (isset($_POST["usuario"]) && isset($_POST["contrasena"])) {
-				// $pic = $_POST["contrasena"];
 				$pic = Pic::progPic($_POST["contrasena"]);
 				$respuesta = CRUDUsuario::iniciarSesionBD($_POST["usuario"], $pic);
 				if ($respuesta["usuario"] == null) {
 					echo '<script>toast("Datos incorrectos!.");</script>';
 				}elseif ($respuesta["usuario"] == $_POST["usuario"] && $respuesta["contrasena"] == $pic) {
-					$datosUsuario = CRUDUsuario::seleccionarUsuarioSesionBD($respuesta["idUsuario"]);
-					$conectarUsuario = CRUDUsuario::conectarUsuarioBD($respuesta["idUsuario"]);
-					if ($datosUsuario["nombre"] == null) {
-						echo '<script>window.location = "IniciarSesion";</script>';
-					}elseif ($datosUsuario["idUsuario"] == $respuesta["idUsuario"] && $conectarUsuario == true) {
-						$_SESSION["ingresado"] = $datosUsuario["nombre"];
-						$_SESSION["usuario"] = $datosUsuario["idUsuario"];
-						$_SESSION["tipo-usuario"] = $datosUsuario["tipoUsuario"];
-						echo '<script>window.location = "Inicio";</script>';
+					$existeUsuario = CRUDUsuario::existeUsuarioBD($respuesta["idUsuario"]);
+					if ($existeUsuario["nombre"] != null) {
+						$datosUsuario = CRUDUsuario::seleccionarUsuarioSesionBD($respuesta["idUsuario"]);
+						$conectarUsuario = CRUDUsuario::conectarUsuarioBD($respuesta["idUsuario"]);
+						if ($datosUsuario["nombre"] == null) {
+							echo '<script>window.location = "IniciarSesion";</script>';
+						}elseif ($datosUsuario["idUsuario"] == $respuesta["idUsuario"] && $conectarUsuario == true) {
+							$_SESSION["ingresado"] = $datosUsuario["nombre"];
+							$_SESSION["usuario"] = $datosUsuario["idUsuario"];
+							$_SESSION["tipo-usuario"] = $datosUsuario["tipoUsuario"];
+							echo '<script>window.location = "Inicio";</script>';
+						}
+					} else {
+						echo '<script>toast("Datos incorrectos!.");</script>';
 					}
 				}
 			}

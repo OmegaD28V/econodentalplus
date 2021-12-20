@@ -3,6 +3,7 @@ import Interactividad from './Interactividad.js';
 import JQueryAcciones from './JQueryAcciones.js';
 import Validaciones from './Validaciones.js';
 
+// fechaA = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2) + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
 const pagina = Pagina.getPagina();
 class All {
 	constructor () {
@@ -18,9 +19,6 @@ class All {
 
 	callScripts () {
 		if(pagina == 'Agenda') {
-			// document.getElementById('citaBtn-C').addEventListener('click', () => {
-			// 	alert('Click');
-			// });
 			Interactividad.interactFormModal(
 				document.querySelector('#citaBtn-s'), 
 				document.querySelector('#citaBtn-x'), 
@@ -47,6 +45,8 @@ class All {
 			);
 			
 			Interactividad.itemsTable(document.getElementsByName('checkCita'));
+
+			Interactividad.confirmarCita(document.getElementsByName('citaBtn-C'));
 			
 			JQueryAcciones.search($('#citaBtn-b'), $('#tbl-citas'), 'buscarCitas', (respuesta) => {
 				let tabla = $('#tbl-citas tr:gt(0)');
@@ -66,9 +66,13 @@ class All {
 								'<td id="' + idCita + '" name="checkCita">' + nombre + '</td>' + 
 								'<td id="' + idCita + '" name="checkCita">' + fechaCita + '</td>' + 
 								'<td id="' + idCita + '" name="checkCita">' + telefono + '</td>' + 
+								'<td id="' + idCita + '" name="checkCita">' + 
+									'<input type="button" name="citaBtn-C" class="btn" value="Confirmar">' + 
+								'</td>' + 
 							'</tr>'
 						);
 						tbl.append(row);
+						$('#results').text(respuesta.length + ' resultados');
 					}
 					Interactividad.checkBox(
 						document.querySelector('#checkCitas'), 
@@ -77,6 +81,26 @@ class All {
 						document.querySelector('#cancelarBtn-s')
 					);
 					Interactividad.itemsTable(document.getElementsByName('checkCita'));
+					Interactividad.confirmarCita(document.getElementsByName('citaBtn-C'));
+					JQueryAcciones.editForm(
+						$('#posponerBtn-s'), 
+						$('[name="checkCita"]'), 
+						$('#idPosponer'), 
+						function (resultado) {
+							let fecha = JQueryAcciones.completarHoraInicio(resultado['fechaCita']);
+							$('#posponerTiempo').val(fecha);
+						}
+					);
+					
+					JQueryAcciones.deleteForm(
+						$('#cancelarBtn-s'), 
+						$('#cancelarBtn-C'), 
+						$('#cancelarBtn-x'), 
+						$('[name="checkCita"]'), 
+						document.getElementById('cancelarForm'), 
+						'cancelarCitas', 
+						'Agenda'
+					);
 				}
 			});
 
@@ -107,6 +131,7 @@ class All {
 			Validaciones.nombresPropios(document.getElementById('citaNombre-n'), 2, 30);
 			Validaciones.nombresPropios(document.getElementById('citaApellidos-n'), 2, 50);
 			Validaciones.enterosSinIntervalo(document.getElementById('citaTelefono-n'), 10);
+			Validaciones.fechas(document.getElementById('citaTiempo-n'), 1);
 		} else if (pagina == 'Usuarios') {
 			Interactividad.interactFormModal(
 				document.querySelector('#usuarioNBtn-s'), 
@@ -160,6 +185,7 @@ class All {
 							'</tr>'
 						);
 						tbl.append(row);
+						$('#results').text(respuesta.length + ' resultados');
 					}
 					Interactividad.checkBox(
 						document.querySelector('#checkUsuarios'), 
@@ -168,6 +194,33 @@ class All {
 						document.querySelector('#usuarioEBtn-s')
 					);
 					Interactividad.itemsTable(document.getElementsByName('checkUsuario'));
+
+					JQueryAcciones.editForm(
+						$('#usuarioABtn-s'), 
+						$('[name="checkUsuario"]'), 
+						$('#idUsuario-A'), 
+						function (resultado) {
+							let select = $('#usuarioCargo-A');
+							$('#usuarioNombre-A').val(resultado["nombre"]);
+							$('#usuarioApellidos-A').val(resultado["apellidos"]);
+							select[0].options.selectedIndex = false;
+							for(const k of select[0].options){
+								if(k.value == resultado["tipoUsuario"]){
+									k.selected = true;
+								}
+							}
+						}
+					);
+					
+					JQueryAcciones.deleteForm(
+						$('#usuarioEBtn-s'), 
+						$('#usuarioEBtn-C'), 
+						$('#usuarioEBtn-x'), 
+						$('[name="checkUsuario"]'), 
+						document.getElementById('usuarioEForm'), 
+						'eliminarUsuarios', 
+						'Usuarios'
+					);
 				}
 			});
 
@@ -176,7 +229,6 @@ class All {
 				$('[name="checkUsuario"]'), 
 				$('#idUsuario-A'), 
 				function (resultado) {
-					console.log(resultado);
 					let select = $('#usuarioCargo-A');
 					$('#usuarioNombre-A').val(resultado["nombre"]);
 					$('#usuarioApellidos-A').val(resultado["apellidos"]);

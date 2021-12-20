@@ -12,6 +12,12 @@
 			return $citas;
 		}
 		
+		#Contar las citas existentes.
+		public function contarCitasCtl() {
+			$citas = CRUDAgenda::contarCitasBD();
+			return $citas;
+		}
+		
 		#Recuperar fecha de cita para editar o posponer.
 		public function fechaCitaCtl($idCita) {
 			$fechaCita = CRUDAgenda::fechaCitaBD($idCita);

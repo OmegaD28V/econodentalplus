@@ -30,6 +30,31 @@
 			$sql -> close();
 			$sql = null;
 		}
+		
+		#Contar usuarios de la base de datos.
+		public function contarUsuariosBD(){
+			$sql = Conexion::conectar() -> prepare(
+				"SELECT count(*) as totalUsuarios FROM usuario 
+				WHERE estado = 1 AND tipoUsuario > 0;"
+			);
+			$sql -> execute();
+			return $sql -> fetch();
+			$sql -> close();
+			$sql = null;
+		}
+		
+		#Seleccionar usuarios de la base de datos.
+		public function existeUsuarioBD($idUsuario){
+			$sql = Conexion::conectar() -> prepare(
+				"SELECT nombre FROM usuario 
+				WHERE idUsuario = :idUsuario AND estado = 1;"
+			);
+			$sql -> bindParam(":idUsuario", $idUsuario, PDO::PARAM_INT);
+			$sql -> execute();
+			return $sql -> fetch();
+			$sql -> close();
+			$sql = null;
+		}
 
 		// #Seleccionar estado de conexión de los usuarios activos de la base de datos.
 		// public function seleccionarConexionUsuariosBD(){
@@ -131,22 +156,25 @@
 		// 	$sql = null;
 		// }
 
-		// #Actualizar datos de usuario en la base de datos.
-		// public function actualizarUsuarioBD($datosUsuario){
-		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"UPDATE usuario SET nombre = :nombre, tipo = :tipo WHERE idUsuario = :idUsuario;"
-		// 	);
-		// 	$sql -> bindParam(":nombre", $datosUsuario["nombre"], PDO::PARAM_STR);
-		// 	$sql -> bindParam(":tipo", $datosUsuario["tipo"], PDO::PARAM_INT);
-		// 	$sql -> bindParam(":idUsuario", $datosUsuario["idUsuario"], PDO::PARAM_INT);
-		// 	if($sql -> execute()) {
-		// 		return true;
-		// 	}else{
-		// 		return false;
-		// 	}
-		// 	$sql -> close();
-		// 	$sql = null;
-		// }
+		#Actualizar datos de usuario en la base de datos.
+		public function actualizarUsuarioBD($datosUsuario){
+			$sql = Conexion::conectar() -> prepare(
+				"UPDATE usuario 
+				SET nombre = :nombre, apellidos = :apellidos, tipoUsuario = :tipoUsuario 
+				WHERE idUsuario = :idUsuario AND tipoUsuario != 1;"
+			);
+			$sql -> bindParam(":nombre", $datosUsuario["nombre"], PDO::PARAM_STR);
+			$sql -> bindParam(":apellidos", $datosUsuario["apellidos"], PDO::PARAM_STR);
+			$sql -> bindParam(":tipoUsuario", $datosUsuario["cargo"], PDO::PARAM_INT);
+			$sql -> bindParam(":idUsuario", $datosUsuario["idUsuario"], PDO::PARAM_INT);
+			if($sql -> execute()) {
+				return true;
+			}else{
+				return false;
+			}
+			$sql -> close();
+			$sql = null;
+		}
 		
 		// #Actualizar contraseña de usuario en la base de datos.
 		// public function actualizarPicBD($datosPic){

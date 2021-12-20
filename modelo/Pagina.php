@@ -6,6 +6,8 @@
 			'Cita' => "Cita", 
 			'Agenda' => "Agenda", 
 			'Usuarios' => "Usuarios", 
+			'HistoriaMedica' => "HistoriaMedica", 
+			'Configuracion' => "Configuracion", 
 			'IniciarSesion' => "IniciarSesion", 
 			'Salir' => "Salir", 
 			'Error' => "Error"

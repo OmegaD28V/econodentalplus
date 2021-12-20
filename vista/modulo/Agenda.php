@@ -16,12 +16,15 @@
 	// }
 
 	$arrayCitas = ControladorAgenda::selCitasCtl();
+	$totalCitas = ControladorAgenda::contarCitasCtl()["totalCitas"];
+	$mostrando = sizeof($arrayCitas);
 	// $paginacion = Paginacion::pnt($modulo, sizeof($arrayClientes), $init, $size);
 	// $paginacion != null ? $inicio = $paginacion['inicio'] : null ;
 	// $clientes = array_slice($arrayClientes, $inicio, $size);
 ?>
-
-<h2 class="title">Citas</h2>
+<div class="title">
+	<h2>Agenda</h2>
+</div>
 
 <?php if($cargo >= 1) { ?>
 <div class="C__Table">
@@ -30,6 +33,9 @@
 			<input type="button" id="citaBtn-s" class="btn" value=" + Nueva">
 			<input type="button" id="posponerBtn-s" class="btn" value="Posponer" disabled>
 			<input type="button" id="cancelarBtn-s" class="btn" value="Cancelar" disabled>
+		</div>
+		<div class="C__Btn">
+			<span class="results" id="results"><?=$mostrando?> resultados de <?=$totalCitas?></span>
 		</div>
 		<div class="C__Btn__Last">
 			<input class="search" type="text" id="citaBtn-b" name="citaBtn-b" placeholder="Buscar Paciente">
@@ -54,7 +60,7 @@
 			</td>
 			<td id="<?=$value["idCita"]?>" name="checkCita"><?=$value["nombre"].' '.$value["apellidos"]?>
 			</td>
-			<td id="<?=$value["idCita"]?>" name="checkCita"><?=$value["fechaCita"]?></td>
+			<td id="<?=$value["idCita"]?>" name="checkCita"><?=$value["fechaCi"]?></td>
 			<td id="<?=$value["idCita"]?>" name="checkCita"><?=$value["telefono"]?></td>
 			<td id="<?=$value["idCita"]?>" name="checkCita">
 				<input type="button" name="citaBtn-C" class="btn" value="Confirmar">

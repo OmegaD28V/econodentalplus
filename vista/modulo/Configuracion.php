@@ -27,3 +27,18 @@
 <div class="title">
 	<h2>Configuración</h2>
 </div>
+
+<div class="C__Table center">
+	<div class="Bar__Btns column w70">
+		<span class="Lbl__Bar">Información Personal</span>
+		<div class="C__Btn">
+			<a href="MisDatos" id="historiaBtn-d" class="btn">Mis Datos</a>
+		</div>
+	</div>
+	<div class="Bar__Btns column w70">
+		<span class="Lbl__Bar">Seguridad</span>
+		<div class="C__Btn">
+			<a href="index.php?pagina=HistoriaMedica&type-doc=generar" id="historiaBtn-d" class="btn">Cambiar Contraseña</a>
+		</div>
+	</div>
+</div>

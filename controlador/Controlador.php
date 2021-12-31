@@ -16,63 +16,63 @@
 			include $respuesta;
 		}
 
-		#Seleccionar correo electrónico del cliente o usuario para editar.
-		public function seleccionarCorreoCtl($correoId){
-			$respuesta = CRUD::seleccionarCorreoBD($correoId);
+		#Seleccionar correo electrónico del paciente o usuario para editar.
+		public function selCorreoCtl($idCorreo){
+			$respuesta = CRUD::selCorreoBD($idCorreo);
 			return $respuesta;
 		}
 		
-		#Seleccionar teléfono del cliente o usuario para editar.
-		public function seleccionarTelefonoCtl($telefonoId){
-			$respuesta = CRUD::seleccionarTelefonoBD($telefonoId);
+		#Seleccionar teléfono del paciente o usuario para editar.
+		public function selTelefonoCtl($idTelefono){
+			$respuesta = CRUD::selTelefonoBD($idTelefono);
 			return $respuesta;
 		}
 
-		#Seleccionar domicili del cliente o usuario para editar.
-		public function seleccionarDomicilioCtl($domicilioId){
-			$respuesta = CRUD::seleccionarDomicilioBD($domicilioId);
+		#Seleccionar domicili del paciente o usuario para editar.
+		public function selDomicilioCtl($idDomicilio){
+			$respuesta = CRUD::selDomicilioBD($idDomicilio);
 			return $respuesta;
 		}
 
-		#Seleccionar todos los correos electrónicos del cliente o usuario.
-		public function seleccionarCorreosCtl($clienteId){
-			$respuesta = CRUD::seleccionarCorreosBD($clienteId);
+		#Seleccionar todos los correos electrónicos del paciente o usuario.
+		public function selCorreosCtl($idPersona){
+			$respuesta = CRUD::selCorreosBD($idPersona);
 			return $respuesta;
 		}
 		
-		#Seleccionar todos los teléfonos del cliente o usuario.
-		public function seleccionarTelefonosCtl($clienteId){
-			$respuesta = CRUD::seleccionarTelefonosBD($clienteId);
+		#Seleccionar todos los teléfonos del paciente o usuario.
+		public function selTelefonosCtl($idPersona){
+			$respuesta = CRUD::selTelefonosBD($idPersona);
 			return $respuesta;
 		}
 		
-		#Seleccionar todos los domicilios del cliente o usuario.
-		public function seleccionarDomiciliosCtl($clienteId){
-			$respuesta = CRUD::seleccionarDomiciliosBD($clienteId);
+		#Seleccionar todos los domicilios del paciente o usuario.
+		public function selDomiciliosCtl($idPersona){
+			$respuesta = CRUD::selDomiciliosBD($idPersona);
 			return $respuesta;
 		}
 		
 		#Agregar nuevo correo electrónico.
 		public function nuevoCorreoCtl(){
 			if (
-				isset($_POST["correo-new"]) && 
-				isset($_POST["add-email-id"])
+				isset($_POST["correo-n"]) && 
+				isset($_POST["correoIdPersona-n"])
 			) {
-				if (Validacion::correosElectronicos($_POST["correo-new"], 30)) {
-					$datosCorreoCliente = array(
-						"personaId" => $_POST["add-email-id"], 
-						"correo" => $_POST["correo-new"]
+				if (Validacion::correosElectronicos($_POST["correo-n"], 30)) {
+					$datosCorreo = array(
+						"idPersona" => $_POST["correoIdPersona-n"], 
+						"correo" => $_POST["correo-n"]
 					);
-					$hayCorreos = CRUD::hayCorreosBD($datosCorreoCliente["personaId"]);
-					$hayCorreos["correos"] == 0 ? $status = 2 : $status = 1;
-					$respuesta = CRUD::nuevoCorreoBD($datosCorreoCliente, $status);
+					$hayCorreos = CRUD::hayCorreosBD($datosCorreo["idPersona"]);
+					$hayCorreos["correos"] == 0 ? $estado = 2 : $estado = 1;
+					$respuesta = CRUD::nuevoCorreoBD($datosCorreo, $estado);
 					if ($respuesta == true) {
-						echo '<script>toast("Correo electrónico agregado correctamente!");</script>';
+						echo '<script>toast("Correo electrónico guardado!");</script>';
 					} else {
-						echo '<script>toast("Error al agregar el correo electrónico.");</script>';
+						echo '<script>toast("Ocurrió un error al guardar el correo electrónico.");</script>';
 					}
 				} else {
-					echo '<script>toast("No válido usa el formato nombre@ejemplo.com");</script>';
+					echo '<script>toast("Correo electrónico no válido, ejemplo: Alguien@ejemplo.com");</script>';
 				}
 			}
 		}
@@ -156,7 +156,7 @@
 		}
 
 		#Actualizar el correo electrónico.
-		public function actualizarCorreoCtl($userId){
+		public function actualizarCorreoCtl($idPersona){
 			if (isset($_POST["correo-edit"]) && isset($_POST["correo-id-edit"])) {
 				if (Validacion::correosElectronicos($_POST["correo-edit"], 30)) {
 					$datosCorreoCliente = array (
@@ -171,13 +171,13 @@
 						echo '<script>toast("No se pudo actualizar el correo electrónico, revise sus datos");</script>';
 					}
 				} else {
-					echo '<script>toast("No válido usa el formato nombre@ejemplo.com");</script>';
+					echo '<script>toast("No válido usa el formato Alguien@ejemplo.com");</script>';
 				}
 			}
 		}
 
 		#Actualizar el teléfono.
-		public function actualizarTelefonoCtl($userId){
+		public function actualizarTelefonoCtl($idPersona){
 			if (
 				isset($_POST["telefono-edit"]) && 
 				isset($_POST["tipotelefono-edit"]) && 
@@ -203,7 +203,7 @@
 		}
 		
 		#Actualizar el domicilio.
-		public function actualizarDomicilioCtl($userId){
+		public function actualizarDomicilioCtl($idPersona){
 			if (
 				isset($_POST["domicilio-estado-edit"]) && 
 				isset($_POST["domicilio-municipio-edit"]) && 
@@ -253,11 +253,11 @@
 		}
 		
 		#Deshabilitar uno o más correos electrónicos de clientes o usuarios.
-		public function eliminarCorreosCtl($correosEliminar){
+		public function eliminarCorreosCtl($correos){
 			$respuestas = array();
 			$conclusion = true;
-			for ($i = 0; $i < sizeof($correosEliminar); $i++) {
-				$respuesta = CRUD::eliminarCorreoBD($correosEliminar[$i]);
+			for ($i = 0; $i < sizeof($correos); $i++) {
+				$respuesta = CRUD::eliminarCorreoBD($correos[$i]);
 				if ($respuesta == false) {
 					$respuestas[$i] = false;
 				}
@@ -272,11 +272,11 @@
 		}
 		
 		#Deshabilitar uno o más teléfonos de clientes o usuarios.
-		public function eliminarTelefonosCtl($telefonosEliminar){
+		public function eliminarTelefonosCtl($telefonos){
 			$respuestas = array();
 			$conclusion = true;
-			for ($i = 0; $i < sizeof($telefonosEliminar); $i++) {
-				$respuesta = CRUD::eliminarTelefonoBD($telefonosEliminar[$i]);
+			for ($i = 0; $i < sizeof($telefonos); $i++) {
+				$respuesta = CRUD::eliminarTelefonoBD($telefonos[$i]);
 				if ($respuesta == false) {
 					$respuestas[$i] = false;
 				}
@@ -291,11 +291,11 @@
 		}
 		
 		#Deshabilitar uno o más domicilios de clientes o usuarios.
-		public function eliminarDomiciliosCtl($domiciliosEliminar){
+		public function eliminarDomiciliosCtl($domicilios){
 			$respuestas = array();
 			$conclusion = true;
-			for ($i = 0; $i < sizeof($domiciliosEliminar); $i++) {
-				$respuesta = CRUD::eliminarDomicilioBD($domiciliosEliminar[$i]);
+			for ($i = 0; $i < sizeof($domicilios); $i++) {
+				$respuesta = CRUD::eliminarDomicilioBD($domicilios[$i]);
 				if ($respuesta == false) {
 					$respuestas[$i] = false;
 				}
@@ -310,8 +310,8 @@
 		}
 
 		#Establecer información de contacto de cliente o ususario como principal.
-		public function asMainElementCtl($elementId, $tabla) {
-			$respuesta = CRUD::asMainElementBD($elementId, $tabla);
+		public function asMainElementCtl($idElemento, $tabla) {
+			$respuesta = CRUD::asMainElementBD($idElemento, $tabla);
 			return $respuesta;
 		}
 	}

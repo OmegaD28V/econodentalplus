@@ -15,10 +15,5 @@
 	require_once 'controlador/HTMLToDoc.php';
 	// require_once 'controlador/MainInfo.php';
 	// require_once 'controlador/Paginacion.php';
-
-	if(isset($_GET["pagina"])) {
-		if ($_GET["pagina"] == "HistoriaMedica") {
-		}
-	}
 	$controlador = new Controlador();
 	$controlador -> getPlantilla();

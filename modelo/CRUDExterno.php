@@ -16,10 +16,11 @@
 					:nombre, :apellidos, :telefono, :fechaCita, now(), 1
 				)"
 			);
+			$tiempo = $datosCita["fecha"]." ".$datosCita["hora"];
 			$sql -> bindParam(':nombre', $datosCita["nombre"], PDO::PARAM_STR);
 			$sql -> bindParam(':apellidos', $datosCita["apellidos"], PDO::PARAM_STR);
 			$sql -> bindParam(':telefono', $datosCita["telefono"], PDO::PARAM_STR);
-			$sql -> bindParam(':fechaCita', $datosCita["tiempo"]);
+			$sql -> bindParam(':fechaCita', $tiempo);
 			if ($sql -> execute()) {
 				return true;
 			} else {

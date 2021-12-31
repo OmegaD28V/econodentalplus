@@ -131,7 +131,8 @@ class All {
 			Validaciones.nombresPropios(document.getElementById('citaNombre-n'), 2, 30);
 			Validaciones.nombresPropios(document.getElementById('citaApellidos-n'), 2, 50);
 			Validaciones.enterosSinIntervalo(document.getElementById('citaTelefono-n'), 10);
-			Validaciones.fechas(document.getElementById('citaTiempo-n'), 1);
+			Validaciones.fechas(document.getElementById('citaFecha-n'), 1);
+			Validaciones.horas(document.getElementById('citaHora-n'), "10:00", "18:30");
 		} else if (pagina == 'Usuarios') {
 			Interactividad.interactFormModal(
 				document.querySelector('#usuarioNBtn-s'), 
@@ -249,6 +250,25 @@ class All {
 				document.getElementById('usuarioEForm'), 
 				'eliminarUsuarios', 
 				'Usuarios'
+			);
+		} else if (pagina == 'Configuracion') {
+			Validaciones.correosElectronicos(document.getElementById('correo-n'), 30);
+			Interactividad.interactFormModal(
+				document.querySelector('#correoNBtn-s'), 
+				document.querySelector('#correoNBtn-x'), 
+				document.querySelector('#correoNForm')
+			);
+			
+			Interactividad.interactFormModal(
+				document.querySelector('#correoABtn-s'), 
+				document.querySelector('#correoABtn-x'), 
+				document.querySelector('#correoAForm')
+			);
+			
+			Interactividad.interactFormModal(
+				document.querySelector('#correoEBtn-s'), 
+				document.querySelector('#correoEBtn-x'), 
+				document.querySelector('#correoEForm')
 			);
 		}
 	}

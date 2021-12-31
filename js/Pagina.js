@@ -11,7 +11,8 @@ export default class Pagina {
 			'Cita' : "Cita", 
 			'Agenda' : "Agenda", 
 			'Usuarios' : "Usuarios", 
-			'HistoriaMedica' : "HistoriaMedica", 
+			'MisDatos' : "Configuracion", 
+			'HistoriaMedica' : "Inicio", 
 			'Configuracion' : "Configuracion", 
 			'Salir' : "Salir", 
 			'Error' : "Error"

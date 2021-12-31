@@ -1,7 +1,7 @@
 <?php 
 	session_start();
 	date_default_timezone_set('America/Mexico_City');
-	$page;
+	$page = '';
 	if (isset($_GET["pagina"])) {
 		$page = $_GET["pagina"];
 	}

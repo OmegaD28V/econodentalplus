@@ -4,6 +4,9 @@ export default class Interactividad {
 			for (const i of btnC) {
 				i.addEventListener('click', () => {
 					console.log(i.parentElement.getAttribute('id'));
+					// Crear paciente nuevo en la base de datos.
+					// Crear la tabla expediente y normalizar.
+					// Para iniciar el expediente, llenar en forma física y digital el formato de Historia Medica ECO.docx
 				});
 			}
 		}

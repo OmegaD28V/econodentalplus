@@ -48,7 +48,7 @@ export default class Validaciones {
 	static correosElectronicos(input, max) {
 		if (input) {
 			let regExp = new RegExp("^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$");
-			let text = "Debe conincidir con el formato: nombre@ejemplo.com";
+			let text = "Debe conincidir con el formato: Alguien@ejemplo.com";
 			Validaciones.validarCampo(input, regExp, max, text);
 		}
 	}
@@ -91,9 +91,36 @@ export default class Validaciones {
 				input.classList.remove('yeah');
 				message.remove();
 				let d = new Date();
-				let fechaActual = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + (d.getDate() + min)).slice(-2) + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+				let fechaActual = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + (d.getDate() + min)).slice(-2);
+				// let fechaActual = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + (d.getDate() + min)).slice(-2) + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
 				console.log(fechaActual);
+				console.log(input.value);
 				if (input.value < fechaActual) {
+					input.classList.add('noug');
+					input.value = null;
+					input.parentElement.appendChild(message);
+				} else {
+					input.classList.add('yeah');
+				}
+			})
+			// let text = "Solo letras y espacios.";
+			// Validaciones.validarCampo(input, regExp, max, text);
+		}
+	}
+	
+	static horas(input, min, max) {
+		if (input) {
+			let message = document.createElement('div');
+			message.setAttribute('class', 'message');
+			message.innerText = 'Hora inválida.';
+			input.addEventListener('change', () => {
+				input.classList.remove('noug');
+				input.classList.remove('yeah');
+				message.remove();
+				console.log(min);
+				console.log(max);
+				console.log(input.value);
+				if (input.value < min || input.value > max) {
 					input.classList.add('noug');
 					input.value = null;
 					input.parentElement.appendChild(message);

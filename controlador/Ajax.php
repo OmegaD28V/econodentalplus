@@ -1,7 +1,7 @@
 <?php 
-	// require_once '../modelo/CRUD.php';
+	require_once '../modelo/CRUD.php';
 	require_once '../modelo/CRUDUsuario.php';
-	// require_once 'Controlador.php';
+	require_once 'Controlador.php';
 	require_once 'ControladorUsuario.php';
 	require_once '../modelo/CRUDAgenda.php';
 	require_once 'ControladorAgenda.php';
@@ -10,7 +10,6 @@
 		public $cancelarCitas;
 		public $datosCita;
 		public $datosUsuario;
-		// public $requestClientDataEdit;
 		// public $requestPetDataEdit;
 		// public $asMain;
 
@@ -96,24 +95,24 @@
 		// 	echo json_encode($respuesta);
 		// }
 
-		// #Seleccionar correo electrónico del cliente para editar.
-		// public function seleccionarCorreoAjax(){
-		// 	$requestCD = $this -> requestClientDataEdit;
-		// 	$respuesta = Controlador::seleccionarCorreoCtl($requestCD);
-		// 	echo json_encode($respuesta);
-		// }
+		#Seleccionar correo electrónico para editar.
+		public function selCorreoAjax(){
+			$datos = $this -> datosUsuario;
+			$respuesta = Controlador::selCorreoCtl($datos);
+			echo json_encode($respuesta);
+		}
 		
-		// #Seleccionar teléfono del cliente para editar.
-		// public function seleccionarTelefonoAjax(){
-		// 	$requestCD = $this -> requestClientDataEdit;
-		// 	$respuesta = Controlador::seleccionarTelefonoCtl($requestCD);
-		// 	echo json_encode($respuesta);
-		// }
+		#Seleccionar teléfono para editar.
+		public function selTelefonoAjax(){
+			$datos = $this -> datosUsuario;
+			$respuesta = Controlador::selTelefonoCtl($datos);
+			echo json_encode($respuesta);
+		}
 		
 		// #Seleccionar domicilio del cliente para editar.
 		// public function seleccionarDomicilioAjax(){
-		// 	$requestCD = $this -> requestClientDataEdit;
-		// 	$respuesta = Controlador::seleccionarDomicilioCtl($requestCD);
+		// 	$datos = $this -> datosUsuario;
+		// 	$respuesta = Controlador::seleccionarDomicilioCtl($datos);
 		// 	echo json_encode($respuesta);
 		// }
 
@@ -253,25 +252,25 @@
 	
 	// if (isset($_POST["estado-usuarios"])) {
 	// 	$objEstadoUsuarios = new Ajax();
-	// 	$objEstadoUsuarios -> seleccionarConexionUsuariosAjax();
+	// 	$objEstadoUsuarios -> selConexionUsuariosAjax();
 	// }
 	
-	// if (isset($_POST["correo-id-edit"])) {
-	// 	$objRequestClientDataEdit = new Ajax();
-	// 	$objRequestClientDataEdit -> requestClientDataEdit = $_POST["correo-id-edit"];
-	// 	$objRequestClientDataEdit -> seleccionarCorreoAjax();
-	// }
+	if (isset($_POST["correoABtn-s"])) {
+		$objUserDataEdit = new Ajax();
+		$objUserDataEdit -> datosUsuario = $_POST["correoABtn-s"];
+		$objUserDataEdit -> selCorreoAjax();
+	}
 	
-	// if (isset($_POST["phone-id-edit"])) {
-	// 	$objRequestClientDataEdit = new Ajax();
-	// 	$objRequestClientDataEdit -> requestClientDataEdit = $_POST["phone-id-edit"];
-	// 	$objRequestClientDataEdit -> seleccionarTelefonoAjax();
-	// }
+	if (isset($_POST["telefonoABtn-s"])) {
+		$objUserDataEdit = new Ajax();
+		$objUserDataEdit -> datosUsuario = $_POST["telefonoABtn-s"];
+		$objUserDataEdit -> selTelefonoAjax();
+	}
 	
 	// if (isset($_POST["address-id-edit"])) {
-	// 	$objRequestClientDataEdit = new Ajax();
-	// 	$objRequestClientDataEdit -> requestClientDataEdit = $_POST["address-id-edit"];
-	// 	$objRequestClientDataEdit -> seleccionarDomicilioAjax();
+	// 	$objUserDataEdit = new Ajax();
+	// 	$objUserDataEdit -> datosUsuario = $_POST["address-id-edit"];
+	// 	$objUserDataEdit -> selDomicilioAjax();
 	// }
 	
 	// if (isset($_POST["clienteId-edit"])) {
@@ -295,31 +294,31 @@
 	// if (isset($_POST["petId-edit"])) {
 	// 	$petEdit = new Ajax();
 	// 	$petEdit -> requestPetDataEdit = $_POST["petId-edit"];
-	// 	$petEdit -> seleccionarMascotaAjax();
+	// 	$petEdit -> selMascotaAjax();
 	// }
 	
 	// if (isset($_POST["jaulaId-edit"])) {
 	// 	$objJaulaEdit = new Ajax();
 	// 	$objJaulaEdit -> requestPetDataEdit = $_POST["jaulaId-edit"];
-	// 	$objJaulaEdit -> seleccionarJaulaAjax();
+	// 	$objJaulaEdit -> selJaulaAjax();
 	// }
 	
 	// if (isset($_POST["razaId-edit"])) {
 	// 	$objRazaEdit = new Ajax();
 	// 	$objRazaEdit -> requestPetDataEdit = $_POST["razaId-edit"];
-	// 	$objRazaEdit -> seleccionarDatosRazaAjax();
+	// 	$objRazaEdit -> selDatosRazaAjax();
 	// }
 	
 	// if (isset($_POST["graficaMascota"])) {
 	// 	$objGrafica = new Ajax();
 	// 	$objGrafica -> grafica = $_POST["graficaMascota"];
-	// 	$objGrafica -> seleccionarAtributosAjax();
+	// 	$objGrafica -> selAtributosAjax();
 	// }
 	
 	// if (isset($_POST["select-raza"])) {
 	// 	$objSelectRaza = new Ajax();
 	// 	$objSelectRaza -> selectRaza = $_POST["select-raza"];
-	// 	$objSelectRaza -> seleccionarRazasByEspecieAjax();
+	// 	$objSelectRaza -> selRazasByEspecieAjax();
 	// }
 	
 	// if (isset($_POST["asmain-email"])) {

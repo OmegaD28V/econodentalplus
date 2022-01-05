@@ -13,6 +13,7 @@
 	require_once 'controlador/Validacion.php';
 	require_once 'controlador/Pic.php';
 	require_once 'controlador/HTMLToDoc.php';
+	require_once 'data/DataArrays.php';
 	// require_once 'controlador/MainInfo.php';
 	// require_once 'controlador/Paginacion.php';
 	$controlador = new Controlador();

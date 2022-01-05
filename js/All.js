@@ -133,6 +133,7 @@ class All {
 			Validaciones.enterosSinIntervalo(document.getElementById('citaTelefono-n'), 10);
 			Validaciones.fechas(document.getElementById('citaFecha-n'), 1);
 			Validaciones.horas(document.getElementById('citaHora-n'), "10:00", "18:30");
+			Interactividad.ajuste();
 		} else if (pagina == 'Usuarios') {
 			Interactividad.interactFormModal(
 				document.querySelector('#usuarioNBtn-s'), 
@@ -259,17 +260,98 @@ class All {
 				document.querySelector('#correoNForm')
 			);
 			
-			Interactividad.interactFormModal(
-				document.querySelector('#correoABtn-s'), 
+			Interactividad.formModal(
+				document.getElementsByName('correoABtn-s'), 
 				document.querySelector('#correoABtn-x'), 
-				document.querySelector('#correoAForm')
+				document.querySelector('#correoAForm'), 
+				(element) => {
+					JQueryAcciones.editFormModal(element, (datosCorreo) => {
+						$('#correo-a').val(datosCorreo["correo"]);
+						$('#correoId-a').val(datosCorreo["idUsuarioCorreo"]);
+					});
+				}
 			);
 			
-			Interactividad.interactFormModal(
-				document.querySelector('#correoEBtn-s'), 
+			Interactividad.formModal(
+				document.getElementsByName('correoEBtn-s'), 
 				document.querySelector('#correoEBtn-x'), 
-				document.querySelector('#correoEForm')
+				document.querySelector('#correoEForm'), 
+				(element) => {
+					JQueryAcciones.editFormModal(element, (datosCorreo) => {
+						$('#correoId-e').val(datosCorreo["idUsuarioCorreo"]);
+					});
+				}
 			);
+			
+			Validaciones.enterosSinIntervalo(document.getElementById('telNumero-n'), 10);
+			Interactividad.interactFormModal(
+				document.querySelector('#telefonoNBtn-s'), 
+				document.querySelector('#telefonoNBtn-x'), 
+				document.querySelector('#telefonoNForm')
+			);
+			
+			Interactividad.formModal(
+				document.getElementsByName('telefonoABtn-s'), 
+				document.querySelector('#telefonoABtn-x'), 
+				document.querySelector('#telefonoAForm'), 
+				(element) => {
+					JQueryAcciones.editFormModal(element, (datosTelefono) => {
+						$('#telNumero-a').val(datosTelefono["numero"]);
+						$('#telId-a').val(datosTelefono["idUsuarioTelefono"]);
+						for (const i of $('#telTipo-a')[0].options) {
+							i.value == datosTelefono["tipoTelefono"] ? i.selected = true : null;
+						}
+					});
+				}
+			);
+			
+			Interactividad.formModal(
+				document.getElementsByName('telefonoEBtn-s'), 
+				document.querySelector('#telefonoEBtn-x'), 
+				document.querySelector('#telefonoEForm'), 
+				(element) => {
+					console.log(element);
+					JQueryAcciones.editFormModal(element, (datosTelefono) => {
+						$('#telId-e').val(datosTelefono["idUsuarioTelefono"]);
+					});
+				}
+			);
+			
+			// Validaciones.enterosSinIntervalo(document.getElementById('telNumero-n'), 10);
+			Interactividad.interactFormModal(
+				document.querySelector('#domicilioNBtn-s'), 
+				document.querySelector('#domicilioNBtn-x'), 
+				document.querySelector('#domicilioNForm')
+			);
+			
+			// Interactividad.formModal(
+			// 	document.getElementsByName('domicilioABtn-s'), 
+			// 	document.querySelector('#domicilioABtn-x'), 
+			// 	document.querySelector('#domicilioAForm'), 
+			// 	(element) => {
+			// 		JQueryAcciones.editFormModal(element, (datosTelefono) => {
+			// 			$('#telNumero-a').val(datosTelefono["numero"]);
+			// 			$('#telId-a').val(datosTelefono["idUsuarioTelefono"]);
+			// 			for (const i of $('#telTipo-a')[0].options) {
+			// 				i.value == datosTelefono["tipoTelefono"] ? i.selected = true : null;
+			// 			}
+			// 		});
+			// 	}
+			// );
+			
+			// Interactividad.formModal(
+			// 	document.getElementsByName('domicilioEBtn-s'), 
+			// 	document.querySelector('#domicilioEBtn-x'), 
+			// 	document.querySelector('#domicilioEForm'), 
+			// 	(element) => {
+			// 		console.log(element);
+			// 		JQueryAcciones.editFormModal(element, (datosTelefono) => {
+			// 			$('#telId-e').val(datosTelefono["idUsuarioTelefono"]);
+			// 		});
+			// 	}
+			// );
+		} else if (pagina == 'IniciarSesion') {
+			Interactividad.ajuste();
 		}
 	}
 }

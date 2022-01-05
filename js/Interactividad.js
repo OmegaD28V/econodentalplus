@@ -1,4 +1,10 @@
+import JQueryAcciones from "./JQueryAcciones.js";
+
 export default class Interactividad {
+	static ajuste() {
+		document.querySelector('main').classList.add('ajuste');
+	}
+	
 	static confirmarCita(btnC) {
 		if (btnC) {
 			for (const i of btnC) {
@@ -36,6 +42,21 @@ export default class Interactividad {
 			buttonShow.addEventListener('click', () => {
 				form.classList.remove('oculto');
 				$('body, html').animate({scrollTop: '0px'}, 300);
+			});
+			buttonHide.addEventListener('click', () => {
+				form.classList.add('oculto');
+			});
+		}
+	}
+
+	static formModal (buttonsShow, buttonHide, form, callback) {
+		if (buttonsShow && buttonHide && form) {
+			buttonsShow.forEach( element => {
+				element.addEventListener('click', () => {
+					form.classList.remove('oculto');
+					$('body, html').animate({screenTop: '0px'}, 300);
+					callback(element.getAttribute('id'));
+				});
 			});
 			buttonHide.addEventListener('click', () => {
 				form.classList.add('oculto');

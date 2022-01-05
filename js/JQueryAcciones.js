@@ -180,6 +180,34 @@ export default class JQueryAcciones {
 	static removeElementsChoosen () {
 		document.getElementById('container-elements-choosen').remove();
 	}
+
+	static editFormModal (element, callback) {
+		let e = $('#' + element);
+		if (e) {
+			let recordId = e.attr('id');
+			let nameRequest = e.attr('name');
+			let formData = new FormData();
+			formData.append(nameRequest, recordId);
+			console.log(nameRequest);
+
+			$.ajax({
+				url: 'controlador/Ajax.php', 
+				method: 'post', 
+				data: formData, 
+				cache: false, 
+				contentType: false, 
+				processData: false, 
+				dataType: 'json', 
+				success: function (response) {
+					if (response) {
+						callback(response);
+					} else {
+						callback('Sin resultado');
+					}
+				}
+			});
+		}
+	}
 	
 	static editForm (btnShowFormEdit, checkElement, inputId, callback) {
 		if (btnShowFormEdit) {

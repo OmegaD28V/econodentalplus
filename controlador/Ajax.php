@@ -109,12 +109,12 @@
 			echo json_encode($respuesta);
 		}
 		
-		// #Seleccionar domicilio del cliente para editar.
-		// public function seleccionarDomicilioAjax(){
-		// 	$datos = $this -> datosUsuario;
-		// 	$respuesta = Controlador::seleccionarDomicilioCtl($datos);
-		// 	echo json_encode($respuesta);
-		// }
+		#Seleccionar domicilio del cliente para editar.
+		public function selDomicilioAjax(){
+			$datos = $this -> datosUsuario;
+			$respuesta = Controlador::selDomicilioCtl($datos);
+			echo json_encode($respuesta);
+		}
 
 		// #Seleccionar mascota para editar.
 		// public function seleccionarMascotaAjax(){
@@ -267,11 +267,29 @@
 		$objUserDataEdit -> selTelefonoAjax();
 	}
 	
-	// if (isset($_POST["address-id-edit"])) {
-	// 	$objUserDataEdit = new Ajax();
-	// 	$objUserDataEdit -> datosUsuario = $_POST["address-id-edit"];
-	// 	$objUserDataEdit -> selDomicilioAjax();
-	// }
+	if (isset($_POST["domicilioABtn-s"])) {
+		$objUserDataEdit = new Ajax();
+		$objUserDataEdit -> datosUsuario = $_POST["domicilioABtn-s"];
+		$objUserDataEdit -> selDomicilioAjax();
+	}
+	
+	if (isset($_POST["correoEBtn-s"])) {
+		$objUserDataEdit = new Ajax();
+		$objUserDataEdit -> datosUsuario = $_POST["correoEBtn-s"];
+		$objUserDataEdit -> selCorreoAjax();
+	}
+	
+	if (isset($_POST["telefonoEBtn-s"])) {
+		$objUserDataEdit = new Ajax();
+		$objUserDataEdit -> datosUsuario = $_POST["telefonoEBtn-s"];
+		$objUserDataEdit -> selTelefonoAjax();
+	}
+	
+	if (isset($_POST["domicilioEBtn-s"])) {
+		$objUserDataEdit = new Ajax();
+		$objUserDataEdit -> datosUsuario = $_POST["domicilioEBtn-s"];
+		$objUserDataEdit -> selDomicilioAjax();
+	}
 	
 	// if (isset($_POST["clienteId-edit"])) {
 	// 	$objRequestClientEdit = new Ajax();

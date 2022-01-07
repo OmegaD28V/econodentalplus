@@ -32,6 +32,9 @@
 			<link rel="stylesheet" href="css/Estilos.css">
 		<?php endif ?>
 
+		<!-- API Google Places -->
+		<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+
 		<!-- Notificaciones -->
 		<script src="js/Notificaciones.js"></script>
 	</head>

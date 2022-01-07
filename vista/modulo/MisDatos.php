@@ -13,18 +13,24 @@
 </div>
 
 <div class="C__Table center">
+	<div class="info msg w70">
+		<span>Elemento principal(<b class="principal">*</b>)</span>
+	</div>
 	<div class="Bar__Btns column w70">
 		<span class="subtitle center">Teléfono</span>
 		<div class="C__Btn">
 			<input type="button" id="telefonoNBtn-s" class="btn" value=" + Agregar teléfono">
 		</div>
 		<?php if (!$telefonos) : ?>
-			<div class="nodata"><span>No hay teléfonos registrados</span></div>
+			<div class="info nodata"><span>No hay teléfonos registrados</span></div>
 		<?php else : foreach ($telefonos as $key => $value) : ?>
-		<?php $value["estado"] == 2 ? $eTel = "(Principal)" : $eTel = ""; ?>
+		<?php $value["estado"] == 2 ? $eTel = "*" : $eTel = ""; ?>
 			<div class="lista">
 				<div class="listaItem">
-					<span><?=$value["numero"]." ".$eTel?></span>
+					<div>
+						<b class="principal"><?=$eTel?></b>
+						<span><?=$value["numero"]?></span>
+					</div>
 					<div>
 						<input class="btn link" id="<?=$value["idUsuarioTelefono"]?>" name="telefonoABtn-s" type="button" value="Actualizar">
 						<input class="btn link" id="<?=$value["idUsuarioTelefono"]?>" name="telefonoEBtn-s" type="button" value="Eliminar">
@@ -40,12 +46,15 @@
 			<input type="button" id="correoNBtn-s" class="btn" value=" + Agregar Correo electrónico">
 		</div>
 		<?php if (!$correos) :  ?>
-			<div class="nodata"><span>No hay Correos electrónicos registrados</span></div>
+			<div class="info nodata"><span>No hay Correos electrónicos registrados</span></div>
 		<?php else : foreach ($correos as $key => $value) : ?>
-		<?php $value["estado"] == 2 ? $eCorreo = "(Principal)" : $eCorreo = "" ?>
+		<?php $value["estado"] == 2 ? $eCorreo = "*" : $eCorreo = "" ?>
 			<div class="lista">
 				<div class="listaItem">
-					<span><?=$value["correo"]." ".$eCorreo?></span>
+					<div>
+						<b class="principal"><?=$eCorreo?></b>
+						<span><?=$value["correo"]?></span>
+					</div>
 					<div>
 						<input class="btn link" id="<?=$value["idUsuarioCorreo"]?>" name="correoABtn-s" type="button" value="Actualizar">
 						<input class="btn link" id="<?=$value["idUsuarioCorreo"]?>" name="correoEBtn-s" type="button" value="Eliminar">
@@ -61,12 +70,21 @@
 			<input type="button" id="domicilioNBtn-s" class="btn" value=" + Agregar domicilio">
 		</div>
 		<?php if (!$domicilios) :  ?>
-			<div class="nodata"><span>No hay domicilios registrados</span></div>
+			<div class="info nodata"><span>No hay domicilios registrados</span></div>
 		<?php else : foreach ($domicilios as $key => $value) : ?>
-		<?php $value["estado"] == 2 ? $eDom = "(Principal)" : $eDom = "" ?>
+		<?php $value["estado"] == 2 ? $eDom = "*" : $eDom = "" ?>
+		<?php 
+			$domJSON = json_decode($value["domicilioJSON"]); 
+			$domicilio = $domJSON->calle.", ".
+				(!$domJSON->numExt ? 'S/N' : "#".$domJSON->numExt).", ".
+				$domJSON->colonia.", ".$domJSON->municipio.", ".$domJSON->estado;
+		?>
 			<div class="lista">
 				<div class="listaItem">
-					<span><?=$value["calle"]." ".$eDom?></span>
+					<div>
+						<b class="principal"><?=$eDom?></b>
+						<span><?=$domicilio?></span>
+					</div>
 					<div>
 						<input class="btn link" id="<?=$value["idUsuarioDomicilio"]?>" name="domicilioABtn-s" type="button" value="Actualizar">
 						<input class="btn link" id="<?=$value["idUsuarioDomicilio"]?>" name="domicilioEBtn-s" type="button" value="Eliminar">
@@ -118,6 +136,72 @@
 	</form>
 </div>
 
+<div class="C__f oculto" id="domicilioAForm">
+	<form method="post" class="f fBig">
+		<span class="f__x" id="domicilioABtn-x"></span>
+		<h2 class="f__title">Actualizar Domicilio</h2>
+		<div class="i__group">
+			<input class="textfield type="text" name="domUbicacion-a" id="domUbicacion-a">
+			<label class="labels" for="domUbicacion-a">Buscar Ubicación</label>
+		</div>
+		<div class="C__group">Ubicación
+			<div class="iflex">
+				<div class="i__group">
+					<input class="textfield" type="text" name="domEstado-a" id="domEstado-a" required>
+					<label class="labels" for="domEstado-a">Entidad Federativa</label>
+				</div>
+				<div class="i__group">
+					<input class="textfield" type="text" name="domMunicipio-a" id="domMunicipio-a" required>
+					<label class="labels" for="domMunicipio-a">Municipio</label>
+				</div>
+			</div>
+			<div class="iflex">
+				<div class="i__group">
+					<input class="textfield" type="text" name="domColonia-a" id="domColonia-a" required>
+					<label class="labels" for="domColonia-a">Colonia</label>
+				</div>
+			</div>
+			<div class="iflex">
+				<div class="i__group">
+					<input class="textfield" type="text" name="domCalle-a" id="domCalle-a" required>
+					<label class="labels" for="domCalle-a">Calle</label>
+				</div>
+			</div>
+			<div class="iflex">
+				<div class="i__group">
+					<input class="textfield" type="text" name="domNumExt-a" id="domNumExt-a" required>
+					<label class="labels" for="domNumExt-a">Número de casa o Exterior</label>
+				</div>
+				<div class="i__group">
+					<input class="textfield" type="text" name="domNumInt-a" id="domNumInt-a">
+					<label class="labels" for="domNumInt-a">Número de Departamiento o Interior</label>
+				</div>
+			</div>
+		</div>
+		<div class="C__group">Entre Calles
+			<div class="iflex">
+				<div class="i__group">
+					<input class="textfield" type="text" name="domCalle1-a" id="domCalle1-a">
+					<label class="labels" for="domCalle1-a">Calle 1</label>
+				</div>
+				<div class="i__group">
+					<input class="textfield" type="text" name="domCalle2-a" id="domCalle2-a">
+					<label class="labels" for="domCalle2-a">Calle 2</label>
+				</div>
+			</div>
+		</div>
+		<div class="i__group">
+			<input class="textfield" type="text" name="domRef-a" id="domRef-a" required>
+			<label class="labels" for="domRef-a">Indicaciones para llegar a su domicilio</label>
+		</div>
+		<div>
+			<input type="hidden" name="domId-a" id="domId-a" value="">
+			<input class="submit" type="submit" value="Guardar">
+			<?php Controlador::actualizarDomicilioCtl(); ?>
+		</div>
+	</form>
+</div>
+
 <div class="C__f oculto" id="telefonoEForm">
 	<form method="post" class="f">
 		<span class="f__x" id="telefonoEBtn-x"></span>
@@ -128,7 +212,7 @@
 		</div>
 		<div>
 			<input type="hidden" name="telId-e" id="telId-e" value="">
-			<input class="submit" type="submit" id="telefonoEBtn-C" value="Aceptar">
+			<input class="submit" type="submit" value="Aceptar">
 			<?php Controlador::eliminarTelefonoCtl(); ?>
 		</div>
 	</form>
@@ -158,7 +242,11 @@
 		<div class="i__group">
 			<span class="label-checkbox">¿Eliminar el domicilio seleccionado?</span>
 		</div>
-		<input class="submit" type="button" id="domicilioEBtn-C" value="Aceptar">
+		<div>
+			<input type="hidden" name="domId-e" id="domId-e" value="">
+			<input class="submit" type="submit" value="Aceptar">
+			<?php Controlador::eliminarDomicilioCtl(); ?>
+		</div>
 	</form>
 </div>
 
@@ -217,8 +305,8 @@
 					<label class="labels" for="domEstado-n">Entidad Federativa</label>
 				</div>
 				<div class="i__group">
-					<input class="textfield" type="text" name="domMinicipio-n" id="domMinicipio-n" required>
-					<label class="labels" for="domMinicipio-n">Municipio</label>
+					<input class="textfield" type="text" name="domMunicipio-n" id="domMunicipio-n" required>
+					<label class="labels" for="domMunicipio-n">Municipio</label>
 				</div>
 			</div>
 			<div class="iflex">
@@ -239,7 +327,7 @@
 					<label class="labels" for="domNumExt-n">Número de casa o Exterior</label>
 				</div>
 				<div class="i__group">
-					<input class="textfield" type="text" name="domNumInt-n" id="domNumInt-n" required>
+					<input class="textfield" type="text" name="domNumInt-n" id="domNumInt-n">
 					<label class="labels" for="domNumInt-n">Número de Departamiento o Interior</label>
 				</div>
 			</div>
@@ -247,11 +335,11 @@
 		<div class="C__group">Entre Calles
 			<div class="iflex">
 				<div class="i__group">
-					<input class="textfield" type="text" name="domCalle1-n" id="domCalle1-n" required>
+					<input class="textfield" type="text" name="domCalle1-n" id="domCalle1-n">
 					<label class="labels" for="domCalle1-n">Calle 1</label>
 				</div>
 				<div class="i__group">
-					<input class="textfield" type="text" name="domCalle2-n" id="domCalle2-n" required>
+					<input class="textfield" type="text" name="domCalle2-n" id="domCalle2-n">
 					<label class="labels" for="domCalle2-n">Calle 2</label>
 				</div>
 			</div>
@@ -263,7 +351,7 @@
 		<div>
 			<input type="hidden" name="domIdPersona-n" id="domIdPersona-n" value="<?=$idUsuario?>">
 			<input class="submit" type="submit" value="Guardar">
-			<?php //Controlador::nuevoCorreoCtl(); ?>
+			<?php Controlador::nuevoDomicilioCtl(); ?>
 		</div>
 	</form>
 </div>

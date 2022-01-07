@@ -117,7 +117,7 @@
 		static public function nuevoDomicilioCtl(){
 			if (
 				isset($_POST["domEstado-n"]) && 
-				isset($_POST["domicilio-municipio-n"]) && 
+				isset($_POST["domMunicipio-n"]) && 
 				isset($_POST["domColonia-n"]) && 
 				isset($_POST["domCalle-n"]) && 
 				isset($_POST["domNumExt-n"]) && 
@@ -129,7 +129,7 @@
 			) {
 				if (
 					Validacion::nombresPropiosNumerados($_POST["domEstado-n"], 2, 50) && 
-					Validacion::nombresPropiosNumerados($_POST["domicilio-municipio-n"], 2, 50) && 
+					Validacion::nombresPropiosNumerados($_POST["domMunicipio-n"], 2, 50) && 
 					Validacion::nombresPropiosNumerados($_POST["domColonia-n"], 2, 50) && 
 					Validacion::nombresPropiosNumerados($_POST["domCalle-n"], 2, 50) && 
 					Validacion::nombresPropiosNumerados($_POST["domCalle1-n"], 0, 25) && 
@@ -138,10 +138,10 @@
 					Validacion::enterosEnIntervalo($_POST["domNumInt-n"], 0, 5) && 
 					Validacion::descripciones($_POST["domRef-n"], 2, 50)
 				) {
+					$idPersona = $_POST["domIdPersona-n"];
 					$datosDomicilio = array(
-						"idPersona" => $_POST["domIdPersona-n"], 
 						"estado" => $_POST["domEstado-n"], 
-						"municipio" => $_POST["domicilio-municipio-n"], 
+						"municipio" => $_POST["domMunicipio-n"], 
 						"colonia" => $_POST["domColonia-n"], 
 						"calle" => $_POST["domCalle-n"], 
 						"numExt" => $_POST["domNumExt-n"], 
@@ -150,10 +150,11 @@
 						"calle2" => $_POST["domCalle2-n"], 
 						"referencia" => $_POST["domRef-n"]
 					);
-					$hayDomicilios = CRUD::hayDomiciliosBD($datosDomicilio["idPersona"]);
+					$domicilioJSON = json_encode($datosDomicilio);
+					$hayDomicilios = CRUD::hayDomiciliosBD($idPersona);
 					if ($hayDomicilios["domicilios"] < 2) {
 						$hayDomicilios["domicilios"] == 0 ? $status = 2 : $status = 1;
-						$respuesta = CRUD::nuevoDomicilioBD($datosDomicilio, $status);
+						$respuesta = CRUD::nuevoDomicilioBD($idPersona, $domicilioJSON, $status);
 						if ($respuesta) {
 							echo '<script>toast("¡Domicilio guardado!");</script>';
 						}else{
@@ -215,44 +216,44 @@
 		}
 		
 		#Actualizar el domicilio.
-		static public function actualizarDomicilioCtl($idPersona){
+		static public function actualizarDomicilioCtl(){
 			if (
-				isset($_POST["domicilio-estado-edit"]) && 
-				isset($_POST["domicilio-municipio-edit"]) && 
-				isset($_POST["domicilio-colonia-edit"]) && 
-				isset($_POST["domicilio-calle-edit"]) && 
-				isset($_POST["domicilio-numero-e-edit"]) && 
-				isset($_POST["domicilio-numero-i-edit"]) && 
-				isset($_POST["domicilio-calle1-edit"]) && 
-				isset($_POST["domicilio-calle2-edit"]) && 
-				isset($_POST["domicilio-referencia-edit"]) && 
-				isset($_POST["address-id-edit"])
+				isset($_POST["domEstado-a"]) && 
+				isset($_POST["domMunicipio-a"]) && 
+				isset($_POST["domColonia-a"]) && 
+				isset($_POST["domCalle-a"]) && 
+				isset($_POST["domNumExt-a"]) && 
+				isset($_POST["domNumInt-a"]) && 
+				isset($_POST["domCalle1-a"]) && 
+				isset($_POST["domCalle2-a"]) && 
+				isset($_POST["domRef-a"]) && 
+				isset($_POST["domId-a"])
 			) {
 				if (
-					Validacion::nombresPropiosNumerados($_POST["domicilio-estado-edit"], 2, 50) && 
-					Validacion::nombresPropiosNumerados($_POST["domicilio-municipio-edit"], 2, 50) && 
-					Validacion::nombresPropiosNumerados($_POST["domicilio-colonia-edit"], 2, 50) && 
-					Validacion::nombresPropiosNumerados($_POST["domicilio-calle-edit"], 2, 50) && 
-					Validacion::nombresPropiosNumerados($_POST["domicilio-calle1-edit"], 0, 25) && 
-					Validacion::nombresPropiosNumerados($_POST["domicilio-calle2-edit"], 0, 25) && 
-					Validacion::enterosEnIntervalo($_POST["domicilio-numero-e-edit"], 0, 5) && 
-					Validacion::enterosEnIntervalo($_POST["domicilio-numero-i-edit"], 0, 5) && 
-					Validacion::descripciones($_POST["domicilio-referencia-edit"], 2, 50)
+					Validacion::nombresPropiosNumerados($_POST["domEstado-a"], 2, 50) && 
+					Validacion::nombresPropiosNumerados($_POST["domMunicipio-a"], 2, 50) && 
+					Validacion::nombresPropiosNumerados($_POST["domColonia-a"], 2, 50) && 
+					Validacion::nombresPropiosNumerados($_POST["domCalle-a"], 2, 50) && 
+					Validacion::nombresPropiosNumerados($_POST["domCalle1-a"], 0, 25) && 
+					Validacion::nombresPropiosNumerados($_POST["domCalle2-a"], 0, 25) && 
+					Validacion::enterosEnIntervalo($_POST["domNumExt-a"], 0, 5) && 
+					Validacion::enterosEnIntervalo($_POST["domNumInt-a"], 0, 5) && 
+					Validacion::descripciones($_POST["domRef-a"], 2, 50)
 				) {
-					$datosDomicilioCliente = array(
-						"domicilioId" => $_POST["address-id-edit"], 
-						"estado" => $_POST["domicilio-estado-edit"], 
-						"municipio" => $_POST["domicilio-municipio-edit"], 
-						"colonia" => $_POST["domicilio-colonia-edit"], 
-						"calle" => $_POST["domicilio-calle-edit"], 
-						"numeroE" => $_POST["domicilio-numero-e-edit"], 
-						"numeroI" => $_POST["domicilio-numero-i-edit"], 
-						"calle1" => $_POST["domicilio-calle1-edit"], 
-						"calle2" => $_POST["domicilio-calle2-edit"], 
-						"referencia" => $_POST["domicilio-referencia-edit"], 
+					$idDomicilio = $_POST["domId-a"];
+					$datosDomicilio = array(
+						"estado" => $_POST["domEstado-a"], 
+						"municipio" => $_POST["domMunicipio-a"], 
+						"colonia" => $_POST["domColonia-a"], 
+						"calle" => $_POST["domCalle-a"], 
+						"numExt" => $_POST["domNumExt-a"], 
+						"numInt" => $_POST["domNumInt-a"], 
+						"calle1" => $_POST["domCalle1-a"], 
+						"calle2" => $_POST["domCalle2-a"], 
+						"referencia" => $_POST["domRef-a"]
 					);
-	
-					$respuesta = CRUD::actualizarDomicilioBD($datosDomicilioCliente);
+					$domicilioJSON = json_encode($datosDomicilio);
+					$respuesta = CRUD::actualizarDomicilioBD($idDomicilio, $domicilioJSON);
 					if ($respuesta) {
 						echo '<script>toast("Domicilio actualizado");</script>';
 					}else{
@@ -286,6 +287,19 @@
 					echo '<script>toast("¡Teléfono eliminado!");</script>';
 				}else{
 					echo '<script>toast("Ocurrió un error al eliminar el teléfono.");</script>';
+				}
+			}
+		}
+
+		#Deshabilitar un domicilio.
+		static public function eliminarDomicilioCtl(){
+			if (isset($_POST["domId-e"])) {
+				$idDomicilio = $_POST["domId-e"];
+				$respuesta = CRUD::eliminarDomicilioBD($idDomicilio);
+				if ($respuesta) {
+					echo '<script>toast("¡Domicilio eliminado!");</script>';
+				}else{
+					echo '<script>toast("Ocurrió un error al eliminar el domicilio.");</script>';
 				}
 			}
 		}

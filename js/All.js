@@ -264,8 +264,8 @@ class All {
 				document.getElementsByName('correoABtn-s'), 
 				document.querySelector('#correoABtn-x'), 
 				document.querySelector('#correoAForm'), 
-				(element) => {
-					JQueryAcciones.editFormModal(element, (datosCorreo) => {
+				(idElement, nameElement) => {
+					JQueryAcciones.editFormModal(idElement, nameElement, (datosCorreo) => {
 						$('#correo-a').val(datosCorreo["correo"]);
 						$('#correoId-a').val(datosCorreo["idUsuarioCorreo"]);
 					});
@@ -276,8 +276,8 @@ class All {
 				document.getElementsByName('correoEBtn-s'), 
 				document.querySelector('#correoEBtn-x'), 
 				document.querySelector('#correoEForm'), 
-				(element) => {
-					JQueryAcciones.editFormModal(element, (datosCorreo) => {
+				(idElement, nameElement) => {
+					JQueryAcciones.editFormModal(idElement, nameElement, (datosCorreo) => {
 						$('#correoId-e').val(datosCorreo["idUsuarioCorreo"]);
 					});
 				}
@@ -294,8 +294,8 @@ class All {
 				document.getElementsByName('telefonoABtn-s'), 
 				document.querySelector('#telefonoABtn-x'), 
 				document.querySelector('#telefonoAForm'), 
-				(element) => {
-					JQueryAcciones.editFormModal(element, (datosTelefono) => {
+				(idElement, nameElement) => {
+					JQueryAcciones.editFormModal(idElement, nameElement, (datosTelefono) => {
 						$('#telNumero-a').val(datosTelefono["numero"]);
 						$('#telId-a').val(datosTelefono["idUsuarioTelefono"]);
 						for (const i of $('#telTipo-a')[0].options) {
@@ -309,47 +309,67 @@ class All {
 				document.getElementsByName('telefonoEBtn-s'), 
 				document.querySelector('#telefonoEBtn-x'), 
 				document.querySelector('#telefonoEForm'), 
-				(element) => {
-					console.log(element);
-					JQueryAcciones.editFormModal(element, (datosTelefono) => {
+				(idElement, nameElement) => {
+					console.log(idElement, nameElement);
+					JQueryAcciones.editFormModal(idElement, nameElement, (datosTelefono) => {
 						$('#telId-e').val(datosTelefono["idUsuarioTelefono"]);
 					});
 				}
 			);
 			
 			// Validaciones.enterosSinIntervalo(document.getElementById('telNumero-n'), 10);
+			JQueryAcciones.autocompleteAddress(
+				document.getElementById('domUbicacion-n'), 
+				document.getElementById('domEstado-n'), 
+				document.getElementById('domMunicipio-n'), 
+				document.getElementById('domColonia-n'), 
+				document.getElementById('domCalle-n')
+			);
+			JQueryAcciones.autocompleteAddress(
+				document.getElementById('domUbicacion-a'), 
+				document.getElementById('domEstado-a'), 
+				document.getElementById('domMunicipio-a'), 
+				document.getElementById('domColonia-a'), 
+				document.getElementById('domCalle-a')
+			);
 			Interactividad.interactFormModal(
 				document.querySelector('#domicilioNBtn-s'), 
 				document.querySelector('#domicilioNBtn-x'), 
 				document.querySelector('#domicilioNForm')
 			);
 			
-			// Interactividad.formModal(
-			// 	document.getElementsByName('domicilioABtn-s'), 
-			// 	document.querySelector('#domicilioABtn-x'), 
-			// 	document.querySelector('#domicilioAForm'), 
-			// 	(element) => {
-			// 		JQueryAcciones.editFormModal(element, (datosTelefono) => {
-			// 			$('#telNumero-a').val(datosTelefono["numero"]);
-			// 			$('#telId-a').val(datosTelefono["idUsuarioTelefono"]);
-			// 			for (const i of $('#telTipo-a')[0].options) {
-			// 				i.value == datosTelefono["tipoTelefono"] ? i.selected = true : null;
-			// 			}
-			// 		});
-			// 	}
-			// );
+			Interactividad.formModal(
+				document.getElementsByName('domicilioABtn-s'), 
+				document.querySelector('#domicilioABtn-x'), 
+				document.querySelector('#domicilioAForm'), 
+				(idElement, nameElement) => {
+					JQueryAcciones.editFormModal(idElement, nameElement, (domicilioJSON) => {
+						let domJSON = JSON.parse(domicilioJSON["domicilioJSON"]);
+						$('#domId-a').val(domicilioJSON["idUsuarioDomicilio"]);
+						$('#domEstado-a').val(domJSON.estado);
+						$('#domMunicipio-a').val(domJSON.municipio);
+						$('#domColonia-a').val(domJSON.colonia);
+						$('#domCalle-a').val(domJSON.calle);
+						$('#domNumExt-a').val(domJSON.numExt);
+						$('#domRef-a').val(domJSON.referencia);
+						$('#domNumInt-a').val(domJSON.numInt != undefined ? domJSON.numInt : '');
+						$('#domCalle1-a').val(domJSON.calle1 != undefined ? domJSON.calle1 : '');
+						$('#domCalle2-a').val(domJSON.calle2 != undefined ? domJSON.calle2 : '');
+					});
+				}
+			);
 			
-			// Interactividad.formModal(
-			// 	document.getElementsByName('domicilioEBtn-s'), 
-			// 	document.querySelector('#domicilioEBtn-x'), 
-			// 	document.querySelector('#domicilioEForm'), 
-			// 	(element) => {
-			// 		console.log(element);
-			// 		JQueryAcciones.editFormModal(element, (datosTelefono) => {
-			// 			$('#telId-e').val(datosTelefono["idUsuarioTelefono"]);
-			// 		});
-			// 	}
-			// );
+			Interactividad.formModal(
+				document.getElementsByName('domicilioEBtn-s'), 
+				document.querySelector('#domicilioEBtn-x'), 
+				document.querySelector('#domicilioEForm'), 
+				(idElement, nameElement) => {
+					JQueryAcciones.editFormModal(idElement, nameElement, (datosDomicilio) => {
+						console.log(datosDomicilio["idUsuarioDomicilio"]);
+						$('#domId-e').val(datosDomicilio["idUsuarioDomicilio"]);
+					});
+				}
+			);
 		} else if (pagina == 'IniciarSesion') {
 			Interactividad.ajuste();
 		}

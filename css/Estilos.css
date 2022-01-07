@@ -5,8 +5,14 @@
 	--CGrisClaro: #E5E5E5;
 	--CGrisPrincipal: #818181;
 	--CBackground: #EBEBEB;
-	--CAvisoPrincipal: #856404;
-	--CAvisoBase: rgb(255, 243, 205);
+	--CAvisoNDPrincipal: #856404;
+	--CAvisoNDBase: #fff3cd;
+	--CAvisoMSGPrincipal: #31708f;
+	--CAvisoMSGBase: #bce8f1;
+	--CAvisoSCSPrincipal: #3c763d;
+	--CAvisoSCSBase: #d6e9c6;
+	--CAvisoDNGPrincipal: #a94442;
+	--CAvisoDNGBase: #ebccd1;
 }
 
 * {
@@ -394,6 +400,11 @@ select {
 	max-width: -webkit-fill-available;
 }
 
+.principal {
+	color: var(--CPrincipal);
+	font-family: Roboto;
+}
+
 .w70 {
 	width: 70% !important;
 }
@@ -569,22 +580,45 @@ table tr:last-child td:last-child {
 	background-color: green !important;
 }
 
-.nodata{
+.info {
 	display: inline-block;
 	width: calc(100%);
 	font-size: 0.8rem;
-	background-color: var(--CAvisoBase);
 	text-align: center;
 	padding: 5px;
-	border: 1px solid var(--CAvisoPrincipal);
+	border: 1px solid;
 	border-radius: 4px;
 }
 
-.nodata span{
+.info.scs{
+	background-color: var(--CAvisoSCSBase);
+	border-color: var(--CAvisoSCSPrincipal);
+	color: var(--CAvisoSCSPrincipal);
+}
+
+.info.msg{
+	background-color: var(--CAvisoMSGBase);
+	border-color: var(--CAvisoMSGPrincipal);
+	color: var(--CAvisoMSGPrincipal);
+}
+
+.info.nodata{
+	background-color: var(--CAvisoNDBase);
+	border-color: var(--CAvisoNDPrincipal);
+	color: var(--CAvisoNDPrincipal);
+}
+
+.info.dng{
+	background-color: var(--CAvisoDNGBase);
+	border-color: var(--CAvisoDNGPrincipal);
+	color: var(--CAvisoDNGPrincipal);
+}
+
+.info span{
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: var(--CAvisoPrincipal);
+	color: inherit;
 }
 
 .table tr td a, .button{

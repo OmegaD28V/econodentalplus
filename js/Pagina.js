@@ -7,12 +7,12 @@ export default class Pagina {
 	static getPagina() {
 		let arrayURL = {
 			'Inicio' : "Inicio", 
+			'HistoriaMedica' : "Inicio", 
 			'IniciarSesion' : "IniciarSesion", 
 			'Cita' : "Cita", 
 			'Agenda' : "Agenda", 
 			'Usuarios' : "Usuarios", 
 			'MisDatos' : "Configuracion", 
-			'HistoriaMedica' : "Inicio", 
 			'Configuracion' : "Configuracion", 
 			'Salir' : "Salir", 
 			'Error' : "Error"

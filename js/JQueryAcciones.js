@@ -79,72 +79,74 @@ export default class JQueryAcciones {
 	// 	}
 	// }
 	
-	// function autocompleteAddress (inputSearchAddress, inputEstado, inputMunicipio, inputColonia, inputCalle) {
-	// 	if (
-	// 		inputSearchAddress && 
-	// 		inputEstado && 
-	// 		inputMunicipio && 
-	// 		inputColonia && 
-	// 		inputCalle
-	// 	) {
-	// 		var autocomplete;
-	// 		autocomplete = new google.maps.places.Autocomplete(inputSearchAddress, {
-	// 			types: ['geocode'], 
-	// 			componentRestrictions: {
-	// 				country: "MX"
-	// 			}
-	// 		});
+	static autocompleteAddress (inputSearchAddress, inputEstado, inputMunicipio, inputColonia, inputCalle) {
+		if (
+			inputSearchAddress && 
+			inputEstado && 
+			inputMunicipio && 
+			inputColonia && 
+			inputCalle
+		) {
+			var autocomplete;
+			autocomplete = new google.maps.places.Autocomplete(inputSearchAddress, {
+				types: ['geocode'], 
+				componentRestrictions: {
+					country: "MX"
+				}
+			});
 				
-	// 		google.maps.event.addListener(autocomplete, 'place_changed', function () {
-	// 			var data_place = autocomplete.getPlace();
+			google.maps.event.addListener(autocomplete, 'place_changed', function () {
+				var data_place = autocomplete.getPlace();
 				
-	// 			if (data_place.address_components[0].types) {
-	// 				console.log(data_place);
-	// 				console.log(data_place.address_components.length);
-	// 				for (let i = 0; i < data_place.address_components.length; i++) {
-	// 					if(
-	// 						data_place.address_components[i].types[0] === "administrative_area_level_1" && 
-	// 						inputEstado.value !== data_place.address_components[i].types[0].long_name
-	// 						){
-	// 						inputEstado.value = data_place.address_components[i].long_name;
-	// 						console.log("Estado: " + data_place.address_components[i].long_name);
-	// 					}else{
-	// 						console.log("No existe Estado");
-	// 					}
-	// 					if(
-	// 						data_place.address_components[i].types[0] === "locality" && 
-	// 						inputMunicipio.value !== data_place.address_components[i].types[0].long_name
-	// 						){
-	// 						inputMunicipio.value = data_place.address_components[i].long_name;
-	// 						console.log("Municipio: " + data_place.address_components[i].long_name);
-	// 					}else{
-	// 						console.log("No existe Municipio");
-	// 					}
-	// 					if(
-	// 						data_place.address_components[i].types[0] === "sublocality_level_1" && 
-	// 						inputColonia.value !== data_place.address_components[i].types[0].long_name
-	// 						){
-	// 						inputColonia.value = data_place.address_components[i].long_name;
-	// 						console.log("Colonia: " + data_place.address_components[i].long_name);
-	// 					}else{
-	// 						console.log("No existe colonia");
-	// 					}
-	// 					if(
-	// 						data_place.address_components[i].types[0] === "route" && 
-	// 						inputCalle.value !== data_place.address_components[i].types[0].long_name
-	// 						){
-	// 						inputCalle.value = data_place.address_components[i].long_name;
-	// 						console.log("Calle: " + data_place.address_components[i].long_name);
-	// 					}else{
-	// 						console.log("No existe Calle");
-	// 					}
-	// 				}
-	// 			}else{
-	// 				console.log("No se encontraron datos");
-	// 			}
-	// 		});
-	// 	}
-	// }
+				if (data_place.address_components[0].types) {
+					console.log(data_place);
+					console.log(data_place.address_components.length);
+					for (let i = 0; i < data_place.address_components.length; i++) {
+						if(
+							data_place.address_components[i].types[0] === "administrative_area_level_1" && 
+							inputEstado.value !== data_place.address_components[i].types[0].long_name
+							){
+							inputEstado.value = data_place.address_components[i].long_name;
+							console.log("Estado: " + data_place.address_components[i].long_name);
+						}else{
+							console.log("No existe Estado");
+						}
+						if(
+							data_place.address_components[i].types[0] === "locality" && 
+							inputMunicipio.value !== data_place.address_components[i].types[0].long_name
+							){
+							inputMunicipio.value = data_place.address_components[i].long_name;
+							console.log("Municipio: " + data_place.address_components[i].long_name);
+						}else{
+							console.log("No existe Municipio");
+						}
+						if(
+							data_place.address_components[i].types[0] === "sublocality_level_1" && 
+							inputColonia.value !== data_place.address_components[i].types[0].long_name
+							){
+							inputColonia.value = data_place.address_components[i].long_name;
+							console.log("Colonia: " + data_place.address_components[i].long_name);
+						}else{
+							console.log("No existe colonia");
+						}
+						if(
+							data_place.address_components[i].types[0] === "route" && 
+							inputCalle.value !== data_place.address_components[i].types[0].long_name
+							){
+							inputCalle.value = data_place.address_components[i].long_name;
+							console.log("Calle: " + data_place.address_components[i].long_name);
+						}else{
+							console.log("No existe Calle");
+						}
+					}
+				}else{
+					console.log("No se encontraron datos");
+				}
+			});
+		} else {
+			console.log('Campos insuficientes');
+		}
+	}
 
 	static elementChecked (checkElement) {
 		if (checkElement) {
@@ -181,32 +183,29 @@ export default class JQueryAcciones {
 		document.getElementById('container-elements-choosen').remove();
 	}
 
-	static editFormModal (element, callback) {
-		let e = $('#' + element);
-		if (e) {
-			let recordId = e.attr('id');
-			let nameRequest = e.attr('name');
-			let formData = new FormData();
-			formData.append(nameRequest, recordId);
-			console.log(nameRequest);
+	static editFormModal (idElement, nameElement, callback) {
+		let recordId = idElement;
+		let nameRequest = nameElement;
+		let formData = new FormData();
+		formData.append(nameRequest, recordId);
+		console.log(nameRequest);
 
-			$.ajax({
-				url: 'controlador/Ajax.php', 
-				method: 'post', 
-				data: formData, 
-				cache: false, 
-				contentType: false, 
-				processData: false, 
-				dataType: 'json', 
-				success: function (response) {
-					if (response) {
-						callback(response);
-					} else {
-						callback('Sin resultado');
-					}
+		$.ajax({
+			url: 'controlador/Ajax.php', 
+			method: 'post', 
+			data: formData, 
+			cache: false, 
+			contentType: false, 
+			processData: false, 
+			dataType: 'json', 
+			success: function (response) {
+				if (response) {
+					callback(response);
+				} else {
+					callback('Sin resultado');
 				}
-			});
-		}
+			}
+		});
 	}
 	
 	static editForm (btnShowFormEdit, checkElement, inputId, callback) {

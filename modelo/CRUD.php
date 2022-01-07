@@ -27,18 +27,18 @@
 			$sql = null;
 		}
 		
-		// #Seleccionar domicilio del paciente o usuario de la base de datos.
-		// static public function selDomicilioBD($domicilioId){
-		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"SELECT * FROM user_domicilio 
-		// 		WHERE estado >= 1 AND estado <=2 AND idUsuario_domicilio = :idUsuario_domicilio;"
-		// 	);
-		// 	$sql -> bindParam(":idUsuario_domicilio", $domicilioId, PDO::PARAM_INT);
-		// 	$sql -> execute();
-		// 	return $sql -> fetch();
-		// 	$sql -> close();
-		// 	$sql = null;
-		// }
+		#Seleccionar domicilio del paciente o usuario de la base de datos.
+		static public function selDomicilioBD($idDomicilio){
+			$sql = Conexion::conectar() -> prepare(
+				"SELECT * FROM usuario_domicilio 
+				WHERE estado >= 1 AND estado <=2 AND idUsuarioDomicilio = :idUsuarioDomicilio;"
+			);
+			$sql -> bindParam(":idUsuarioDomicilio", $idDomicilio, PDO::PARAM_INT);
+			$sql -> execute();
+			return $sql -> fetch();
+			$sql -> close();
+			$sql = null;
+		}
 
 		#Seleccionar correos electrónicos del paciente o usuario de la base de datos.
 		static public function selCorreosBD($idPersona){
@@ -68,11 +68,6 @@
 		
 		#Seleccionar domicilios del paciente o usuario de la base de datos.
 		static public function selDomiciliosBD($idPersona){
-			// $sql = Conexion::conectar() -> prepare(
-			// 	"SELECT idUsuario_domicilio, colonia, calle, num_casaex, estado 
-			// 	FROM user_domicilio 
-			// 	WHERE estado >= 1 AND estado <=2 AND idUsuario = :idUsuario;"
-			// );
 			$sql = Conexion::conectar() -> prepare(
 				"SELECT * FROM usuario_domicilio 
 				WHERE estado >= 1 AND estado <=2 AND idUsuario = :idUsuario;"
@@ -161,36 +156,26 @@
 		}
 		
 		#Agregar nuevo domicilio en la base de datos.
-		static public function nuevoDomicilioBD($datosDomicilio, $estado){
-			// $sql = Conexion::conectar() -> prepare(
-			// 	"INSERT INTO user_domicilio(
-			// 		idUsuario, estado, localidad, colonia, calle, num_casaex, 
-			// 		num_casaint, calle1, calle2, referencia, estado
-			// 	) 
-			// 	VALUE(
-			// 		:idUsuario, :estado, :localidad, :colonia, :calle, :num_casaex, 
-			// 		:num_casaint, :calle1, :calle2, :referencia, :estado
-			// 	);"
-			// );
+		static public function nuevoDomicilioBD($idPersona, $domicilioJSON, $estado){
+			$sql = Conexion::conectar() -> prepare(
+				"INSERT INTO usuario_domicilio(
+					idUsuario, domicilioJSON, fechaRegistro, estado
+				) 
+				VALUE(
+					:idUsuario, :domicilioJSON, now(), :estado
+				);"
+			);
 
-			// $sql -> bindParam(":idUsuario", $datosDomicilio["personaId"], PDO::PARAM_INT);
-			// $sql -> bindParam(":estado", $datosDomicilio["estado"], PDO::PARAM_STR);
-			// $sql -> bindParam(":localidad", $datosDomicilio["municipio"], PDO::PARAM_STR);
-			// $sql -> bindParam(":colonia", $datosDomicilio["colonia"], PDO::PARAM_STR);
-			// $sql -> bindParam(":calle", $datosDomicilio["calle"], PDO::PARAM_STR);
-			// $sql -> bindParam(":num_casaex", $datosDomicilio["numeroE"], PDO::PARAM_INT);
-			// $sql -> bindParam(":num_casaint", $datosDomicilio["numeroI"], PDO::PARAM_INT);
-			// $sql -> bindParam(":calle1", $datosDomicilio["calle1"], PDO::PARAM_STR);
-			// $sql -> bindParam(":calle2", $datosDomicilio["calle2"], PDO::PARAM_STR);
-			// $sql -> bindParam(":referencia", $datosDomicilio["referencia"], PDO::PARAM_STR);
-			// $sql -> bindParam(":estado", $estado, PDO::PARAM_INT);
-			// if($sql -> execute()) {
-			// 	return true;
-			// }else{
-			// 	return false;
-			// }
-			// $sql -> close();
-			// $sql = null;
+			$sql -> bindParam(":idUsuario", $idPersona, PDO::PARAM_INT);
+			$sql -> bindParam(":domicilioJSON", $domicilioJSON);
+			$sql -> bindParam(":estado", $estado, PDO::PARAM_INT);
+			if($sql -> execute()) {
+				return true;
+			}else{
+				return false;
+			}
+			$sql -> close();
+			$sql = null;
 		}
 
 		#Actualizar el correo electrónico en la base de datos.
@@ -229,39 +214,23 @@
 			$sql = null;
 		}
 		
-		// #Actualizar el domicilio en la base de datos.
-		// static public function actualizarDomicilioBD($datosDomicilioPersona){
-		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"UPDATE user_domicilio SET 
-		// 			estado = :estado, 
-		// 			localidad = :localidad, 
-		// 			colonia = :colonia, 
-		// 			calle = :calle, 
-		// 			num_casaex = :num_casaex, 
-		// 			num_casaint = :num_casaint, 
-		// 			calle1 = :calle1, 
-		// 			calle2 = :calle2, 
-		// 			referencia = :referencia 
-		// 		WHERE idUsuario_domicilio = :idUsuario_domicilio;"
-		// 	);
-		// 	$sql -> bindParam(":idUsuario_domicilio", $datosDomicilioPersona["domicilioId"], PDO::PARAM_INT);
-		// 	$sql -> bindParam(":estado", $datosDomicilioPersona["estado"], PDO::PARAM_STR);
-		// 	$sql -> bindParam(":localidad", $datosDomicilioPersona["municipio"], PDO::PARAM_STR);
-		// 	$sql -> bindParam(":colonia", $datosDomicilioPersona["colonia"], PDO::PARAM_STR);
-		// 	$sql -> bindParam(":calle", $datosDomicilioPersona["calle"], PDO::PARAM_STR);
-		// 	$sql -> bindParam(":num_casaex", $datosDomicilioPersona["numeroE"], PDO::PARAM_INT);
-		// 	$sql -> bindParam(":num_casaint", $datosDomicilioPersona["numeroI"], PDO::PARAM_INT);
-		// 	$sql -> bindParam(":calle1", $datosDomicilioPersona["calle1"], PDO::PARAM_STR);
-		// 	$sql -> bindParam(":calle2", $datosDomicilioPersona["calle2"], PDO::PARAM_STR);
-		// 	$sql -> bindParam(":referencia", $datosDomicilioPersona["referencia"], PDO::PARAM_STR);
-		// 	if($sql -> execute()) {
-		// 		return true;
-		// 	}else{
-		// 		return false;
-		// 	}
-		// 	$sql -> close();
-		// 	$sql = null;
-		// }
+		#Actualizar el domicilio en la base de datos.
+		static public function actualizarDomicilioBD($idDomicilio, $domicilioJSON){
+			$sql = Conexion::conectar() -> prepare(
+				"UPDATE usuario_domicilio SET 
+				domicilioJSON = :domicilioJSON 
+				WHERE idUsuarioDomicilio = :idUsuarioDomicilio;"
+			);
+			$sql -> bindParam(":idUsuarioDomicilio", $idDomicilio, PDO::PARAM_INT);
+			$sql -> bindParam(":domicilioJSON", $domicilioJSON);
+			if($sql -> execute()) {
+				return true;
+			}else{
+				return false;
+			}
+			$sql -> close();
+			$sql = null;
+		}
 		
 		#Deshabilitar un correo electrónico.
 		static public function eliminarCorreoBD($idCorreo){
@@ -294,36 +263,22 @@
 			$sql -> close();
 			$sql = null;
 		}
-
-		// #Deshabilitar uno o más teléfonos de clientes o usuarios del sistema.
-		// static public function eliminarTelefonoBD($telefonoId){
-		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"UPDATE user_telefono set estado = 0 WHERE idUsuario_telefono = :idUsuario_telefono;"
-		// 	);
-		// 	$sql -> bindParam(":idUsuario_telefono", $telefonoId, PDO::PARAM_INT);
-		// 	if ($sql -> execute()) {
-		// 		return true;
-		// 	}else{
-		// 		return false;
-		// 	}
-		// 	$sql -> close();
-		// 	$sql = null;
-		// }
 		
-		// #Deshabilitar uno o más domicilios de clientes del sistema.
-		// static public function eliminarDomicilioBD($domicilioId){
-		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"UPDATE user_domicilio set estado = 0 WHERE idUsuario_domicilio = :idUsuario_domicilio;"
-		// 	);
-		// 	$sql -> bindParam(":idUsuario_domicilio", $domicilioId, PDO::PARAM_INT);
-		// 	if ($sql -> execute()) {
-		// 		return true;
-		// 	}else{
-		// 		return false;
-		// 	}
-		// 	$sql -> close();
-		// 	$sql = null;
-		// }
+		#Deshabilitar un domicilio.
+		static public function eliminarDomicilioBD($idDomicilio){
+			$sql = Conexion::conectar() -> prepare(
+				"UPDATE usuario_domicilio SET estado = 0 
+				WHERE idUsuarioDomicilio = :idUsuarioDomicilio;"
+			);
+			$sql -> bindParam(":idUsuarioDomicilio", $idDomicilio, PDO::PARAM_INT);
+			if ($sql -> execute()) {
+				return true;
+			}else{
+				return false;
+			}
+			$sql -> close();
+			$sql = null;
+		}
 
 		// #Establecer correo electrónico como principal
 		// static public function correoPrincipalBD($correoId) {

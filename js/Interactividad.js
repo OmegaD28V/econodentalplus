@@ -54,8 +54,11 @@ export default class Interactividad {
 			buttonsShow.forEach( element => {
 				element.addEventListener('click', () => {
 					form.classList.remove('oculto');
-					$('body, html').animate({screenTop: '0px'}, 300);
-					callback(element.getAttribute('id'));
+					$('body, html').animate({scrollTop: '0px'}, 300);
+					callback(
+						element.getAttribute('id'), 
+						element.getAttribute('name')
+					);
 				});
 			});
 			buttonHide.addEventListener('click', () => {

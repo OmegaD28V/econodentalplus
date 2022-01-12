@@ -11,6 +11,8 @@ export default class Pagina {
 			'IniciarSesion' : "IniciarSesion", 
 			'Cita' : "Cita", 
 			'Agenda' : "Agenda", 
+			'Pacientes' : "Pacientes", 
+			'PacienteInfo' : "Pacientes", 
 			'Usuarios' : "Usuarios", 
 			'MisDatos' : "Configuracion", 
 			'Configuracion' : "Configuracion", 

@@ -253,6 +253,19 @@ class All {
 				'Usuarios'
 			);
 		} else if (pagina == 'Configuracion') {
+			Validaciones.contrasenas(document.getElementById('pwdNueva'), 30);
+			Interactividad.interactFormModal(
+				document.querySelector('#changePwdBtn-s'), 
+				document.querySelector('#changePwdBtn-x'), 
+				document.querySelector('#changePwdForm')
+			);
+			
+			Interactividad.interactFormModal(
+				document.querySelector('#horarioNBtn-s'), 
+				document.querySelector('#horarioNBtn-x'), 
+				document.querySelector('#horarioNForm')
+			);
+
 			Validaciones.correosElectronicos(document.getElementById('correo-n'), 30);
 			Interactividad.interactFormModal(
 				document.querySelector('#correoNBtn-s'), 

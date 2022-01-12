@@ -1,5 +1,5 @@
 <?php
-	$idUsuario = $_SESSION["usuario"];
+	$idUsuario = $_SESSION["paciente"];
 	$telefonos = Controlador::selTelefonosCtl($idUsuario);
 	$correos = Controlador::selCorreosCtl($idUsuario);
 	$domicilios = Controlador::selDomiciliosCtl($idUsuario);
@@ -13,7 +13,7 @@
 </div>
 
 <div class="C__Table center">
-	<div class="info msg column w70">
+	<div class="info msg w70">
 		<span>Elemento principal(<b class="principal">*</b>)</span>
 	</div>
 	<div class="Bar__Btns column w70">

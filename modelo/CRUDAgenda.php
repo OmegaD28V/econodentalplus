@@ -2,10 +2,11 @@
 	require_once 'Conexion.php';
 	class CRUDAgenda {
 		#Buscar citas en la base de datos.
-		public function buscarCitasBD($buscar){
+		static public function buscarCitasBD($buscar){
 			$sql = Conexion::conectar() -> prepare(
 				"SELECT idCita, nombre, apellidos, telefono, 
-				date_format(fechaCita, '%d-%b-%Y %H:%i hrs') fechaCita 
+				date_format(fechaCita, '%d-%b-%Y %H:%i') fechaCita, 
+				date_format(fechaCita, '%d-%m-%Y %H:%i') fechaCitaF, 
 				FROM cita 
 				WHERE (nombre LIKE '%$buscar%' 
 				OR apellidos LIKE '%$buscar%' 
@@ -19,9 +20,10 @@
 		}
 
 		#Vista de las citas existentes.
-		public function selCitasBD() {
+		static public function selCitasBD() {
 			$sql = Conexion::conectar() -> prepare(
-				"SELECT *, date_format(fechaCita, '%d-%b-%Y %H:%i hrs') fechaCi 
+				"SELECT *, date_format(fechaCita, '%d-%b-%Y %H:%i') fechaCi, 
+				date_format(fechaCita, '%d-%m-%Y %H:%i') fechaCiF 
 				FROM cita WHERE estado = 1 ORDER BY fechaCita ASC;"
 			);
 			$sql -> execute();
@@ -31,7 +33,7 @@
 		}
 		
 		#Contar las citas existentes.
-		public function contarCitasBD() {
+		static public function contarCitasBD() {
 			$sql = Conexion::conectar() -> prepare(
 				"SELECT count(*) as totalCitas FROM cita WHERE estado = 1;"
 			);
@@ -42,7 +44,7 @@
 		}
 		
 		#Recuperar fecha de cita para editar o posponer.
-		public function fechaCitaBD($idCita) {
+		static public function fechaCitaBD($idCita) {
 			$sql = Conexion::conectar() -> prepare(
 				"SELECT fechaCita FROM cita WHERE idCita = :idCita;"
 			);
@@ -54,7 +56,7 @@
 		}
 		
 		#Posponer una cita.
-		public function posponerCitaBD($datosCita) {
+		static public function posponerCitaBD($datosCita) {
 			$sql = Conexion::conectar() -> prepare(
 				"UPDATE cita SET fechaCita = :fechaCita WHERE idCita = :idCita;"
 			);
@@ -70,7 +72,7 @@
 		}
 
 		#Cancelar una o más citas.
-		public function cancelarCitaBD($idCita){
+		static public function cancelarCitaBD($idCita){
 			$sql = Conexion::conectar() -> prepare(
 				"UPDATE cita set estado = 0 WHERE idCita = :idCita;"
 			);

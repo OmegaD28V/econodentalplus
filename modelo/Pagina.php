@@ -5,6 +5,8 @@
 			'Inicio' => "Inicio", 
 			'Cita' => "Cita", 
 			'Agenda' => "Agenda", 
+			'Pacientes' => "Pacientes", 
+			'PacienteInfo' => "Pacientes", 
 			'Usuarios' => "Usuarios", 
 			'MisDatos' => "MisDatos", 
 			'HistoriaMedica' => "HistoriaMedica", 

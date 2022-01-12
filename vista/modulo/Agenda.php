@@ -53,17 +53,22 @@
 			<th>Asistencia</th>
 		</tr>
 			<?php foreach($arrayCitas as $key => $value) : ?>
-			
-		<tr name="citas-row">
+			<?php
+				$fechaA = strtotime(DataArrays::getFecha());
+				$fechaB = strtotime($value["fechaCiF"]);
+				$Confirmar;
+				($fechaA > $fechaB) ? $confirmar = 'Recuperar' : $confirmar = 'Confirmar';
+			?>
+		<tr name="citas-row <?=$confirmar?>">
 			<td>
 				<input type="checkbox" name="checkCita" id="checkCita<?=$value["idCita"]?>" value="<?=$value["idCita"]?>">
 			</td>
 			<td id="<?=$value["idCita"]?>" name="checkCita"><?=$value["nombre"].' '.$value["apellidos"]?>
 			</td>
-			<td id="<?=$value["idCita"]?>" name="checkCita"><?=$value["fechaCi"]?></td>
+			<td id="<?=$value["idCita"]?>" name="checkCita"><?=$value["fechaCi"]?> hrs</td>
 			<td id="<?=$value["idCita"]?>" name="checkCita"><?=$value["telefono"]?></td>
 			<td id="<?=$value["idCita"]?>" name="checkCita">
-				<input type="button" name="citaBtn-C" class="btn" value="Confirmar">
+				<input type="button" name="citaBtn-C" class="btn" value="<?=$confirmar?>">
 			</td>
 		</tr>
 			<?php endforeach ?>

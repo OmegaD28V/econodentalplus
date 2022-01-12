@@ -26,4 +26,9 @@
 			<!-- <a href="index.php?pagina=HistoriaMedica&type-doc=llenar" id="plantillaBtn-d" class="btn">Generar Historia Médica.docx</a> -->
 		</div>
 	</div>
+	<div class="Bar__Btns column">
+		<?php
+			echo DataArrays::getFecha();
+		?>
+	</div>
 </div>

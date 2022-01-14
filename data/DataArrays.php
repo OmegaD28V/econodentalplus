@@ -9,10 +9,73 @@
 			);
 		}
 		
+		#Obtener los cargos de usuario.
+		static public function getCargos() {
+			return array(
+				'2' => 'Gerente', 
+				'3' => 'Doctor', 
+				'4' => 'Recepcionista', 
+				'5' => 'Asistente'
+			);
+		}
+		
+		#Obtener todos los posibles cargos de usuario.
+		static public function getAllCargos() {
+			return array(
+				'0' => 'Paciente', 
+				'1' => 'Administrador', 
+				'2' => 'Gerente', 
+				'3' => 'Doctor', 
+				'4' => 'Recepcionista', 
+				'5' => 'Asistente'
+			);
+		}
+		
 		#Obtener la fecha actual.
 		static public function getFecha() {
 			setlocale(LC_TIME, "spanish");
 			$fecha = date("d-m-Y H:i");
 			return $fecha;
+		}
+
+		#Obtener la fecha configurada.
+		static public function getFechaConfig($fechaJSON) {
+			$horaA = $fechaJSON->horaA;
+			$horaC = $fechaJSON->horaC;
+			unset($fechaJSON->horaA);
+			unset($fechaJSON->horaC);
+			$a = ""; $inicio = ""; $fin = "";
+			$dias = DataArrays::getDiasSemana();
+			$corte = 0;
+			foreach($fechaJSON as $k => $v) {
+				if(!$v) {
+					$corte++;
+				}
+				if ($v && $corte <= 1) {
+					if (!$inicio) {
+						$inicio = $k;
+					} else {
+						$fin = $k;
+						$a = "De " . $dias[$inicio] . " a " . $dias[$fin];
+					}
+				} else {
+					$a .= $dias[$k]." ";
+				}
+			}
+			$horario = $a . " de ". $horaA . " a " . $horaC . " hrs.";
+			return $horario;
+		}
+
+		#Obtener el array de días de la semana.
+		static public function getDiasSemana() {
+			return array(
+				'd1' => 'Lunes', 
+				'd2' => 'Martes', 
+				'd3' => 'Miércoles', 
+				'd4' => 'Jueves', 
+				'd5' => 'Viernes', 
+				'd6' => 'Sábado', 
+				'd7' => 'Domingo'
+			);
 		}
 	}

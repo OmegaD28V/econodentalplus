@@ -1,31 +1,31 @@
 <?php
 	class ControladorAgenda {
 		#Buscar citas.
-		public function buscarCitasCtl($buscar) {
+		static public function buscarCitasCtl($buscar) {
 			$respuesta = CRUDAgenda::buscarCitasBD($buscar);
 			return $respuesta;
 		}
 
 		#Vista de las citas existentes.
-		public function selCitasCtl() {
+		static public function selCitasCtl() {
 			$citas = CRUDAgenda::selCitasBD();
 			return $citas;
 		}
 		
 		#Contar las citas existentes.
-		public function contarCitasCtl() {
+		static public function contarCitasCtl() {
 			$citas = CRUDAgenda::contarCitasBD();
 			return $citas;
 		}
 		
 		#Recuperar fecha de cita para editar o posponer.
-		public function fechaCitaCtl($idCita) {
+		static public function fechaCitaCtl($idCita) {
 			$fechaCita = CRUDAgenda::fechaCitaBD($idCita);
 			return $fechaCita;
 		}
 		
 		#Posponer una cita.
-		public function posponerCitaCtl() {
+		static public function posponerCitaCtl() {
 			if (
 				isset($_POST["posponerTiempo"]) &&
 				isset($_POST["idPosponer"])
@@ -44,7 +44,7 @@
 		}
 
 		#Cancelar una o más citas.
-		public function cancelarCitasCtl($citas){
+		static public function cancelarCitasCtl($citas){
 			$respuestas = array();
 			$conclusion = true;
 			for ($i = 0; $i < sizeof($citas); $i++) {

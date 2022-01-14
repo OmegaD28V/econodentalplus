@@ -1,3 +1,4 @@
+<?php $config = ControladorUsuario::selConfigCtl(1); ?>
 <div class="bgTop"></div>
 <div class="bgBottom">
 	<div>
@@ -28,7 +29,11 @@
 				</div>
 			</div>
 			<div class="i__group" style="margin-top: 10px;">
-				<div class="nodata"><span>Horario de Martes a Domingo de 10:00 a 18:30</span></div>
+			<?php if(!$config) : ?>
+				<div class= "nodata"><span>Horario de Martes a Domingo de 10:00 a 18:30</span></div>
+			<?php else : $configJSON = DataArrays::getFechaConfig(json_decode($config["configJSON"]));?>
+				<div class= "nodata"><span>Horario <?=$configJSON?></span></div>
+			<?php endif ?>
 			</div>
 			<div>
 				<input class="submit" type="submit" value="Agendar">

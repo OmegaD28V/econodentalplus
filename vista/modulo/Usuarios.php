@@ -16,6 +16,8 @@
 	// }
 
 	$arrayUsuarios = ControladorUsuario::selUsuariosCtl();
+	$cargos = DataArrays::getCargos();
+	$allCargos = DataArrays::getAllCargos();
 	$totalUsuarios = ControladorUsuario::contarUsuariosCtl()["totalUsuarios"];
 	$mostrando = sizeof($arrayUsuarios);
 	// $paginacion = Paginacion::pnt($modulo, sizeof($arrayClientes), $init, $size);
@@ -55,9 +57,9 @@
 			<?php 
 				foreach($arrayUsuarios as $key => $value) : 
 					$nombre = $value["nombre"].' '.$value["apellidos"];
-					$cargos = ['Paciente', 'Admin', 'Gerente', 'Doctor', 'Asistente', 'Recepcionista'];
+					// $cargos = ['Paciente', 'Admin', 'Gerente', 'Doctor', 'Recepcionista', 'Asistente'];
 					$estados = ['Desconectado', 'Conectado'];
-					$cargo = $cargos[$value["tipoUsuario"]];
+					$cargo = $allCargos[$value["tipoUsuario"]];
 					$estado = $estados[$value["estado"]];
 			?>
 		<tr name="usuarios-row">
@@ -95,10 +97,9 @@
 		<div class="i__group">
 			<select class="textfield" name="usuarioCargo-A" id="usuarioCargo-A" required>
 				<option value="">Seleccione un cargo</option>
-				<option value="2">Gerente</option>
-				<option value="3">Doctor</option>
-				<option value="4">Asistente</option>
-				<option value="5">Recepcionista</option>
+				<?php foreach($cargos as $key => $val) : ?>
+					<option value="<?=$key?>"><?=$val?></option>
+				<?php endforeach ?>
 			</select>
 			<label class="labels" for="usuarioCargo-A">Cargo</label>
 		</div>
@@ -154,10 +155,9 @@
 		<div class="i__group">
 			<select class="textfield" name="usuarioCargo-N" id="usuarioCargo-N" required>
 				<option value="">Seleccione un cargo</option>
-				<option value="2">Gerente</option>
-				<option value="3">Doctor</option>
-				<option value="4">Asistente</option>
-				<option value="5">Recepcionista</option>
+				<?php foreach($cargos as $key => $val) : ?>
+					<option value="<?=$key?>"><?=$val?></option>
+				<?php endforeach ?>
 			</select>
 			<label class="labels" for="usuarioCargo-N">Cargo</label>
 		</div>

@@ -50,15 +50,11 @@
 			<div class="info nodata">
 				<span>No se ha establecido un horario laboral</span>
 			</div>
-		<?php else : $configJSON = json_decode($config["configJSON"]);?>
+		<?php else : $configJSON = DataArrays::getFechaConfig(json_decode($config["configJSON"]));?>
 			<div class="lista">
 				<div class="listaItem">
 					<div>
-						<span><?=$configJSON->horaA?></span>
-					</div>
-					<div>
-						<input class="btn link" id="<?=$config["idConfig"]?>" name="correoABtn-s" type="button" value="Actualizar">
-						<input class="btn link" id="<?=$config["idConfig"]?>" name="correoEBtn-s" type="button" value="Eliminar">
+						<span><?=$configJSON?></span>
 					</div>
 				</div>
 			</div>

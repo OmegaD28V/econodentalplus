@@ -49,6 +49,7 @@ class All {
 			Interactividad.confirmarCita(document.getElementsByName('citaBtn-C'));
 			
 			JQueryAcciones.search($('#citaBtn-b'), $('#tbl-citas'), 'buscarCitas', (respuesta) => {
+				console.log("Funcion buscar paciente agenda");
 				let tabla = $('#tbl-citas tr:gt(0)');
 				let tbl = $('#tbl-citas > tbody');
 				if (respuesta.length > 0) {
@@ -168,10 +169,10 @@ class All {
 				if (respuesta.length > 0) {
 					tabla.empty();
 					for (const k in respuesta) {
-						let nombre = respuesta[k]["nombre"] + respuesta[k]["apellidos"];
+						let nombre = respuesta[k]["nombre"] + ' ' + respuesta[k]["apellidos"];
 						let idUsuario = respuesta[k]["idUsuario"];
 						let fechaRegistro = respuesta[k]["fechaRegistro"];
-						let cargos = ['Paciente', 'Admin', 'Doctor', 'Asistente', 'Recepcionista'];
+						let cargos = ['Paciente', 'Administrador', 'Gerente', 'Doctor', 'Recepcionista', 'Asistente'];
 						let estados = ['Desconectado', 'Conectado'];
 						let cargo = cargos[respuesta[k]["tipoUsuario"]];
 						let estado = estados[respuesta[k]["estado"]];

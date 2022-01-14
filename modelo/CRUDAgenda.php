@@ -6,7 +6,7 @@
 			$sql = Conexion::conectar() -> prepare(
 				"SELECT idCita, nombre, apellidos, telefono, 
 				date_format(fechaCita, '%d-%b-%Y %H:%i') fechaCita, 
-				date_format(fechaCita, '%d-%m-%Y %H:%i') fechaCitaF, 
+				date_format(fechaCita, '%d-%m-%Y %H:%i') fechaCitaF
 				FROM cita 
 				WHERE (nombre LIKE '%$buscar%' 
 				OR apellidos LIKE '%$buscar%' 

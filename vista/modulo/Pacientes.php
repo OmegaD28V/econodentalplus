@@ -11,24 +11,7 @@
 	// }
 
 	$arrayPacientes = ControladorPaciente::selPacientesCtl();
-	// $arrayPacientes = array(
-	// 	// array(
-	// 	// 	'idUsuario' => "6", 
-	// 	// 	'nombre' => "Amanda", 
-	// 	// 	'apellidos' => "Reyes", 
-	// 	// 	'fechaRegistro' => "21-dic-2022 12:30 hrs", 
-	// 	// 	'expediente' => "Ver expediente"
-	// 	// ), 
-	// 	array(
-	// 		'idUsuario' => "5", 
-	// 		'nombre' => "Bernadette", 
-	// 		'apellidos' => "Hills", 
-	// 		'fechaRegistro' => "13-ene-2022 10:00 hrs", 
-	// 		'expediente' => "+ Nuevo expediente"
-	// 	)
-	// );
 	$totalPacientes = ControladorPaciente::contarPacientesCtl()["totalPacientes"];
-	$totalPacientes = 2;
 	$mostrando = sizeof($arrayPacientes);
 	// $paginacion = Paginacion::pnt($modulo, sizeof($arrayClientes), $init, $size);
 	// $paginacion != null ? $inicio = $paginacion['inicio'] : null ;
@@ -87,7 +70,6 @@
 			<td id="<?=$value["idUsuario"]?>" name="checkPaciente"><?=$value["fechaRegistro"]?></td>
 			<td id="<?=$value["idUsuario"]?>" name="checkPaciente">
 				<a class="btn" href="index.php?pagina=PacienteInfo&expediente=<?=$value["idUsuario"]?>">Expediente</a>
-				<!-- <input type="button" id="historiaNBtn-s" class="btn" value="Expediente"> -->
 			</td>
 		</tr>
 			<?php endforeach ?>

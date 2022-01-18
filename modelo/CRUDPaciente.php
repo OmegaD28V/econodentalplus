@@ -40,6 +40,89 @@
 			$sql = null;
 		}
 		
+		#Seleccionar la información del paciente de la base de datos.
+		static public function selInfoPacienteBD($idPaciente){
+			$sql = Conexion::conectar() -> prepare(
+				"SELECT *, date_format(fechaRegistro, '%d/%b/%Y') fechaRegistro 
+				FROM usuario 
+				WHERE estado = 1 AND tipoUsuario = 0 AND idUsuario = :idUsuario;"
+			);
+			$sql -> bindParam(":idUsuario", $idPaciente, PDO::PARAM_INT);
+			$sql -> execute();
+			return $sql -> fetch();
+			$sql -> close();
+			$sql = null;
+		}
+		
+		#Seleccionar la información del paciente de la base de datos.
+		static public function selAtributosBD($idPaciente){
+			$sql = Conexion::conectar() -> prepare(
+				"SELECT *, date_format(fechaNacimiento, '%d/%b/%Y') fechaNacimiento 
+				FROM paciente_atributos 
+				WHERE estado = 1 AND idUsuario = :idUsuario;"
+			);
+			$sql -> bindParam(":idUsuario", $idPaciente, PDO::PARAM_INT);
+			$sql -> execute();
+			return $sql -> fetch();
+			$sql -> close();
+			$sql = null;
+		}
+		
+		#Seleccionar la información del paciente de la base de datos.
+		static public function hayAtributosBD($idPaciente){
+			$sql = Conexion::conectar() -> prepare(
+				"SELECT COUNT(*) AS attr FROM paciente_atributos 
+				WHERE estado = 1 AND idUsuario = :idUsuario;"
+			);
+			$sql -> bindParam(":idUsuario", $idPaciente, PDO::PARAM_INT);
+			$sql -> execute();
+			return $sql -> fetch();
+			$sql -> close();
+			$sql = null;
+		}
+		
+		#Crear los atributos del paciente en la base de datos.
+		static public function nuevosAtributosBD($idPaciente, $attr){
+			$sql = Conexion::conectar() -> prepare(
+				"INSERT INTO paciente_atributos(idUsuario, sexo, estadoCivil, fechaNacimiento, ocupacion, estado)
+				VALUE(:idUsuario, :sexo, :estadoCivil, :fechaNacimiento, :ocupacion, 1);"
+			);
+			$sql -> bindParam(":idUsuario", $idPaciente, PDO::PARAM_INT);
+			$sql -> bindParam(":sexo", $attr["sexo"], PDO::PARAM_INT);
+			$sql -> bindParam(":estadoCivil", $attr["edoCivil"], PDO::PARAM_INT);
+			$sql -> bindParam(":fechaNacimiento", $attr["fecha"]);
+			$sql -> bindParam(":ocupacion", $attr["ocupacion"], PDO::PARAM_STR);
+			if($sql -> execute()) {
+				return true;
+			} else {
+				return false;
+			}
+			$sql -> close();
+			$sql = null;
+		}
+		
+		#Actualizar los atributos del paciente en la base de datos.
+		static public function actualizarAtributosBD($idPaciente, $attr){
+			$sql = Conexion::conectar() -> prepare(
+				"UPDATE paciente_atributos 
+				SET sexo = :sexo, estadoCivil = :estadoCivil, 
+				fechaNacimiento = :fechaNacimiento, ocupacion = :ocupacion, estado = 1
+				WHERE estado = 1 AND idUsuario = :idUsuario;"
+			);
+			$sql -> bindParam(":idUsuario", $idPaciente, PDO::PARAM_INT);
+			$sql -> bindParam(":sexo", $attr["sexo"], PDO::PARAM_INT);
+			$sql -> bindParam(":estadoCivil", $attr["edoCivil"], PDO::PARAM_INT);
+			$sql -> bindParam(":fechaNacimiento", $attr["fecha"]);
+			$sql -> bindParam(":ocupacion", $attr["ocupacion"], PDO::PARAM_STR);
+			if($sql -> execute()) {
+				return true;
+			} else {
+				return false;
+			}
+			$sql -> close();
+			$sql = null;
+		}
+		
 		#Contar pacientes de la base de datos.
 		static public function contarPacientesBD(){
 			$sql = Conexion::conectar() -> prepare(
@@ -82,7 +165,7 @@
 			$sql = null;
 		}
 
-		// #Confirmar los datos de un usuario al iniciar sesión
+		#Confirmar los datos de un usuario al iniciar sesión
 		static public function iniciarSesionBD($usuario, $contrasena){
 			$sql = Conexion::conectar() -> prepare(
 				"SELECT idUsuario, usuario, contrasena, estado 
@@ -170,16 +253,15 @@
 		// }
 
 		#Actualizar datos de usuario en la base de datos.
-		static public function actualizarPacienteBD($datosUsuario){
+		static public function actualizarPacienteBD($datosPaciente){
 			$sql = Conexion::conectar() -> prepare(
 				"UPDATE usuario 
-				SET nombre = :nombre, apellidos = :apellidos, tipoUsuario = :tipoUsuario 
-				WHERE idUsuario = :idUsuario AND tipoUsuario != 1;"
+				SET nombre = :nombre, apellidos = :apellidos 
+				WHERE idUsuario = :idUsuario AND tipoUsuario = 0;"
 			);
-			$sql -> bindParam(":nombre", $datosUsuario["nombre"], PDO::PARAM_STR);
-			$sql -> bindParam(":apellidos", $datosUsuario["apellidos"], PDO::PARAM_STR);
-			$sql -> bindParam(":tipoUsuario", $datosUsuario["cargo"], PDO::PARAM_INT);
-			$sql -> bindParam(":idUsuario", $datosUsuario["idUsuario"], PDO::PARAM_INT);
+			$sql -> bindParam(":nombre", $datosPaciente["nombre"], PDO::PARAM_STR);
+			$sql -> bindParam(":apellidos", $datosPaciente["apellidos"], PDO::PARAM_STR);
+			$sql -> bindParam(":idUsuario", $datosPaciente["idPaciente"], PDO::PARAM_INT);
 			if($sql -> execute()) {
 				return true;
 			}else{

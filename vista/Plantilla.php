@@ -33,7 +33,7 @@
 		<?php endif ?>
 
 		<!-- API Google Places -->
-		<script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFiGfcxMZchQlUNIGD6dz2RZc7Y_9iAi8&libraries=places"></script>
 
 		<!-- Notificaciones -->
 		<script src="js/Notificaciones.js"></script>

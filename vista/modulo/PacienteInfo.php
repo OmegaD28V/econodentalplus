@@ -1,21 +1,84 @@
 <?php
-	$idUsuario = $_GET["expediente"];
-	$telefonos = Controlador::selTelefonosCtl($idUsuario);
-	$correos = Controlador::selCorreosCtl($idUsuario);
-	$domicilios = Controlador::selDomiciliosCtl($idUsuario);
+	$idPaciente = $_GET["expediente"];
+	$telefonos = Controlador::selTelefonosCtl($idPaciente);
+	$correos = Controlador::selCorreosCtl($idPaciente);
+	$domicilios = Controlador::selDomiciliosCtl($idPaciente);
 	$tipoTel = DataArrays::getTipoTel();
 	$eCorreo = "";
 	$eTel = "";
 	$eDom = "";
+	
+	$infoPaciente = ControladorPaciente::selInfoPacienteCtl($idPaciente);
+	$attr = ControladorPaciente::selAtributosCtl($idPaciente);
 ?>
 <div class="title">
 	<h2>Mis Datos</h2>
 </div>
 
 <div class="C__Table center">
+	<div class="Bar__Btns column w70">
+		<span class="subtitle center">Información del paciente</span>
+		<form method="post" class="iflex centerf column ">
+			<div class="iflex">
+				<div class="i__group">
+					<input class="textfield" type="text" id="pacienteNombre-a" name="pacienteNombre-a" value="<?=$infoPaciente["nombre"]?>" autofocus required>
+					<label class="labels" for="pacienteNombre-a">Nombre</label>
+				</div>
+				<div class="i__group">
+					<input class="textfield" type="text" id="pacienteApellidos-a" name="pacienteApellidos-a" value="<?=$infoPaciente["apellidos"]?>" required>
+					<label class="labels" for="pacienteApellidos-a">Apellidos</label>
+				</div>
+			</div>
+			<div class="iflex">
+				<div class="i__group">
+					<input class="textfield" type="date" id="pacienteFecha-a" name="pacienteFecha-a" value="<?=$attr["fechaNacimiento"]?>" required>
+					<label class="labels" for="pacienteFecha-a">Fecha de nacimiento</label>
+				</div>
+			</div>
+			<div class="iflex">
+				<div class="i__group">
+					<div class="iflex">
+						<label class="labels" for="pacienteEdoCivil-a">Estado Civil</label>
+					</div>
+					<input type="radio" name="pacienteEdoCivil-a" id="Soltero" 
+						<?= $attr["estadoCivil"] == 1 ? 'checked' : null ?>>
+					<label class="label-radio" for="Soltero">Soltero</label>
+					<input type="radio" name="pacienteEdoCivil-a" id="Casado" 
+						<?= $attr["estadoCivil"] == 2 ? 'checked' : null ?>>
+					<label class="label-radio" for="Casado">Casado</label>
+				</div>
+			</div>
+			<div class="iflex">
+				<div class="i__group">
+					<div class="iflex">
+						<label class="labels" for="pacienteSexo-a">Sexo</label>
+					</div>
+					<input type="radio" name="pacienteSexo-a" id="Masculino" 
+						<?= $attr["sexo"] == 1 ? 'checked' : null ?> required>
+					<label class="label-radio" for="Masculino">Masculino</label>
+					<input type="radio" name="pacienteSexo-a" id="Femenino" 
+						<?= $attr["sexo"] == 2 ? 'checked' : null ?>>
+					<label class="label-radio" for="Femenino">Femenino</label>
+				</div>
+			</div>
+			<div class="iflex">
+				<div class="i__group">
+					<input class="textfield" type="tel" name="pacienteOcupacion-a" id="pacienteOcupacion-a" value="<?=$attr["ocupacion"]?>">
+					<label class="labels" for="pacienteOcupacion-a">Ocupación</label>
+				</div>
+			</div>
+			<div class="w70 iflex">
+				<input type="hidden" name="idPacienteAtributos-a" value="<?=$idPaciente?>">
+				<input class="submit" type="submit" value="Actualizar">
+				<?php ControladorPaciente::actualizarAtributosCtl(); ?>
+			</div>
+		</form>
+	</div>
+
 	<div class="info msg w70">
 		<span>Elemento principal(<b class="principal">*</b>)</span>
 	</div>
+
 	<div class="Bar__Btns column w70">
 		<span class="subtitle center">Teléfono</span>
 		<div class="C__Btn">
@@ -267,7 +330,7 @@
 			<label class="labels" for="telTipo-n">Tipo de teléfono</label>
 		</div>
 		<div>
-			<input type="hidden" name="telIdPersona-n" id="telIdPersona-n" value="<?=$idUsuario?>">
+			<input type="hidden" name="telIdPersona-n" id="telIdPersona-n" value="<?=$idPaciente?>">
 			<input class="submit" type="submit" value="Guardar">
 			<?php Controlador::nuevoTelefonoCtl(); ?>
 		</div>
@@ -283,7 +346,7 @@
 			<label class="labels" for="correo-n">Correo electrónico</label>
 		</div>
 		<div>
-			<input type="hidden" name="correoIdPersona-n" id="correoIdPersona-n" value="<?=$idUsuario?>">
+			<input type="hidden" name="correoIdPersona-n" id="correoIdPersona-n" value="<?=$idPaciente?>">
 			<input class="submit" type="submit" value="Guardar">
 			<?php Controlador::nuevoCorreoCtl(); ?>
 		</div>
@@ -349,7 +412,7 @@
 			<label class="labels" for="domRef-n">Indicaciones para llegar a su domicilio</label>
 		</div>
 		<div>
-			<input type="hidden" name="domIdPersona-n" id="domIdPersona-n" value="<?=$idUsuario?>">
+			<input type="hidden" name="domIdPersona-n" id="domIdPersona-n" value="<?=$idPaciente?>">
 			<input class="submit" type="submit" value="Guardar">
 			<?php Controlador::nuevoDomicilioCtl(); ?>
 		</div>

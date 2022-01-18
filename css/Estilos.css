@@ -309,6 +309,48 @@ input[type="password"]{
 	text-align: center;
 }
 
+/* input[type="radio"]{
+	display: none;
+} */
+
+input[type="radio"]:checked + .label-radio{
+	display: inline-flex;
+}
+
+/* input[type="radio"]:checked + .label-radio::after{
+	position: absolute;
+	content: '';
+	top: calc(50% - 5px);
+	left: 5px;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: var(--CGrisPrincipal);
+}
+
+.label-radio::before{
+	position: absolute;
+	content: '';
+	top: calc(50% - 7px);
+	left: 3px;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	border: 1px solid var(--CGrisPrincipal);
+} */
+
+.label-radio{
+	position: relative;
+	color: var(--CGrisPrincipal);
+	padding: 2px 4px 2px 20px;
+	border-radius: 2px;
+	transition: all .3s ease;
+}
+
+.label-radio:hover{
+	background-color: #ccc;
+}
+
 select {
 	display: inline-block;
 	background: none;
@@ -534,6 +576,11 @@ table tr:last-child td:last-child {
 
 .table tr{
 	cursor: pointer;
+}
+
+.table tr:hover {
+	background-color: var(--CGrisClaro) !important;
+	transition: background-color .3s ease-out;
 }
 
 .table td, .table th {

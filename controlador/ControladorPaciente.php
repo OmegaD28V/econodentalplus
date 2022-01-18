@@ -12,6 +12,29 @@
 			return $respuesta;
 		}
 		
+		#Seleccionar la información inicial del Paciente 
+		static public function selInfoPacienteCtl($idPaciente){
+			$respuesta = CRUDPaciente::selInfoPacienteBD($idPaciente);
+			return $respuesta;
+		}
+
+		#Seleccionar los atributos del Paciente 
+		static public function selAtributosCtl($idPaciente){
+			$respuesta = CRUDPaciente::selAtributosBD($idPaciente);
+			// if (!$respuesta) {
+			// 	$respuesta = array(
+			// 		'idPacienteAtributos' => null, 
+			// 		'idUsuario' => null, 
+			// 		'sexo' => null, 
+			// 		'estadoCivil' => null, 
+			// 		'fechaNacimiento' => null, 
+			// 		'ocupacion' => null, 
+			// 		'estado' => null
+			// 	);
+			// }
+			return $respuesta;
+		}
+		
 		#Contar los Pacientes 
 		static public function contarPacientesCtl(){
 			$respuesta = CRUDPaciente::contarPacientesBD();
@@ -145,7 +168,57 @@
 		// 	return $desconectar;
 		// }
 
-		#Crear nuevo paciente.
+		#Actualizar la información del paciente.
+		static public function actualizarAtributosCtl(){
+			if (
+				isset($_POST["idPacienteAtributos-a"]) && 
+				isset($_POST["pacienteNombre-a"]) && 
+				isset($_POST["pacienteApellidos-a"]) && 
+				isset($_POST["pacienteFecha-a"]) && 
+				isset($_POST["pacienteOcupacion-a"])
+				) {
+					if (
+						Validacion::nombresPropios($_POST["pacienteNombre-a"], 2, 30) && 
+						Validacion::nombresPropios($_POST["pacienteApellidos-a"], 2, 50) && 
+						Validacion::nombresPropios($_POST["pacienteOcupacion-a"], 0, 30)
+					) {
+						$actualizarAttr = false;
+						$actualizarPaciente = false;
+						$idPaciente = $_POST["idPacienteAtributos-a"];
+						$datosPaciente = array(
+							"idPaciente" => $_POST["idPacienteAtributos-a"], 
+							"nombre" => $_POST["pacienteNombre-a"], 
+							"apellidos" => $_POST["pacienteApellidos-a"]
+						);
+						$attr = array(
+							"fecha" => $_POST["pacienteFecha-a"], 
+							"sexo" => null, 
+							"edoCivil" => null, 
+							"ocupacion" => $_POST["pacienteOcupacion-a"], 
+						);
+						isset($_POST["pacienteEdoCivil-a"]) ? $attr["edoCivil"] = $_POST["pacienteEdoCivil-a"] : null;
+						isset($_POST["pacienteSexo-a"]) ? $attr["sexo"] = $_POST["pacienteSexo-a"] : null;
+						$hayAttr = CRUDPaciente::hayAtributosBD($idPaciente);
+						if ($hayAttr["attr"] == 0) {
+							$actualizarAttr = CRUDPaciente::nuevosAtributosBD($idPaciente, $attr);
+							$actualizarPaciente = CRUDPaciente::actualizarPacienteBD($datosPaciente);
+						} else if($hayAttr["attr"] > 0){
+							$actualizarAttr = CRUDPaciente::actualizarAtributosBD($idPaciente, $attr);
+							$actualizarPaciente = CRUDPaciente::actualizarPacienteBD($datosPaciente);
+						}
+
+						if ($actualizarAttr && $actualizarPaciente) {
+							echo '<script>toast("Información actualizada.");</script>';
+						} else {
+							echo '<script>toast("Ocurrió un error al actualizar.");</script>';
+						}
+					} else {
+						echo '<script>toast("Debe llenar todos los campos correctamente.");</script>';
+					}
+			}
+		}
+		
+		#Crear o actualizar atributos del paciente.
 		static public function nuevoPacienteCtl(){
 			if (
 				isset($_POST["idCitaC"]) && 
@@ -158,7 +231,7 @@
 						Validacion::nombresPropios($_POST["pacienteApellidos-N"], 2, 50) && 
 						Validacion::enterosSinIntervalo($_POST["pacienteTelefono-N"], 10)
 					) {
-						$idCita = $_POST["idCitaC"];
+						$idCita = $_POST["idPacienteAtributos-a"];
 						$datosPaciente = array(
 							"nombre" => $_POST["pacienteNombre-N"], 
 							"apellidos" => $_POST["pacienteApellidos-N"]
@@ -171,7 +244,7 @@
 							"tipo" => '1'
 						);
 						$telefonoPaciente = CRUD::nuevoTelefonoBD($datosTelefono, 1);
-						if (true) {
+						if ($nuevoPaciente && $telefonoPaciente) {
 							$quitarCita = CRUDExterno::quitarCitaBD($idCita);
 							echo '<script>
 									toast("Paciente guardado.");

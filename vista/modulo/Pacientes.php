@@ -11,22 +11,22 @@
 	// }
 
 	$arrayPacientes = ControladorPaciente::selPacientesCtl();
-	$arrayPacientes = array(
-		array(
-			'idUsuario' => "6", 
-			'nombre' => "Amanda", 
-			'apellidos' => "Reyes", 
-			'fechaRegistro' => "21-dic-2022 12:30 hrs", 
-			'expediente' => "Ver expediente"
-		), 
-		array(
-			'idUsuario' => "5", 
-			'nombre' => "Bernadette", 
-			'apellidos' => "Hills", 
-			'fechaRegistro' => "13-ene-2022 10:00 hrs", 
-			'expediente' => "+ Nuevo expediente"
-		)
-	);
+	// $arrayPacientes = array(
+	// 	// array(
+	// 	// 	'idUsuario' => "6", 
+	// 	// 	'nombre' => "Amanda", 
+	// 	// 	'apellidos' => "Reyes", 
+	// 	// 	'fechaRegistro' => "21-dic-2022 12:30 hrs", 
+	// 	// 	'expediente' => "Ver expediente"
+	// 	// ), 
+	// 	array(
+	// 		'idUsuario' => "5", 
+	// 		'nombre' => "Bernadette", 
+	// 		'apellidos' => "Hills", 
+	// 		'fechaRegistro' => "13-ene-2022 10:00 hrs", 
+	// 		'expediente' => "+ Nuevo expediente"
+	// 	)
+	// );
 	$totalPacientes = ControladorPaciente::contarPacientesCtl()["totalPacientes"];
 	$totalPacientes = 2;
 	$mostrando = sizeof($arrayPacientes);
@@ -77,7 +77,7 @@
 			<?php 
 				foreach($arrayPacientes as $key => $value) : 
 					$nombre = $value["nombre"].' '.$value["apellidos"];
-					$expediente = $value["expediente"];
+					//$expediente = $value["expediente"];
 			?>
 		<tr name="pacientes-row">
 			<td>
@@ -86,7 +86,8 @@
 			<td id="<?=$value["idUsuario"]?>" name="checkPaciente"><?=$nombre?></td>
 			<td id="<?=$value["idUsuario"]?>" name="checkPaciente"><?=$value["fechaRegistro"]?></td>
 			<td id="<?=$value["idUsuario"]?>" name="checkPaciente">
-				<input type="button" id="historiaNBtn-s" class="btn" value="<?=$expediente?>">
+				<a class="btn" href="index.php?pagina=PacienteInfo&expediente=<?=$value["idUsuario"]?>">Expediente</a>
+				<!-- <input type="button" id="historiaNBtn-s" class="btn" value="Expediente"> -->
 			</td>
 		</tr>
 			<?php endforeach ?>
@@ -147,10 +148,9 @@
 			</div>
 		</div>
 		<div class="i__group">
-			<input class="textfield" type="text" id="pacienteApellidos-N" name="pacienteApellidos-N" required>
-			<label class="labels" for="pacienteApellidos-N">Teléfono</label>
+			<input class="textfield" type="text" id="pacienteTelefono-N" name="pacienteTelefono-N" required>
+			<label class="labels" for="pacienteTelefono-N">Teléfono</label>
 		</div>
-
 		<div>
 			<input class="submit" type="submit" value="Agregar">
 			<?php //ControladorUsuario::crearCuentaCtl(); ?>

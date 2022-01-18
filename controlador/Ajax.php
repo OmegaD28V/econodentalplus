@@ -1,23 +1,26 @@
 <?php 
 	require_once '../modelo/CRUD.php';
+	require_once '../modelo/CRUDAgenda.php';
+	require_once '../modelo/CRUDExterno.php';
 	require_once '../modelo/CRUDUsuario.php';
 	require_once 'Controlador.php';
-	require_once 'ControladorUsuario.php';
-	require_once '../modelo/CRUDAgenda.php';
 	require_once 'ControladorAgenda.php';
+	require_once 'ControladorUsuario.php';
+	require_once 'ControladorExterno.php';
 
 	class Ajax{
 		public $cancelarCitas;
 		public $datosCita;
 		public $datosUsuario;
-		// public $requestPetDataEdit;
-		// public $asMain;
-
-		// public $datosMascota;
-
-		// public $grafica;
-		// public $selectRaza;
+		public $config;
 		public $buscar;
+
+		#Obtener la configuración.
+		public function getConfigAjax() {
+			$dato = $this -> config;
+			$respuesta = ControladorUsuario::selConfigHoraCtl($dato);
+			echo json_encode($respuesta);
+		}
 
 		#Recuperar fecha de cita para editar o posponer.
 		public function fechaCitaAjax(){
@@ -33,12 +36,6 @@
 			echo json_encode($respuesta);
 		}
 		
-		// #Seleccionar estado de conexión de los usuarios activos de la base de datos.
-		// public function seleccionarConexionUsuariosAjax(){
-		// 	$respuesta = ControladorUsuario::seleccionarConexionUsuariosCtl();
-		// 	echo json_encode($respuesta);
-		// }
-		
 		#Cancelar una o más citas.
 		public function cancelarCitasAjax(){
 			$datos = $this -> cancelarCitas;
@@ -46,54 +43,12 @@
 			echo $respuesta;
 		}
 		
-		// #Deshabilitar uno o más correos de clientes.
-		// public function eliminarCorreosAjax(){
-		// 	$datos = $this -> correosClienteEliminar;
-		// 	$respuesta = Controlador::eliminarCorreosCtl($datos);
-		// 	echo $respuesta;
-		// }
-		
-		// #Deshabilitar uno o más teléfonos de clientes.
-		// public function eliminarTelefonosAjax(){
-		// 	$datos = $this -> telefonosClienteEliminar;
-		// 	$respuesta = Controlador::eliminarTelefonosCtl($datos);
-		// 	echo $respuesta;
-		// }
-		
-		// #Deshabilitar uno o más domicilios de clientes.
-		// public function eliminarDomiciliosAjax(){
-		// 	$datos = $this -> domiciliosClienteEliminar;
-		// 	$respuesta = Controlador::eliminarDomiciliosCtl($datos);
-		// 	echo $respuesta;
-		// }
-		
 		#Deshabilitar uno o más usuarios.
 		public function eliminarUsuariosAjax(){
 			$datos = $this -> datosUsuario;
 			$respuesta = ControladorUsuario::eliminarUsuariosCtl($datos);
 			echo json_encode($respuesta);
 		}
-		
-		// #Deshabilitar una o más mascotas.
-		// public function eliminarMascotasAjax(){
-		// 	$datos = $this -> mascotasElegidosEliminar;
-		// 	$respuesta = ControladorMascota::eliminarMascotasCtl($datos);
-		// 	echo json_encode($respuesta);
-		// }
-		
-		// #Deshabilitar una o más jaulas.
-		// public function eliminarJaulasAjax(){
-		// 	$datos = $this -> petInfoEliminar;
-		// 	$respuesta = ControladorMascota::eliminarJaulasCtl($datos);
-		// 	echo json_encode($respuesta);
-		// }
-		
-		// #Deshabilitar una o más razas.
-		// public function eliminarRazasAjax(){
-		// 	$datos = $this -> petInfoEliminar;
-		// 	$respuesta = ControladorMascota::eliminarRazasCtl($datos);
-		// 	echo json_encode($respuesta);
-		// }
 
 		#Seleccionar correo electrónico para editar.
 		public function selCorreoAjax(){
@@ -116,26 +71,12 @@
 			echo json_encode($respuesta);
 		}
 
-		// #Seleccionar mascota para editar.
-		// public function seleccionarMascotaAjax(){
-		// 	$mascotaId = $this -> requestPetDataEdit;
-		// 	$respuesta = ControladorMascota::infoMascotaCtl($mascotaId);
-		// 	echo json_encode($respuesta);
-		// }
-		
-		// #Seleccionar jaula para editar.
-		// public function seleccionarJaulaAjax(){
-		// 	$requestCD = $this -> requestPetDataEdit;
-		// 	$respuesta = ControladorMascota::seleccionarJaulaCtl($requestCD);
-		// 	echo json_encode($respuesta);
-		// }
-		
-		// #Seleccionar datos de raza para editar.
-		// public function seleccionarDatosRazaAjax(){
-		// 	$requestCD = $this -> requestPetDataEdit;
-		// 	$respuesta = ControladorMascota::seleccionarDatosRazaCtl($requestCD);
-		// 	echo json_encode($respuesta);
-		// }
+		#Seleccionar datos de cita de paciente nuevo.
+		public function selCitaAjax(){
+			$idCita = $this -> datosCita;
+			$respuesta = ControladorExterno::selCitaCtl($idCita);
+			echo json_encode($respuesta);
+		}
 		
 		// #Seleccionar los atributos de la mascota.
 		// public function seleccionarAtributosAjax(){
@@ -178,28 +119,12 @@
 			$respuesta = ControladorUsuario::buscarUsuariosCtl($buscar);
 			echo json_encode($respuesta);
 		}
-		
-		// #Buscar usuario.
-		// public function buscarMascotaAjax(){
-		// 	$buscar = $this -> buscar;
-		// 	$respuesta = $buscar;
-		// 	$respuesta = ControladorMascota::buscarMascotaCtl($buscar);
-		// 	echo json_encode($respuesta);
-		// }
-		
-		// #Buscar raza.
-		// public function buscarRazaAjax(){
-		// 	$buscar = $this -> buscar;
-		// 	$respuesta = ControladorMascota::buscarRazaCtl($buscar);
-		// 	echo json_encode($respuesta);
-		// }
-		
-		// #Buscar jaula.
-		// public function buscarJaulaAjax(){
-		// 	$buscar = $this -> buscar;
-		// 	$respuesta = ControladorMascota::buscarJaulaCtl($buscar);
-		// 	echo json_encode($respuesta);
-		// }
+	}
+	
+	if (isset($_POST["config"])) {
+		$objConfig = new Ajax();
+		$objConfig -> config = json_decode($_POST["config"]);
+		$objConfig -> getConfigAjax();
 	}
 	
 	if (isset($_POST["cancelarCitas"])) {
@@ -214,46 +139,11 @@
 		$objIdEliminar -> eliminarUsuariosAjax();
 	}
 	
-	// if (isset($_POST["petsToDelete"])) {
-	// 	$objIdEliminar = new Ajax();
-	// 	$objIdEliminar -> mascotasElegidosEliminar = json_decode($_POST["petsToDelete"]);
-	// 	$objIdEliminar -> eliminarMascotasAjax();
-	// }
-	
-	// if (isset($_POST["emailsClientToDelete"])) {
-	// 	$objIdEliminar = new Ajax();
-	// 	$objIdEliminar -> correosClienteEliminar = json_decode($_POST["emailsClientToDelete"]);
-	// 	$objIdEliminar -> eliminarCorreosAjax();
-	// }
-	
-	// if (isset($_POST["phonesClientToDelete"])) {
-	// 	$objIdEliminar = new Ajax();
-	// 	$objIdEliminar -> telefonosClienteEliminar = json_decode($_POST["phonesClientToDelete"]);
-	// 	$objIdEliminar -> eliminarTelefonosAjax();
-	// }
-	
-	// if (isset($_POST["addressClientToDelete"])) {
-	// 	$objIdEliminar = new Ajax();
-	// 	$objIdEliminar -> domiciliosClienteEliminar = json_decode($_POST["addressClientToDelete"]);
-	// 	$objIdEliminar -> eliminarDomiciliosAjax();
-	// }
-	
-	// if (isset($_POST["jaulasToDelete"])) {
-	// 	$objIdEliminar = new Ajax();
-	// 	$objIdEliminar -> petInfoEliminar = json_decode($_POST["jaulasToDelete"]);
-	// 	$objIdEliminar -> eliminarJaulasAjax();
-	// }
-	
-	// if (isset($_POST["razasToDelete"])) {
-	// 	$objIdEliminar = new Ajax();
-	// 	$objIdEliminar -> petInfoEliminar = json_decode($_POST["razasToDelete"]);
-	// 	$objIdEliminar -> eliminarRazasAjax();
-	// }
-	
-	// if (isset($_POST["estado-usuarios"])) {
-	// 	$objEstadoUsuarios = new Ajax();
-	// 	$objEstadoUsuarios -> selConexionUsuariosAjax();
-	// }
+	if (isset($_POST["nuevo-paciente"])) {
+		$objDatosCita = new Ajax();
+		$objDatosCita -> datosCita = json_decode($_POST["nuevo-paciente"]);
+		$objDatosCita -> selCitaAjax();
+	}
 	
 	if (isset($_POST["correoABtn-s"])) {
 		$objUserDataEdit = new Ajax();
@@ -374,21 +264,3 @@
 		$objbuscar -> buscar = $_POST["buscarUsuarios"];
 		$objbuscar -> buscarUsuariosAjax();
 	}
-	
-	// if (isset($_POST["buscar-pet"])) {
-	// 	$objbuscar = new Ajax();
-	// 	$objbuscar -> buscar = json_decode($_POST["buscar-pet"]);
-	// 	$objbuscar -> buscarMascotaAjax();
-	// }
-	
-	// if (isset($_POST["buscar-raza"])) {
-	// 	$objbuscar = new Ajax();
-	// 	$objbuscar -> buscar = $_POST["buscar-raza"];
-	// 	$objbuscar -> buscarRazaAjax();
-	// }
-	
-	// if (isset($_POST["buscar-jaula"])) {
-	// 	$objbuscar = new Ajax();
-	// 	$objbuscar -> buscar = $_POST["buscar-jaula"];
-	// 	$objbuscar -> buscarJaulaAjax();
-	// }

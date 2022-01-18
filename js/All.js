@@ -2,8 +2,8 @@ import Pagina from './Pagina.js';
 import Interactividad from './Interactividad.js';
 import JQueryAcciones from './JQueryAcciones.js';
 import Validaciones from './Validaciones.js';
+import CronoAcciones from './CronoAcciones.js';
 
-// fechaA = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2) + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
 const pagina = Pagina.getPagina();
 class All {
 	constructor () {
@@ -46,7 +46,20 @@ class All {
 			
 			Interactividad.itemsTable(document.getElementsByName('checkCita'));
 
-			Interactividad.confirmarCita(document.getElementsByName('citaBtn-C'));
+			Interactividad.confirmarCita(
+				'nuevo-paciente', 
+				document.getElementsByName('citaBtn-C'), 
+				(r) => {
+					$('#pacienteNombre-N').val(r["nombre"]);
+					$('#pacienteApellidos-N').val(r["apellidos"]);
+					$('#pacienteTelefono-N').val(r["telefono"]);
+					$('#idCitaC').val(r["idCita"]);
+					let form = document.querySelector('#pacienteNForm');
+					let buttonHide = document.querySelector('#pacienteNBtn-x');
+					form.classList.remove('oculto');
+					Interactividad.interactFormModalSecret(buttonHide, form);
+				}
+			);
 			
 			JQueryAcciones.search($('#citaBtn-b'), $('#tbl-citas'), 'buscarCitas', (respuesta) => {
 				console.log("Funcion buscar paciente agenda");
@@ -128,12 +141,32 @@ class All {
 			Validaciones.nombresPropios(document.getElementById('citaNombre-n'), 2, 30);
 			Validaciones.nombresPropios(document.getElementById('citaApellidos-n'), 2, 50);
 			Validaciones.enterosSinIntervalo(document.getElementById('citaTelefono-n'), 10);
+
+			CronoAcciones.getConfig((r) => {
+				let i = 0;
+				let dots = {};
+				for (const k in r) {
+					dots[i] = r[k];
+					i++;
+				}
+				Validaciones.fechas(document.getElementById('citaFecha-n'), 1, dots);
+				Validaciones.horas(document.getElementById('citaHora-n'), r.horaA, r.horaC);
+			});
 		} else if (pagina == 'Cita') {
 			Validaciones.nombresPropios(document.getElementById('citaNombre-n'), 2, 30);
 			Validaciones.nombresPropios(document.getElementById('citaApellidos-n'), 2, 50);
 			Validaciones.enterosSinIntervalo(document.getElementById('citaTelefono-n'), 10);
-			Validaciones.fechas(document.getElementById('citaFecha-n'), 1);
-			Validaciones.horas(document.getElementById('citaHora-n'), "10:00", "18:30");
+			
+			CronoAcciones.getConfig((r) => {
+				let i = 0;
+				let dots = {};
+				for (const k in r) {
+					dots[i] = r[k];
+					i++;
+				}
+				Validaciones.fechas(document.getElementById('citaFecha-n'), 1, dots);
+				Validaciones.horas(document.getElementById('citaHora-n'), r.horaA, r.horaC);
+			});
 			Interactividad.ajuste();
 		} else if (pagina == 'Usuarios') {
 			Interactividad.interactFormModal(

@@ -631,7 +631,7 @@ table tr:last-child td:last-child {
 	color: inherit;
 }
 
-.table tr td a, .button{
+/* .table tr td a, .button{
 	text-decoration: none;
 	color: blue;
 	font-size: 20px;
@@ -641,7 +641,7 @@ table tr:last-child td:last-child {
 	width: 50%;
 	text-align: center;
 	border-radius: 2px;
-}
+} */
 
 .table tr td:last-child, .table tr th:last-child{
 	text-align: center;

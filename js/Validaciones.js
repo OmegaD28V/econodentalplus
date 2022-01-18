@@ -81,7 +81,7 @@ export default class Validaciones {
 	}
 
 	/** Validación de campos de datetime-local para fechas con hora. */
-	static fechas(input, min) {
+	static fechas(input, min, dots) {
 		if (input) {
 			let message = document.createElement('div');
 			message.setAttribute('class', 'message');
@@ -91,11 +91,9 @@ export default class Validaciones {
 				input.classList.remove('yeah');
 				message.remove();
 				let d = new Date();
+				let fechaInput = new Date(input.value);
 				let fechaActual = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + (d.getDate() + min)).slice(-2);
-				// let fechaActual = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + (d.getDate() + min)).slice(-2) + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
-				console.log(fechaActual);
-				console.log(input.value);
-				if (input.value < fechaActual) {
+				if (input.value < fechaActual || (!dots[fechaInput.getDay()])) {
 					input.classList.add('noug');
 					input.value = null;
 					input.parentElement.appendChild(message);
@@ -103,8 +101,6 @@ export default class Validaciones {
 					input.classList.add('yeah');
 				}
 			})
-			// let text = "Solo letras y espacios.";
-			// Validaciones.validarCampo(input, regExp, max, text);
 		}
 	}
 	
@@ -117,9 +113,6 @@ export default class Validaciones {
 				input.classList.remove('noug');
 				input.classList.remove('yeah');
 				message.remove();
-				console.log(min);
-				console.log(max);
-				console.log(input.value);
 				if (input.value < min || input.value > max) {
 					input.classList.add('noug');
 					input.value = null;
@@ -128,8 +121,6 @@ export default class Validaciones {
 					input.classList.add('yeah');
 				}
 			})
-			// let text = "Solo letras y espacios.";
-			// Validaciones.validarCampo(input, regExp, max, text);
 		}
 	}
 

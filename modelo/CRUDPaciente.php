@@ -1,5 +1,16 @@
 <?php
 	class CRUDPaciente{
+		#Seleccionar el último registro de pacientes.
+		static public function ultimoPacienteBD() {
+			$sql = Conexion::conectar() -> prepare(
+				"SELECT MAX(idUsuario) AS idUsuario FROM usuario WHERE tipoUsuario = 0;"
+			);
+			$sql -> execute();
+			return $sql -> fetch();
+			$sql -> close();
+			$sql = null;
+		}
+
 		#Buscar pacientes en la base de datos.
 		static public function buscarPacientesBD($buscar){
 			$sql = Conexion::conectar() -> prepare(
@@ -54,18 +65,22 @@
 			$sql = null;
 		}
 
-		// #Seleccionar estado de conexión de los usuarios activos de la base de datos.
-		// static public function seleccionarConexionPacientesBD(){
-		// 	$sql = Conexion::conectar() -> prepare(
-		// 		"SELECT u.idUsuario, u_a.estado FROM usuario u 
-		// 		INNER JOIN usuario_acceso u_a ON u.idUsuario = u_a.idUsuario 
-		// 		WHERE u.estado = 1 AND u.tipo > 0;"
-		// 	);
-		// 	$sql -> execute();
-		// 	return $sql -> fetchAll();
-		// 	$sql -> close();
-		// 	$sql = null;
-		// }
+		#Crear nuevo paciente.
+		static public function nuevoPacienteBD($datosPaciente){
+			$sql = Conexion::conectar() -> prepare(
+				"INSERT INTO usuario(nombre, apellidos, fechaRegistro, tipoUsuario, estado) 
+				VALUE(:nombre, :apellidos, now(), 0, 1);"
+			);
+			$sql -> bindParam(":nombre", $datosPaciente["nombre"], PDO::PARAM_STR);
+			$sql -> bindParam(":apellidos", $datosPaciente["apellidos"], PDO::PARAM_STR);
+			if($sql -> execute()) {
+				return true;
+			} else {
+				return false;
+			}
+			$sql -> close();
+			$sql = null;
+		}
 
 		// #Confirmar los datos de un usuario al iniciar sesión
 		static public function iniciarSesionBD($usuario, $contrasena){

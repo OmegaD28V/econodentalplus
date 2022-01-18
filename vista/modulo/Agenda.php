@@ -18,6 +18,7 @@
 	$arrayCitas = ControladorAgenda::selCitasCtl();
 	$totalCitas = ControladorAgenda::contarCitasCtl()["totalCitas"];
 	$mostrando = sizeof($arrayCitas);
+	$config = ControladorUsuario::selConfigCtl(1);
 	// $paginacion = Paginacion::pnt($modulo, sizeof($arrayClientes), $init, $size);
 	// $paginacion != null ? $inicio = $paginacion['inicio'] : null ;
 	// $clientes = array_slice($arrayClientes, $inicio, $size);
@@ -136,11 +137,42 @@
 			</div>
 		</div>
 		<div class="i__group" style="margin-top: 10px;">
-			<div class="nodata"><span>Horario de Martes a Domingo de 10:00 a 18:30 hrs.</span></div>
-		</div>
+			<?php if(!$config) : ?>
+				<div class= "nodata"><span>Horario de Martes a Domingo de 10:00 a 18:30</span></div>
+			<?php else : $configJSON = DataArrays::getFechaConfig(json_decode($config["configJSON"]));?>
+				<div class= "nodata"><span>Horario <?=$configJSON?></span></div>
+			<?php endif ?>
+			</div>
 		<div>
 			<input class="submit" type="submit" value="Agendar">
 			<?php ControladorExterno::agendarCitaCtl(); ?>
+		</div>
+	</form>
+</div>
+
+<div class="C__f oculto" id="pacienteNForm">
+	<form method="post" class="f">
+		<span class="f__x" id="pacienteNBtn-x"></span>
+		<h2 class="f__title">Nuevo Paciente</h2>
+		<div class="line-top"></div>
+		<div class="iflex">
+			<div class="i__group">
+				<input class="textfield" type="text" id="pacienteNombre-N" name="pacienteNombre-N" autofocus required>
+				<label class="labels" for="pacienteNombre-N">Nombre</label>
+			</div>
+			<div class="i__group">
+				<input class="textfield" type="text" id="pacienteApellidos-N" name="pacienteApellidos-N" required>
+				<label class="labels" for="pacienteApellidos-N">Apellidos</label>
+			</div>
+		</div>
+		<div class="i__group">
+			<input class="textfield" type="text" id="pacienteTelefono-N" name="pacienteTelefono-N" required>
+			<label class="labels" for="pacienteTelefono-N">Teléfono</label>
+		</div>
+		<div>
+			<input type="hidden" name="idCitaC" id="idCitaC">
+			<input class="submit" type="submit" value="Confirmar">
+			<?php ControladorPaciente::nuevoPacienteCtl(); ?>
 		</div>
 	</form>
 </div>

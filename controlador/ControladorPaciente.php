@@ -145,46 +145,47 @@
 		// 	return $desconectar;
 		// }
 
-		// #Crear cuenta de Paciente.
-		// static public function crearCuentaCtl(){
-		// 	if (
-		// 		isset($_POST["PacienteNombre-N"]) && 
-		// 		isset($_POST["PacienteApellidos-N"]) && 
-		// 		isset($_POST["Paciente-N"]) && 
-		// 		isset($_POST["PacientePwd-N"]) && 
-		// 		isset($_POST["PacienteCargo-N"])
-		// 		) {
-		// 		if (CRUDPaciente::validarPacienteBD($_POST["Paciente-N"]) != null) {
-		// 			echo '<script>toast("Debe elegir otro nombre de Paciente");</script>';
-		// 		} else {
-		// 			if (
-		// 				Validacion::nombresPropios($_POST["PacienteNombre-N"], 2, 30) && 
-		// 				Validacion::nombresPropios($_POST["PacienteApellidos-N"], 2, 50) && 
-		// 				Validacion::nombresPacientes($_POST["Paciente-N"], 2, 30) && 
-		// 				Validacion::contrasenas($_POST["PacientePwd-N"], 8)
-		// 			) {
-		// 				$pic = Pic::progPic($_POST["PacientePwd-N"]);
-		// 				$datosPaciente = array(
-		// 					"nombre" => $_POST["PacienteNombre-N"], 
-		// 					"apellidos" => $_POST["PacienteApellidos-N"], 
-		// 					"Paciente" => $_POST["Paciente-N"], 
-		// 					"contrasena" => $pic, 
-		// 					"tipoPaciente" => $_POST["PacienteCargo-N"]
-		// 				);
-		// 				$crearPacienteYCuenta = CRUDPaciente::crearCuentaBD($datosPaciente);
-		// 				if ($crearPacienteYCuenta) {
-		// 					echo '<script>toast("Paciente creado");</script>
-		// 						';
-		// 				}else{
-		// 					echo '<script>toast("Ha ocurrido un error consulte al desarrollador");</script>
-		// 						';
-		// 				}
-		// 			} else {
-		// 				echo '<script>toast("Debe llenar todos los campos correctamente.");</script>';
-		// 			}
-		// 		}
-		// 	}
-		// }
+		#Crear nuevo paciente.
+		static public function nuevoPacienteCtl(){
+			if (
+				isset($_POST["idCitaC"]) && 
+				isset($_POST["pacienteNombre-N"]) && 
+				isset($_POST["pacienteApellidos-N"]) && 
+				isset($_POST["pacienteTelefono-N"])
+				) {
+					if (
+						Validacion::nombresPropios($_POST["pacienteNombre-N"], 2, 30) && 
+						Validacion::nombresPropios($_POST["pacienteApellidos-N"], 2, 50) && 
+						Validacion::enterosSinIntervalo($_POST["pacienteTelefono-N"], 10)
+					) {
+						$idCita = $_POST["idCitaC"];
+						$datosPaciente = array(
+							"nombre" => $_POST["pacienteNombre-N"], 
+							"apellidos" => $_POST["pacienteApellidos-N"]
+						);
+						$nuevoPaciente = CRUDPaciente::nuevoPacienteBD($datosPaciente);
+						$ultimoPaciente = CRUDPaciente::ultimoPacienteBD();
+						$datosTelefono = array(
+							"idPersona" => $ultimoPaciente["idUsuario"], 
+							"telefono" => $_POST["pacienteTelefono-N"], 
+							"tipo" => '1'
+						);
+						$telefonoPaciente = CRUD::nuevoTelefonoBD($datosTelefono, 1);
+						if (true) {
+							$quitarCita = CRUDExterno::quitarCitaBD($idCita);
+							echo '<script>
+									toast("Paciente guardado.");
+									window.location = "index.php?pagina=PacienteInfo&expediente='.$ultimoPaciente["idUsuario"].'";
+								</script>';
+						}else{
+							echo '<script>toast("Ha ocurrido un error, intente de nuevo");</script>
+								';
+							}
+						} else {
+						echo '<script>toast("Debe llenar todos los campos correctamente.");</script>';
+					}
+			}
+		}
 
 		// #Deshabilitar uno o más Pacientes.
 		// static public function eliminarPacientesCtl($Pacientes){

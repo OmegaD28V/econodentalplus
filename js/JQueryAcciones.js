@@ -188,7 +188,6 @@ export default class JQueryAcciones {
 		let nameRequest = nameElement;
 		let formData = new FormData();
 		formData.append(nameRequest, recordId);
-		console.log(nameRequest);
 
 		$.ajax({
 			url: 'controlador/Ajax.php', 

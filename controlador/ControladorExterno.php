@@ -5,7 +5,7 @@
 		 * Cuando el paciente genera la cita por sí mismo 
 		 * desde la página web.
 		 */
-		public function agendarCitaCtl() {
+		static public function agendarCitaCtl() {
 			if (
 				isset($_POST["citaNombre-n"]) &&
 				isset($_POST["citaApellidos-n"]) &&
@@ -36,5 +36,11 @@
 					echo '<script>toast("Hay campos vacíos o incorrectos.");</script>';
 				}
 			}
+		}
+
+		#Seleccionar los datos de cita de paciente nuevo para agregarlo al sistema.
+		static public function selCitaCtl($idCita) {
+			$respuesta = CRUDExterno::selCitaBD($idCita);
+			return $respuesta;
 		}
 	}

@@ -312,6 +312,18 @@
 			$sql = null;
 		}
 		
+		#Seleccionar la configuración de hora del sistema.
+		static public function selConfigHoraBD($idUsuario){
+			$sql = Conexion::conectar() -> prepare(
+				"SELECT configJSON FROM config WHERE idUsuario = :idUsuario;"
+			);
+			$sql -> bindParam(":idUsuario", $idUsuario, PDO::PARAM_INT);
+			$sql -> execute();
+			return $sql -> fetch();
+			$sql -> close();
+			$sql = null;
+		}
+		
 		#Establecer nuevo horario laboral.
 		static public function nuevoHorarioBD($idUsuario, $horarioJSON){
 			$sql = Conexion::conectar() -> prepare(

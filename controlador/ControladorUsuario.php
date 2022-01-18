@@ -201,6 +201,12 @@
 			return $respuesta;
 		}
 		
+		#Seleccionar la configuración de hora del sistema.
+		static public function selConfigHoraCtl($idUsuario) {
+			$respuesta = CRUDUsuario::selConfigHoraBD($idUsuario);
+			return $respuesta;
+		}
+		
 		#Establecer nuevo horario laboral.
 		static public function nuevoHorarioCtl() {
 			if (

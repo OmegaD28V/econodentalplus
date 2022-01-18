@@ -5,11 +5,17 @@ export default class Interactividad {
 		document.querySelector('main').classList.add('ajuste');
 	}
 	
-	static confirmarCita(btnC) {
+	static confirmarCita(nameRequest, btnC, callback) {
 		if (btnC) {
 			for (const i of btnC) {
 				i.addEventListener('click', () => {
-					console.log(i.parentElement.getAttribute('id'));
+					JQueryAcciones.editFormModal(
+						i.parentElement.getAttribute('id'), 
+						nameRequest, 
+						(r) => {
+							callback(r);
+						}
+					);
 					// Crear paciente nuevo en la base de datos.
 					// Crear la tabla expediente y normalizar.
 					// Para iniciar el expediente, llenar en forma física y digital el formato de Historia Medica ECO.docx
@@ -43,6 +49,14 @@ export default class Interactividad {
 				form.classList.remove('oculto');
 				$('body, html').animate({scrollTop: '0px'}, 300);
 			});
+			buttonHide.addEventListener('click', () => {
+				form.classList.add('oculto');
+			});
+		}
+	}
+	
+	static interactFormModalSecret (buttonHide, form) {
+		if (form && buttonHide) {
 			buttonHide.addEventListener('click', () => {
 				form.classList.add('oculto');
 			});

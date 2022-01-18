@@ -1,5 +1,5 @@
 <?php
-	$idUsuario = $_SESSION["paciente"];
+	$idUsuario = $_GET["expediente"];
 	$telefonos = Controlador::selTelefonosCtl($idUsuario);
 	$correos = Controlador::selCorreosCtl($idUsuario);
 	$domicilios = Controlador::selDomiciliosCtl($idUsuario);

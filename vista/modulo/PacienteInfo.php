@@ -12,13 +12,13 @@
 	$attr = ControladorPaciente::selAtributosCtl($idPaciente);
 ?>
 <div class="title">
-	<h2>Mis Datos</h2>
+	<h2>Expediente</h2>
 </div>
 
 <div class="C__Table center">
 	<div class="Bar__Btns column w70">
 		<span class="subtitle center">Información del paciente</span>
-		<form method="post" class="iflex centerf column ">
+		<form method="post" class="iflex centerf column">
 			<div class="iflex">
 				<div class="i__group">
 					<input class="textfield" type="text" id="pacienteNombre-a" name="pacienteNombre-a" value="<?=$infoPaciente["nombre"]?>" autofocus required>
@@ -41,10 +41,10 @@
 						<label class="labels" for="pacienteEdoCivil-a">Estado Civil</label>
 					</div>
 					<input type="radio" name="pacienteEdoCivil-a" id="Soltero" 
-						<?= $attr["estadoCivil"] == 1 ? 'checked' : null ?>>
+						<?= $attr["estadoCivil"] == 1 ? 'checked' : null ?> value="1">
 					<label class="label-radio" for="Soltero">Soltero</label>
 					<input type="radio" name="pacienteEdoCivil-a" id="Casado" 
-						<?= $attr["estadoCivil"] == 2 ? 'checked' : null ?>>
+						<?= $attr["estadoCivil"] == 2 ? 'checked' : null ?> value="2">
 					<label class="label-radio" for="Casado">Casado</label>
 				</div>
 			</div>
@@ -54,10 +54,10 @@
 						<label class="labels" for="pacienteSexo-a">Sexo</label>
 					</div>
 					<input type="radio" name="pacienteSexo-a" id="Masculino" 
-						<?= $attr["sexo"] == 1 ? 'checked' : null ?> required>
+						<?= $attr["sexo"] == 1 ? 'checked' : null ?> value="1" required>
 					<label class="label-radio" for="Masculino">Masculino</label>
 					<input type="radio" name="pacienteSexo-a" id="Femenino" 
-						<?= $attr["sexo"] == 2 ? 'checked' : null ?>>
+						<?= $attr["sexo"] == 2 ? 'checked' : null ?> value="2">
 					<label class="label-radio" for="Femenino">Femenino</label>
 				</div>
 			</div>
@@ -74,87 +74,104 @@
 			</div>
 		</form>
 	</div>
+</div>
 
-	<div class="info msg w70">
-		<span>Elemento principal(<b class="principal">*</b>)</span>
+<div class="C__Table center">
+	<div class="Bar__Btns column w70">
+		<span class="subtitle center">Información de contacto</span>
+		<div class="info msg">
+			<span>Elemento principal(<b class="principal">*</b>)</span>
+		</div>
+		
+		<div class="Bar__Btns column">
+			<span class="subtitle center">Teléfono</span>
+			<div class="C__Btn">
+				<input type="button" id="telefonoNBtn-s" class="btn" value=" + Agregar teléfono">
+			</div>
+			<?php if (!$telefonos) : ?>
+				<div class="info nodata"><span>No hay teléfonos registrados</span></div>
+			<?php else : foreach ($telefonos as $key => $value) : ?>
+			<?php $value["estado"] == 2 ? $eTel = "*" : $eTel = ""; ?>
+				<div class="lista">
+					<div class="listaItem">
+						<div>
+							<b class="principal"><?=$eTel?></b>
+							<span><?=$value["numero"]?></span>
+						</div>
+						<div>
+							<input class="btn link" id="<?=$value["idUsuarioTelefono"]?>" name="telefonoABtn-s" type="button" value="Actualizar">
+							<input class="btn link" id="<?=$value["idUsuarioTelefono"]?>" name="telefonoEBtn-s" type="button" value="Eliminar">
+						</div>
+					</div>
+				</div>
+			<?php endforeach; endif; ?>
+		</div>
+		
+		<div class="Bar__Btns column">
+			<span class="subtitle center">Correo electrónico</span>
+			<div class="C__Btn">
+				<input type="button" id="correoNBtn-s" class="btn" value=" + Agregar Correo electrónico">
+			</div>
+			<?php if (!$correos) :  ?>
+				<div class="info nodata"><span>No hay Correos electrónicos registrados</span></div>
+			<?php else : foreach ($correos as $key => $value) : ?>
+			<?php $value["estado"] == 2 ? $eCorreo = "*" : $eCorreo = "" ?>
+				<div class="lista">
+					<div class="listaItem">
+						<div>
+							<b class="principal"><?=$eCorreo?></b>
+							<span><?=$value["correo"]?></span>
+						</div>
+						<div>
+							<input class="btn link" id="<?=$value["idUsuarioCorreo"]?>" name="correoABtn-s" type="button" value="Actualizar">
+							<input class="btn link" id="<?=$value["idUsuarioCorreo"]?>" name="correoEBtn-s" type="button" value="Eliminar">
+						</div>
+					</div>
+				</div>
+			<?php endforeach; endif; ?>
+		</div>
+		
+		<div class="Bar__Btns column">
+			<span class="subtitle center">Domicilio</span>
+			<div class="C__Btn">
+				<input type="button" id="domicilioNBtn-s" class="btn" value=" + Agregar domicilio">
+			</div>
+			<?php if (!$domicilios) :  ?>
+				<div class="info nodata"><span>No hay domicilios registrados</span></div>
+			<?php else : foreach ($domicilios as $key => $value) : ?>
+			<?php $value["estado"] == 2 ? $eDom = "*" : $eDom = "" ?>
+			<?php 
+				$domJSON = json_decode($value["domicilioJSON"]); 
+				$domicilio = $domJSON->calle.", ".
+					(!$domJSON->numExt ? 'S/N' : "#".$domJSON->numExt).", ".
+					$domJSON->colonia.", ".$domJSON->municipio.", ".$domJSON->estado;
+			?>
+				<div class="lista">
+					<div class="listaItem">
+						<div>
+							<b class="principal"><?=$eDom?></b>
+							<span><?=$domicilio?></span>
+						</div>
+						<div>
+							<input class="btn link" id="<?=$value["idUsuarioDomicilio"]?>" name="domicilioABtn-s" type="button" value="Actualizar">
+							<input class="btn link" id="<?=$value["idUsuarioDomicilio"]?>" name="domicilioEBtn-s" type="button" value="Eliminar">
+						</div>
+					</div>
+				</div>
+			<?php endforeach; endif; ?>
+		</div>
 	</div>
+</div>
 
+<div class="C__Table center">
 	<div class="Bar__Btns column w70">
-		<span class="subtitle center">Teléfono</span>
-		<div class="C__Btn">
-			<input type="button" id="telefonoNBtn-s" class="btn" value=" + Agregar teléfono">
-		</div>
-		<?php if (!$telefonos) : ?>
-			<div class="info nodata"><span>No hay teléfonos registrados</span></div>
-		<?php else : foreach ($telefonos as $key => $value) : ?>
-		<?php $value["estado"] == 2 ? $eTel = "*" : $eTel = ""; ?>
-			<div class="lista">
-				<div class="listaItem">
-					<div>
-						<b class="principal"><?=$eTel?></b>
-						<span><?=$value["numero"]?></span>
-					</div>
-					<div>
-						<input class="btn link" id="<?=$value["idUsuarioTelefono"]?>" name="telefonoABtn-s" type="button" value="Actualizar">
-						<input class="btn link" id="<?=$value["idUsuarioTelefono"]?>" name="telefonoEBtn-s" type="button" value="Eliminar">
-					</div>
-				</div>
-			</div>
-		<?php endforeach; endif; ?>
+		<span class="subtitle center">Información Médica</span>
 	</div>
-	
+</div>
+
+<div class="C__Table center">
 	<div class="Bar__Btns column w70">
-		<span class="subtitle center">Correo electrónico</span>
-		<div class="C__Btn">
-			<input type="button" id="correoNBtn-s" class="btn" value=" + Agregar Correo electrónico">
-		</div>
-		<?php if (!$correos) :  ?>
-			<div class="info nodata"><span>No hay Correos electrónicos registrados</span></div>
-		<?php else : foreach ($correos as $key => $value) : ?>
-		<?php $value["estado"] == 2 ? $eCorreo = "*" : $eCorreo = "" ?>
-			<div class="lista">
-				<div class="listaItem">
-					<div>
-						<b class="principal"><?=$eCorreo?></b>
-						<span><?=$value["correo"]?></span>
-					</div>
-					<div>
-						<input class="btn link" id="<?=$value["idUsuarioCorreo"]?>" name="correoABtn-s" type="button" value="Actualizar">
-						<input class="btn link" id="<?=$value["idUsuarioCorreo"]?>" name="correoEBtn-s" type="button" value="Eliminar">
-					</div>
-				</div>
-			</div>
-		<?php endforeach; endif; ?>
-	</div>
-	
-	<div class="Bar__Btns column w70">
-		<span class="subtitle center">Domicilio</span>
-		<div class="C__Btn">
-			<input type="button" id="domicilioNBtn-s" class="btn" value=" + Agregar domicilio">
-		</div>
-		<?php if (!$domicilios) :  ?>
-			<div class="info nodata"><span>No hay domicilios registrados</span></div>
-		<?php else : foreach ($domicilios as $key => $value) : ?>
-		<?php $value["estado"] == 2 ? $eDom = "*" : $eDom = "" ?>
-		<?php 
-			$domJSON = json_decode($value["domicilioJSON"]); 
-			$domicilio = $domJSON->calle.", ".
-				(!$domJSON->numExt ? 'S/N' : "#".$domJSON->numExt).", ".
-				$domJSON->colonia.", ".$domJSON->municipio.", ".$domJSON->estado;
-		?>
-			<div class="lista">
-				<div class="listaItem">
-					<div>
-						<b class="principal"><?=$eDom?></b>
-						<span><?=$domicilio?></span>
-					</div>
-					<div>
-						<input class="btn link" id="<?=$value["idUsuarioDomicilio"]?>" name="domicilioABtn-s" type="button" value="Actualizar">
-						<input class="btn link" id="<?=$value["idUsuarioDomicilio"]?>" name="domicilioEBtn-s" type="button" value="Eliminar">
-					</div>
-				</div>
-			</div>
-		<?php endforeach; endif; ?>
+		<span class="subtitle center">Tratamiento</span>
 	</div>
 </div>
 

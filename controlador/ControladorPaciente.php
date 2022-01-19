@@ -180,7 +180,7 @@
 					if (
 						Validacion::nombresPropios($_POST["pacienteNombre-a"], 2, 30) && 
 						Validacion::nombresPropios($_POST["pacienteApellidos-a"], 2, 50) && 
-						Validacion::nombresPropios($_POST["pacienteOcupacion-a"], 0, 30)
+						Validacion::nombresPropios($_POST["pacienteOcupacion-a"], 0, 45)
 					) {
 						$actualizarAttr = false;
 						$actualizarPaciente = false;

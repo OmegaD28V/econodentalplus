@@ -286,6 +286,58 @@ class All {
 				'eliminarUsuarios', 
 				'Usuarios'
 			);
+		} else if (pagina == 'Pacientes') {
+			Interactividad.checkBox(
+				document.querySelector('#checkPacientes'), 
+				document.getElementsByName('checkPaciente'), 
+				document.querySelector('#pacienteABtn-s'), 
+				document.querySelector('#pacienteFBtn-s')
+			);
+			Interactividad.itemsTable(document.getElementsByName('checkPaciente'));
+			Interactividad.interactFormModal(
+				document.querySelector('#pacienteNBtn-s'), 
+				document.querySelector('#pacienteNBtn-x'), 
+				document.querySelector('#pacienteNForm') 
+			);
+			Interactividad.interactFormModal(
+				document.querySelector('#pacienteABtn-s'), 
+				document.querySelector('#pacienteABtn-x'), 
+				document.querySelector('#pacienteAForm') 
+			);
+			Interactividad.interactFormModal(
+				document.querySelector('#pacienteFBtn-s'), 
+				document.querySelector('#pacienteFBtn-x'), 
+				document.querySelector('#pacienteFForm') 
+			);
+			
+			Validaciones.nombresPropios(document.getElementById('pacienteNombre-N'), 2, 30);
+			Validaciones.nombresPropios(document.getElementById('pacienteApellidos-N'), 2, 50);
+			Validaciones.enterosSinIntervalo(document.getElementById('pacienteTelefono-N'), 10);
+			
+			Validaciones.nombresPropios(document.getElementById('pacienteNombre-A'), 2, 30);
+			Validaciones.nombresPropios(document.getElementById('pacienteApellidos-A'), 2, 50);
+			Validaciones.enterosSinIntervalo(document.getElementById('pacienteTelefono-A'), 10);
+		
+			/*#PacienteInfo*/
+			Validaciones.nombresPropios(document.getElementById('pacienteNombre-a'), 2, 30);
+			Validaciones.nombresPropios(document.getElementById('pacienteApellidos-a'), 2, 50);
+			Validaciones.nombresPropios(document.getElementById('pacienteOcupacion-a'), 0, 45);
+
+			Interactividad.interactFormModal(
+				document.querySelector('#correoNBtn-s'), 
+				document.querySelector('#correoNBtn-x'), 
+				document.querySelector('#correoNForm') 
+			);
+			Interactividad.interactFormModal(
+				document.querySelector('#telefonoNBtn-s'), 
+				document.querySelector('#telefonoNBtn-x'), 
+				document.querySelector('#telefonoNForm') 
+			);
+			Interactividad.interactFormModal(
+				document.querySelector('#domicilioNBtn-s'), 
+				document.querySelector('#domicilioNBtn-x'), 
+				document.querySelector('#domicilioNForm') 
+			);
 		} else if (pagina == 'Configuracion') {
 			Validaciones.contrasenas(document.getElementById('pwdNueva'), 30);
 			Interactividad.interactFormModal(

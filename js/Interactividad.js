@@ -16,7 +16,6 @@ export default class Interactividad {
 							callback(r);
 						}
 					);
-					// Crear paciente nuevo en la base de datos.
 					// Crear la tabla expediente y normalizar.
 					// Para iniciar el expediente, llenar en forma física y digital el formato de Historia Medica ECO.docx
 				});

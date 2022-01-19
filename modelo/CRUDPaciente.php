@@ -57,7 +57,7 @@
 		#Seleccionar la información del paciente de la base de datos.
 		static public function selAtributosBD($idPaciente){
 			$sql = Conexion::conectar() -> prepare(
-				"SELECT *, date_format(fechaNacimiento, '%d/%b/%Y') fechaNacimiento 
+				"SELECT *, date_format(fechaNacimiento, '%Y-%m-%d') fechaNacimiento 
 				FROM paciente_atributos 
 				WHERE estado = 1 AND idUsuario = :idUsuario;"
 			);

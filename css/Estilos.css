@@ -309,40 +309,18 @@ input[type="password"]{
 	text-align: center;
 }
 
-/* input[type="radio"]{
-	display: none;
-} */
+input[type="radio"]{
+	margin: 2px 4px;
+}
 
 input[type="radio"]:checked + .label-radio{
 	display: inline-flex;
 }
 
-/* input[type="radio"]:checked + .label-radio::after{
-	position: absolute;
-	content: '';
-	top: calc(50% - 5px);
-	left: 5px;
-	width: 10px;
-	height: 10px;
-	border-radius: 50%;
-	background-color: var(--CGrisPrincipal);
-}
-
-.label-radio::before{
-	position: absolute;
-	content: '';
-	top: calc(50% - 7px);
-	left: 3px;
-	width: 12px;
-	height: 12px;
-	border-radius: 50%;
-	border: 1px solid var(--CGrisPrincipal);
-} */
-
 .label-radio{
 	position: relative;
 	color: var(--CGrisPrincipal);
-	padding: 2px 4px 2px 20px;
+	padding: 2px 4px;
 	border-radius: 2px;
 	transition: all .3s ease;
 }
@@ -377,7 +355,6 @@ select {
 	display: inline-block;
 	width: 100%;
 	font-family: 'Nunito Sans', sans-serif, arial;
-	font-weight: bold;
 	letter-spacing: 2px;
 	text-decoration: none;
 	cursor: pointer;

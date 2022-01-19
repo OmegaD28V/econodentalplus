@@ -91,6 +91,10 @@
 				<label class="labels" for="pacienteApellidos-A">Apellidos</label>
 			</div>
 		</div>
+		<div class="i__group">
+			<input class="textfield" type="tel" id="pacienteTelefono-A" name="pacienteTelefono-A" required>
+			<label class="labels" for="pacienteTelefono-A">Teléfono</label>
+		</div>
 
 		<div>
 			<input type="hidden" name="idPaciente-A" id="idPaciente-A" required>
@@ -100,15 +104,15 @@
 	</form>
 </div>
 
-<div class="C__f oculto" id="pacienteEForm">
+<div class="C__f oculto" id="pacienteFForm">
 	<form method="post" class="f">
-		<span class="f__x" id="pacienteEBtn-x"></span>
+		<span class="f__x" id="pacienteFBtn-x"></span>
 		<h2 class="f__title">Eliminar pacientes</h2>
 		<div class="line-top"></div>
 		<div class="i__group">
 			<span class="label-checkbox">¿Eliminar los pacientes seleccionados?</span>
 		</div>
-		<input class="submit" type="button" id="pacienteEBtn-C" value="Aceptar">
+		<input class="submit" type="button" id="pacienteFBtn-C" value="Aceptar">
 	</form>
 </div>
 
@@ -130,7 +134,7 @@
 			</div>
 		</div>
 		<div class="i__group">
-			<input class="textfield" type="text" id="pacienteTelefono-N" name="pacienteTelefono-N" required>
+			<input class="textfield" type="tel" id="pacienteTelefono-N" name="pacienteTelefono-N" required>
 			<label class="labels" for="pacienteTelefono-N">Teléfono</label>
 		</div>
 		<div>

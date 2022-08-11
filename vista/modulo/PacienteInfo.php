@@ -3,6 +3,31 @@
 	$telefonos = Controlador::selTelefonosCtl($idPaciente);
 	$correos = Controlador::selCorreosCtl($idPaciente);
 	$domicilios = Controlador::selDomiciliosCtl($idPaciente);
+	$alergias = array(
+		array(
+			'idAlergia' => '1', 
+			'alergia' => 'Penicilina', 
+			'medicamento' => 'Ninguno'
+		)
+	);
+	$padecimientos = array(
+		array(
+			'idPadecimiento' => '1', 
+			'padecimiento' => 'Baja presión', 
+			'antiguedad' => 'Siempre', 
+			'medicamento' => 'Ninguno'
+		)
+	);
+	$tratamiento = array(
+		array(
+			'idTratamiento' => '1', 
+			'diagnostico' => 'Mordida borde a borde', 
+			'tratamiento' => 'Ortodoncia', 
+			'doctor' => 'Daniel', 
+			'ultiCita' => '19/ene/2022', 
+			'proxCita' => '19/feb/2022'
+		)
+	);
 	$tipoTel = DataArrays::getTipoTel();
 	$eCorreo = "";
 	$eTel = "";
@@ -16,6 +41,17 @@
 </div>
 
 <div class="C__Table center">
+	<div class="Bar__Btns column w70">
+		<div class="C__Btn">
+			<input type="button" id="divPacienteBtn-s" value="Información del paciente" class="btn">
+			<input type="button" id="divContactoBtn-s" value="Información de contacto" class="btn">
+			<input type="button" id="divMedicaBtn-s" value="Información médica" class="btn">
+			<input type="button" id="divHistoriaBtn-s" value="Historia Médica" class="btn">
+		</div>
+	</div>
+</div>
+
+<div class="C__Table center " name="divs" id="infoPacienteDiv">
 	<div class="Bar__Btns column w70">
 		<span class="subtitle center">Información del paciente</span>
 		<form method="post" class="iflex centerf column">
@@ -76,7 +112,7 @@
 	</div>
 </div>
 
-<div class="C__Table center">
+<div class="C__Table center none" name="divs" id="infoContactoDiv">
 	<div class="Bar__Btns column w70">
 		<span class="subtitle center">Información de contacto</span>
 		<div class="info msg">
@@ -163,15 +199,89 @@
 	</div>
 </div>
 
-<div class="C__Table center">
+<div class="C__Table center none" name="divs" id="infoMedicaDiv">
 	<div class="Bar__Btns column w70">
 		<span class="subtitle center">Información Médica</span>
+		
+		<div class="Bar__Btns column">
+			<span class="subtitle center">Alergias</span>
+			<div class="C__Btn">
+				<input type="button" id="alergiaNBtn-s" class="btn" value=" + Alergia">
+			</div>
+			<?php if (!$alergias) : ?>
+				<div class="info nodata"><span>No se han registrado alergias</span></div>
+			<?php else : foreach ($alergias as $key => $value) : ?>
+				<div class="lista">
+					<div class="listaItem">
+						<div>
+							<div>Alergia: <?=$value["alergia"]?></div>
+							<div>Medicamento: <?=$value["medicamento"]?></div>
+						</div>
+						<div>
+							<input class="btn link" id="<?=$value["idAlergia"]?>" name="alergiaABtn-s" type="button" value="Actualizar">
+							<input class="btn link" id="<?=$value["idAlergia"]?>" name="alergiaEBtn-s" type="button" value="Eliminar">
+						</div>
+					</div>
+				</div>
+			<?php endforeach; endif; ?>
+		</div>
+
+		<div class="Bar__Btns column">
+			<span class="subtitle center">Padecimientos</span>
+			<div class="C__Btn">
+				<input type="button" id="padecNBtn-s" class="btn" value=" + Padecimiento">
+			</div>
+			<?php if (!$padecimientos) : ?>
+				<div class="info nodata"><span>No se han registrado padecimientos</span></div>
+			<?php else : foreach ($padecimientos as $key => $value) : ?>
+				<div class="lista">
+					<div class="listaItem">
+						<div>
+							<div>Padecimiento: <?=$value["padecimiento"]?></div>
+							<div>Antigüedad: <?=$value["antiguedad"]?></div>
+							<div>Medicamento utilizado: <?=$value["medicamento"]?></div>
+						</div>
+						<div>
+							<input class="btn link" id="<?=$value["idPadecimiento"]?>" name="padecABtn-s" type="button" value="Actualizar">
+							<input class="btn link" id="<?=$value["idPadecimiento"]?>" name="padecEBtn-s" type="button" value="Eliminar">
+						</div>
+					</div>
+				</div>
+			<?php endforeach; endif; ?>
+		</div>
 	</div>
 </div>
 
-<div class="C__Table center">
+<div class="C__Table center none" name="divs" id="infoHistoriaDiv">
 	<div class="Bar__Btns column w70">
-		<span class="subtitle center">Tratamiento</span>
+		<span class="subtitle center">Historia Médica</span>
+
+		<div class="Bar__Btns column">
+			<span class="subtitle center">Tratamientos</span>
+			<div class="C__Btn">
+				<input type="button" id="tratamientoNBtn-s" class="btn" value=" + Agregar tratamiento">
+			</div>
+			<?php if (!$tratamiento) : ?>
+				<div class="info nodata"><span>No hay tratamientos registrados</span></div>
+			<?php else : foreach ($tratamiento as $key => $value) : ?>
+				<div class="lista">
+					<div class="listaItem">
+						<div>
+							<div>Diagnóstico: <?=$value["diagnostico"]?></div>
+							<div>Tratamiento: <?=$value["tratamiento"]?></div>
+							<div>Doctor: <?=$value["doctor"]?></div>
+							<div>Última cita: <?=$value["ultiCita"]?></div>
+							<div>Prox. Cita: <?=$value["proxCita"]?></div>
+						</div>
+						<div>
+							<input class="btn link" id="<?=$value["idTratamiento"]?>" name="tratamientoABtn-s" type="button" value="+ Agregar Indicaciones">
+							<input class="btn link" id="<?=$value["idTratamiento"]?>" name="tratamientoABtn-s" type="button" value="Indicaciones">
+							<input class="btn link" id="<?=$value["idTratamiento"]?>" name="tratamientoEBtn-s" type="button" value="Alta">
+						</div>
+					</div>
+				</div>
+			<?php endforeach; endif; ?>
+		</div>
 	</div>
 </div>
 

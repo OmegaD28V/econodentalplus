@@ -318,7 +318,7 @@ class All {
 			Validaciones.nombresPropios(document.getElementById('pacienteApellidos-A'), 2, 50);
 			Validaciones.enterosSinIntervalo(document.getElementById('pacienteTelefono-A'), 10);
 		
-			/*#PacienteInfo*/
+			/*PacienteInfo*/
 			Validaciones.nombresPropios(document.getElementById('pacienteNombre-a'), 2, 30);
 			Validaciones.nombresPropios(document.getElementById('pacienteApellidos-a'), 2, 50);
 			Validaciones.nombresPropios(document.getElementById('pacienteOcupacion-a'), 0, 45);
@@ -337,6 +337,26 @@ class All {
 				document.querySelector('#domicilioNBtn-s'), 
 				document.querySelector('#domicilioNBtn-x'), 
 				document.querySelector('#domicilioNForm') 
+			);
+			Interactividad.interactDiv(
+				document.querySelector('#divPacienteBtn-s'), 
+				document.getElementsByName('divs'), 
+				document.querySelector('#infoPacienteDiv')
+			);
+			Interactividad.interactDiv(
+				document.querySelector('#divContactoBtn-s'), 
+				document.getElementsByName('divs'), 
+				document.querySelector('#infoContactoDiv')
+			);
+			Interactividad.interactDiv(
+				document.querySelector('#divMedicaBtn-s'), 
+				document.getElementsByName('divs'), 
+				document.querySelector('#infoMedicaDiv')
+			);
+			Interactividad.interactDiv(
+				document.querySelector('#divHistoriaBtn-s'), 
+				document.getElementsByName('divs'), 
+				document.querySelector('#infoHistoriaDiv')
 			);
 		} else if (pagina == 'Configuracion') {
 			Validaciones.contrasenas(document.getElementById('pwdNueva'), 30);
@@ -471,6 +491,14 @@ class All {
 			);
 		} else if (pagina == 'IniciarSesion') {
 			Interactividad.ajuste();
+		} else if (pagina == 'Inicio') {
+			setInterval(() => {Interactividad.stepSlide(document.getElementById('sliderContent'))}, 5000);
+			Interactividad.sliderControls(
+				document.getElementById('prevSlide'), 
+				document.getElementById('nextSlide'), 
+				document.querySelectorAll('.slide'), 
+				document.getElementById('sliderContent')
+			);
 		}
 	}
 }

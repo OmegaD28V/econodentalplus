@@ -4,6 +4,34 @@ export default class Interactividad {
 	static ajuste() {
 		document.querySelector('main').classList.add('ajuste');
 	}
+
+	static stepSlide(slider) {
+		let firstSlide = document.querySelectorAll('.slide')[0];
+		slider.style.marginLeft = '-200%';
+		slider.style.transition = 'all .5s';
+		setTimeout(() => {
+			slider.style.transition = 'none';
+			slider.insertAdjacentElement('beforeend', firstSlide);
+			slider.style.marginLeft = '-100%';
+		}, 500);
+	}
+
+	static sliderControls(prev, next, items, slider) {
+		let lastSlide = items[items.length - 1];
+		slider.insertAdjacentElement('afterbegin', lastSlide);
+		next.addEventListener('click', () => {Interactividad.stepSlide(slider)});
+		prev.addEventListener('click', () => {
+			let items = document.querySelectorAll('.slide');
+			let lastSlide = items[items.length - 1];
+			slider.style.marginLeft = '0%';
+			slider.style.transition = 'all .5s';
+			setTimeout(() => {
+				slider.style.transition = 'none';
+				slider.insertAdjacentElement('afterbegin', lastSlide);
+				slider.style.marginLeft = '-100%';
+			}, 500);
+		});
+	}
 	
 	static confirmarCita(nameRequest, btnC, callback) {
 		if (btnC) {
@@ -40,6 +68,15 @@ export default class Interactividad {
 				}
 			});
 		});
+	}
+	
+	static interactDiv (buttonShow, divs, div) {
+		if (buttonShow && divs && div) {
+			buttonShow.addEventListener('click', () => {
+				divs.forEach(element => {element.classList.add('none')});
+				div.classList.remove('none');
+			});
+		}
 	}
 	
 	static interactFormModal (buttonShow, buttonHide, form) {

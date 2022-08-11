@@ -11,6 +11,14 @@
 	// }
 
 	$arrayPacientes = ControladorPaciente::selPacientesCtl();
+	// $arrayPacientes = array(
+	// 	array(
+	// 		'idUsuario' => '1', 
+	// 		'nombre' => 'Bernadette', 
+	// 		'apellidos' => 'Hills', 
+	// 		'fechaRegistro' => '13-ene-2022 10:00 hrs'
+	// 	)
+	// );
 	$totalPacientes = ControladorPaciente::contarPacientesCtl()["totalPacientes"];
 	$mostrando = sizeof($arrayPacientes);
 	// $paginacion = Paginacion::pnt($modulo, sizeof($arrayClientes), $init, $size);
@@ -107,10 +115,10 @@
 <div class="C__f oculto" id="pacienteFForm">
 	<form method="post" class="f">
 		<span class="f__x" id="pacienteFBtn-x"></span>
-		<h2 class="f__title">Eliminar pacientes</h2>
+		<h2 class="f__title">Archivar pacientes</h2>
 		<div class="line-top"></div>
 		<div class="i__group">
-			<span class="label-checkbox">¿Eliminar los pacientes seleccionados?</span>
+			<span class="label-checkbox">Los pacientes seleccionados, serán archivados para su futura consulta, no serán eliminados, pero pasarán a estar inactivos en el sistema.</span>
 		</div>
 		<input class="submit" type="button" id="pacienteFBtn-C" value="Aceptar">
 	</form>

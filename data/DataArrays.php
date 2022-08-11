@@ -37,6 +37,31 @@
 			$fecha = date("d-m-Y H:i");
 			return $fecha;
 		}
+		
+		#Obtener pacientes nuevos.
+		static public function getCounterCitas($citas) {
+			$citasAtrasadas = 0;
+			$citasActuales = 0;
+			$citasHoy = 0;
+			$fechaA = strtotime(DataArrays::getFecha());
+			foreach ($citas as $k => $v) : 
+				$fechaCita = strtotime($v["fechaCiF"]);
+				if ($fechaCita == $fechaA) {
+					$citasActuales++;
+					$citasHoy++;
+				} elseif ($fechaCita > $fechaA) {
+					$citasActuales++;
+				} elseif ($fechaCita < $fechaA) {
+					$citasAtrasadas++;
+				}
+			endforeach;
+			$counterCitas = array(
+				'atrasadas' => $citasAtrasadas, 
+				'hoy' => $citasHoy, 
+				'actuales' => $citasActuales
+			);
+			return $counterCitas;
+		}
 
 		#Obtener la fecha configurada.
 		static public function getFechaConfig($fechaJSON) {
